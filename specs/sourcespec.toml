@@ -10,7 +10,7 @@ ids = ["12 kok", "13", "14"]                                                # li
 # this lets us attach a nickname to the id,
 # which can then be used in sources.sourcename.meta's identifier field
 
-[[sources.sourcename.override]]                                             # an id or nickname from sources.<sourcename>.ids
+[[sources.sourcename.overrides]]                                            # an id or nickname from sources.<sourcename>.ids
 identifier = "kok"                                                          # overrides for individual ids
 append = true                                                               # if false, overwrites information
 characters = ["kokomi"]                                                     # all fields are valid, regardless of the provider.
