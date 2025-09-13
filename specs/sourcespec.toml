@@ -1,0 +1,28 @@
+[sources.sourcename]                                                        # any name of choice
+provider = "myprovider"                                                     # name of provider, builtin providers: danbooru, urls
+ids = [12, 13, 14]                                                          # depending on provider, this can be of any type
+
+[sources.sourcename.filters]                                                # per source filters
+characters = { list = ["abc", "xyz"], inverted = false }                    # a filter contains two attributes
+copyrights = { list = ["arknights"], inverted = false }                     # list:     a list of strings where each element is a tag to be filtered
+artists = { list = ["mourncolor", "elodias"], inverted = true }             # inverted: determins whether the values are filter out
+tags = { list = ["bird", "horse"], inverted = false }                       #           OR only those values are kept
+ids = { list = [11112], inverted = false }                                  #
+ratings = { list = ["g"], inverted = true }                                 # presently only these meta attributes are supported
+
+[sources.sourcename.previews]                                               # previews and filters for the auto generated pewview.md
+enabled = true                                                              # determines whether this source is included in preview.md
+characters = { list = ["abc", "xyz"], inverted = false }                    # each field is the same as sources.<sourcename>.filters.
+copyrights = { list = ["arknights"], inverted = false }
+artists = { list = ["mourncolor", "elodias"], inverted = true }
+tags = { list = ["bird", "horse"], inverted = false }
+ids = { list = [11112], inverted = false }
+ratings = { list = ["g"], inverted = true }
+
+[[sources.sourcename.override]]                                             # overrides for individual ids
+id = 12                                                                     # must be a valid id from IDS
+append = true                                                               # if false, overwrites information
+characters = ["kokomi"]                                                     # all fields are valid, regardless of the provider.
+copyrights = ["genshin_impact"]                                             # this is great for the `urls` provider which adds no extra information
+tags = { list = ["bird", "horse"], inverted = false }
+ratings = { list = ["g"], inverted = true }
