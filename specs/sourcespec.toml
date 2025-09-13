@@ -20,7 +20,7 @@ ids = { list = [11112], inverted = false }
 ratings = { list = ["g"], inverted = true }
 
 [[sources.sourcename.override]]                                             # overrides for individual ids
-id = 12                                                                     # must be a valid id from IDS
+id = 12                                                                     # an id from sources.<sourcename>.ids
 append = true                                                               # if false, overwrites information
 characters = ["kokomi"]                                                     # all fields are valid, regardless of the provider.
 copyrights = ["genshin_impact"]                                             # this is great for the `urls` provider which adds no extra information
