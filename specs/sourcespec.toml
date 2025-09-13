@@ -15,8 +15,8 @@ identifier = "kok"                                                          # ov
 append = true                                                               # if false, overwrites information
 characters = ["kokomi"]                                                     # all fields are valid, regardless of the provider.
 copyrights = ["genshin_impact"]                                             # this is great for the `urls` provider which adds no extra information
-tags = { list = ["bird", "horse"], inverted = false }
-ratings = { list = ["g"], inverted = true }
+tags = ["bird", "horse"]
+ratings = ["g"]
 
 [sources.filters]                                                           # per source filters
 characters = { list = ["abc", "xyz"], inverted = false }                    # a filter contains two attributes
