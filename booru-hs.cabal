@@ -23,7 +23,10 @@ common warnings
 library
   import:             warnings
   exposed-modules:    MyLib
-  other-modules:      QuoteStr
+  other-modules:
+    Booru.Schema.Sources
+    QuoteStr
+
   default-extensions: QuasiQuotes
   build-depends:
     , base              ^>=4.19.2.0
