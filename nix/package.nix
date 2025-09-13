@@ -2,6 +2,9 @@
   mkDerivation,
   base,
   lib,
+  toml-parser,
+  template-haskell,
+  text,
 }: let
   inherit (lib.fileset) toSource unions fileFilter;
   hsfilter = fileFilter (file: lib.any file.hasExt ["hs"]);
@@ -20,12 +23,12 @@
   };
 in
   mkDerivation {
+    inherit src;
     pname = "booru-hs";
     version = "0.0.0.1";
-    inherit src;
     isLibrary = true;
     isExecutable = true;
-    libraryHaskellDepends = [base];
+    libraryHaskellDepends = [base template-haskell toml-parser text];
     executableHaskellDepends = [base];
     testHaskellDepends = [base];
     homepage = "https://github.com/Rexcrazy804/booru.hs";
