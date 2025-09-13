@@ -1,6 +1,22 @@
 [sources.sourcename]                                                        # any name of choice
 provider = "myprovider"                                                     # name of provider, builtin providers: danbooru, urls
-ids = [12, 13, 14]                                                          # depending on provider, this can be of any type
+ids = ["12 kok", "13", "14"]                                                # list of ids to be fetched using the provider
+
+# NOTE
+# a ' ' (whitespace) can be used in elements of `ids` to seperate the id and a nickname
+# this will be usefull for the `urls` provider that takes full urls as ids
+# for instance:
+# "https://sjc1.vultrobjects.com/cucdn/gallery-39/art/gi-sangonomiya-kokomi-birthday-2023.jpg kokomi-birthday"
+# this lets us attach a nickname to the id,
+# which can then be used in sources.sourcename.meta's identifier field
+
+[[sources.sourcename.override]]                                             # an id or nickname from sources.<sourcename>.ids
+identifier = "kok"                                                          # overrides for individual ids
+append = true                                                               # if false, overwrites information
+characters = ["kokomi"]                                                     # all fields are valid, regardless of the provider.
+copyrights = ["genshin_impact"]                                             # this is great for the `urls` provider which adds no extra information
+tags = { list = ["bird", "horse"], inverted = false }
+ratings = { list = ["g"], inverted = true }
 
 [sources.sourcename.filters]                                                # per source filters
 characters = { list = ["abc", "xyz"], inverted = false }                    # a filter contains two attributes
@@ -17,12 +33,4 @@ copyrights = { list = ["arknights"], inverted = false }
 artists = { list = ["mourncolor", "elodias"], inverted = true }
 tags = { list = ["bird", "horse"], inverted = false }
 ids = { list = [11112], inverted = false }
-ratings = { list = ["g"], inverted = true }
-
-[[sources.sourcename.override]]                                             # overrides for individual ids
-id = 12                                                                     # an id from sources.<sourcename>.ids
-append = true                                                               # if false, overwrites information
-characters = ["kokomi"]                                                     # all fields are valid, regardless of the provider.
-copyrights = ["genshin_impact"]                                             # this is great for the `urls` provider which adds no extra information
-tags = { list = ["bird", "horse"], inverted = false }
 ratings = { list = ["g"], inverted = true }
