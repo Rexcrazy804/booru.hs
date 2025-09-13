@@ -10,8 +10,7 @@
     self,
     nixpkgs,
     systems,
-    ...
-  } @ inputs: let
+  }: let
     inherit (nixpkgs) lib;
     inherit (lib) getAttrs mapAttrs;
 
@@ -19,6 +18,11 @@
     eachSystem = fn: mapAttrs fn pkgsFor;
   in {
     formatter = eachSystem (_: pkgs: pkgs.alejandra);
-    devShells = eachSystem (_: pkgs: {default = pkgs.callPackage ./nix/shell.nix {};});
+    packages = eachSystem (_: pkgs: {
+      default = pkgs.haskellPackages.callPackage ./nix/package.nix {};
+    });
+    devShells = eachSystem (_: pkgs: {
+      default = pkgs.callPackage ./nix/shell.nix {inherit self;};
+    });
   };
 }
