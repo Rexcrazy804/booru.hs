@@ -18,7 +18,7 @@ copyrights = ["genshin_impact"]                                             # th
 tags = { list = ["bird", "horse"], inverted = false }
 ratings = { list = ["g"], inverted = true }
 
-[[sources.filters]]                                                         # per source filters
+[sources.filters]                                                           # per source filters
 characters = { list = ["abc", "xyz"], inverted = false }                    # a filter contains two attributes
 copyrights = { list = ["arknights"], inverted = false }                     # list:     a list of strings where each element is a tag to be filtered
 artists = { list = ["mourncolor", "elodias"], inverted = true }             # inverted: determins whether the values are filter out
@@ -26,7 +26,7 @@ tags = { list = ["bird", "horse"], inverted = false }                       #   
 ids = { list = [11112], inverted = false }                                  #
 ratings = { list = ["g"], inverted = true }                                 # presently only these meta attributes are supported
 
-[[sources.previews]]                                                        # previews and filters for the auto generated pewview.md
+[sources.previews]                                                          # previews and filters for the auto generated pewview.md
 enabled = true                                                              # determines whether this source is included in preview.md
 characters = { list = ["abc", "xyz"], inverted = false }                    # each field is the same as sources.<sourcename>.filters.
 copyrights = { list = ["arknights"], inverted = false }
