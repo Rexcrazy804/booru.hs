@@ -11,7 +11,7 @@
   jq,
 }:
 mkShellNoCC {
-  inputsFrom = map (lib.getAttr "env") [self.packages.${system}.default];
+  inputsFrom = map (lib.getAttr "env") [self.packages.${system}.rapid];
   packages = [
     haskell-language-server
     fourmolu
