@@ -45,3 +45,6 @@
 
 [synonyms.artists]
 "elodias" = ["little ello"]
+
+[synonyms.ratings]
+"e" = ["explicit", "n$fw"]
