@@ -1,0 +1,10 @@
+[[providers]]                                                                         # provider specification
+name = "safebooru"                                                                    # name of the provider
+url = "https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&id=%%ID%%"     # %%ID%% is required
+file = { enabled = true, attr = "file_url" }                                          # if disabled, url is treated as file. see `urls` provider
+preview_file = { enabled = true, attr = "sample_url" }                                # leveraged by preview.md thumbnails
+characters = { enabled = false, attr = ""}                                            # each attribute is a nested table where
+artists = { enabled = false, attr = ""}                                               # enabled: determines whether the provider supports
+tags = { enabled = true, attr = "tags" }                                              #          supports the attribute
+copyrights = { enabled = false, attr = "" }                                           # attr:    the json attribute containing the required
+ratings = { enabled = false, attr = "" }                                              #          attriute info
