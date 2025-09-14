@@ -135,8 +135,35 @@ simpleFilterParsed =
     , fratings = Just Filter{list = ["e"], inverted = False}
     }
 
+simplePreviews :: Text
+simplePreviews =
+  [quoteStr|
+  enabled = true
+  [filters]
+  artists = { list = ["elodias"], inverted = true }
+  copyrights = { list = ["genshin_impact"], inverted = true}
+  tags = { list = ["birds"], inverted = false }
+  |]
+
+simplePreviewsParsed :: Previews
+simplePreviewsParsed =
+  Previews
+    { enabled = True
+    , pfilters =
+        Just
+          Filters
+            { fids = Nothing
+            , fartists = Just Filter{list = ["elodias"], inverted = True}
+            , fcharacters = Nothing
+            , fcopyrights = Just Filter{list = ["genshin_impact"], inverted = True}
+            , ftags = Just Filter{list = ["birds"], inverted = False}
+            , fratings = Nothing
+            }
+    }
+
 spec :: Spec
 spec = do
   it "parses exhaustive Source" $ decode fullSource `shouldBe` Success [] fullSourceParsed
   it "parses empty source" $ decode emptySource `shouldBe` Success [] emptySourceParsed
   it "parses simple filter" $ decode simpleFilter `shouldBe` Success [] simpleFilterParsed
+  it "parses simple previews" $ decode simplePreviews `shouldBe` Success [] simplePreviewsParsed
