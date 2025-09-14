@@ -65,8 +65,8 @@ test-suite booru-hs-test
 
   other-modules:
     QuoteStr
-    Schema.SourceSpec
     Schema.ProviderSpec
+    Schema.SourceSpec
     SpecHook
 
   build-tool-depends: hspec-discover:hspec-discover ^>=2.11.12
