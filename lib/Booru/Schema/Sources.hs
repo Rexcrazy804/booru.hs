@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DerivingVia #-}
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 module Booru.Schema.Sources (
   Sources (..),
@@ -13,7 +13,6 @@ module Booru.Schema.Sources (
 )
 where
 
-import Data.Text (Text)
 import GHC.Generics (Generic)
 import Toml.Schema
 
@@ -53,61 +52,19 @@ data Filter = Filter
   deriving (ToTable, ToValue, FromValue) via GenericTomlTable Filter
 
 data Filters = Filters
-  { fcharacters :: Maybe Filter
-  , fcopyrights :: Maybe Filter
-  , fartists :: Maybe Filter
-  , ftags :: Maybe Filter
-  , fids :: Maybe Filter
-  , fratings :: Maybe Filter
+  { characters :: Maybe Filter
+  , copyrights :: Maybe Filter
+  , artists :: Maybe Filter
+  , tags :: Maybe Filter
+  , ids :: Maybe Filter
+  , ratings :: Maybe Filter
   }
   deriving (Eq, Show, Generic)
-
-toElem :: (ToValue a) => Text -> Maybe a -> [(Text, Value)]
-toElem _ Nothing = []
-toElem name (Just x) = [name .= x]
-
-instance ToValue Filters where
-  toValue = defaultTableToValue
-
-instance ToTable Filters where
-  toTable (Filters cha cop art tag id' rat) =
-    table $
-      concat
-        [ toElem "characters" cha
-        , toElem "copyrights" cop
-        , toElem "artists" art
-        , toElem "tags" tag
-        , toElem "ids" id'
-        , toElem "ratings" rat
-        ]
-
-instance FromValue Filters where
-  fromValue =
-    parseTableFromValue $
-      Filters
-        <$> optKey "characters"
-        <*> optKey "copyrights"
-        <*> optKey "artists"
-        <*> optKey "tags"
-        <*> optKey "ids"
-        <*> optKey "ratings"
+  deriving (ToTable, ToValue, FromValue) via GenericTomlTable Filters
 
 data Previews = Previews
   { enabled :: Bool
-  , pfilters :: Maybe Filters
+  , filters :: Maybe Filters
   }
   deriving (Eq, Show, Generic)
-
-instance ToValue Previews where
-  toValue = defaultTableToValue
-
-instance ToTable Previews where
-  toTable (Previews enb filts) =
-    table (("enabled" .= enb) : toElem "filters" filts)
-
-instance FromValue Previews where
-  fromValue =
-    parseTableFromValue $
-      Previews
-        <$> reqKey "enabled"
-        <*> optKey "filters"
+  deriving (ToTable, ToValue, FromValue) via GenericTomlTable Previews

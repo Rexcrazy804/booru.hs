@@ -1,3 +1,4 @@
+{-# LANGUAGE DisambiguateRecordFields #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Schema.SourceSpec (spec) where
@@ -66,26 +67,26 @@ fullSourceParsed =
               , filters =
                   Just
                     Filters
-                      { fcharacters = Just Filter{list = ["abc", "xyz"], inverted = False}
-                      , fcopyrights = Just Filter{list = ["arknights"], inverted = False}
-                      , fartists = Just Filter{list = ["mourncolor", "elodias"], inverted = True}
-                      , ftags = Just Filter{list = ["bird", "horse"], inverted = False}
-                      , fids = Just Filter{list = ["11112"], inverted = False}
-                      , fratings = Just Filter{list = ["g"], inverted = True}
+                      { characters = Just Filter{list = ["abc", "xyz"], inverted = False}
+                      , copyrights = Just Filter{list = ["arknights"], inverted = False}
+                      , artists = Just Filter{list = ["mourncolor", "elodias"], inverted = True}
+                      , tags = Just Filter{list = ["bird", "horse"], inverted = False}
+                      , ids = Just Filter{list = ["11112"], inverted = False}
+                      , ratings = Just Filter{list = ["g"], inverted = True}
                       }
               , previews =
                   Just
                     Previews
                       { enabled = True
-                      , pfilters =
+                      , filters =
                           Just
                             Filters
-                              { fcharacters = Just Filter{list = ["abc", "xyz"], inverted = False}
-                              , fcopyrights = Just Filter{list = ["arknights"], inverted = False}
-                              , fartists = Just Filter{list = ["mourncolor", "elodias"], inverted = True}
-                              , ftags = Just Filter{list = ["bird", "horse"], inverted = False}
-                              , fids = Just Filter{list = ["11112"], inverted = False}
-                              , fratings = Just Filter{list = ["g"], inverted = True}
+                              { characters = Just Filter{list = ["abc", "xyz"], inverted = False}
+                              , copyrights = Just Filter{list = ["arknights"], inverted = False}
+                              , artists = Just Filter{list = ["mourncolor", "elodias"], inverted = True}
+                              , tags = Just Filter{list = ["bird", "horse"], inverted = False}
+                              , ids = Just Filter{list = ["11112"], inverted = False}
+                              , ratings = Just Filter{list = ["g"], inverted = True}
                               }
                       }
               }
@@ -127,12 +128,12 @@ simpleFilter =
 simpleFilterParsed :: Filters
 simpleFilterParsed =
   Filters
-    { fids = Just Filter{list = ["123"], inverted = False}
-    , fartists = Nothing
-    , fcharacters = Just Filter{list = ["barbara"], inverted = True}
-    , fcopyrights = Nothing
-    , ftags = Nothing
-    , fratings = Just Filter{list = ["e"], inverted = False}
+    { ids = Just Filter{list = ["123"], inverted = False}
+    , artists = Nothing
+    , characters = Just Filter{list = ["barbara"], inverted = True}
+    , copyrights = Nothing
+    , tags = Nothing
+    , ratings = Just Filter{list = ["e"], inverted = False}
     }
 
 simplePreviews :: Text
@@ -149,15 +150,15 @@ simplePreviewsParsed :: Previews
 simplePreviewsParsed =
   Previews
     { enabled = True
-    , pfilters =
+    , filters =
         Just
           Filters
-            { fids = Nothing
-            , fartists = Just Filter{list = ["elodias"], inverted = True}
-            , fcharacters = Nothing
-            , fcopyrights = Just Filter{list = ["genshin_impact"], inverted = True}
-            , ftags = Just Filter{list = ["birds"], inverted = False}
-            , fratings = Nothing
+            { ids = Nothing
+            , artists = Just Filter{list = ["elodias"], inverted = True}
+            , characters = Nothing
+            , copyrights = Just Filter{list = ["genshin_impact"], inverted = True}
+            , tags = Just Filter{list = ["birds"], inverted = False}
+            , ratings = Nothing
             }
     }
 
@@ -196,26 +197,26 @@ multiSourceParsed =
               , filters =
                   Just
                     Filters
-                      { fcharacters = Just Filter{list = ["kokomi"], inverted = True}
-                      , fcopyrights = Nothing
-                      , fids = Nothing
-                      , ftags = Nothing
-                      , fartists = Nothing
-                      , fratings = Nothing
+                      { characters = Just Filter{list = ["kokomi"], inverted = True}
+                      , copyrights = Nothing
+                      , ids = Nothing
+                      , tags = Nothing
+                      , artists = Nothing
+                      , ratings = Nothing
                       }
               , previews =
                   Just
                     Previews
                       { enabled = True
-                      , pfilters =
+                      , filters =
                           Just
                             Filters
-                              { fratings = Just Filter{list = ["g"], inverted = True}
-                              , fcopyrights = Nothing
-                              , fids = Nothing
-                              , ftags = Nothing
-                              , fartists = Nothing
-                              , fcharacters = Nothing
+                              { ratings = Just Filter{list = ["g"], inverted = True}
+                              , copyrights = Nothing
+                              , ids = Nothing
+                              , tags = Nothing
+                              , artists = Nothing
+                              , characters = Nothing
                               }
                       }
               }
@@ -227,26 +228,26 @@ multiSourceParsed =
               , filters =
                   Just
                     Filters
-                      { fcopyrights = Just Filter{list = ["nier_automata"], inverted = True}
-                      , fcharacters = Nothing
-                      , fids = Nothing
-                      , ftags = Nothing
-                      , fartists = Nothing
-                      , fratings = Nothing
+                      { copyrights = Just Filter{list = ["nier_automata"], inverted = True}
+                      , characters = Nothing
+                      , ids = Nothing
+                      , tags = Nothing
+                      , artists = Nothing
+                      , ratings = Nothing
                       }
               , previews =
                   Just
                     Previews
                       { enabled = True
-                      , pfilters =
+                      , filters =
                           Just
                             Filters
-                              { fratings = Just Filter{list = ["e"], inverted = False}
-                              , fcopyrights = Nothing
-                              , fids = Nothing
-                              , ftags = Nothing
-                              , fartists = Nothing
-                              , fcharacters = Nothing
+                              { ratings = Just Filter{list = ["e"], inverted = False}
+                              , copyrights = Nothing
+                              , ids = Nothing
+                              , tags = Nothing
+                              , artists = Nothing
+                              , characters = Nothing
                               }
                       }
               }
