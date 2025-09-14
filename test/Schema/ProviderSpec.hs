@@ -56,4 +56,4 @@ fullProviderParsed =
 
 spec :: Spec
 spec = do
-  it "parses exhaustive Source" $ decode fullProvider `shouldBe` Success [] fullProviderParsed
+  it "parses exhaustive providers" $ decode fullProvider `shouldBe` Success [] fullProviderParsed
