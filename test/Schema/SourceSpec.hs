@@ -41,6 +41,14 @@ fullsource =
   ratings = { list = ["g"], inverted = true }
   |]
 
+emptySource :: Text
+emptySource =
+  [quoteStr|
+  [[sources]]
+  provider = "danbooru"
+  ids = ["834871"]
+  |]
+
 spec :: Spec
 spec = do
   it "parses exhaustive Source.toml" $
@@ -86,6 +94,23 @@ spec = do
                             , pids = Just Filter{list = ["11112"], inverted = False}
                             , pratings = Just Filter{list = ["g"], inverted = True}
                             }
+                    }
+                )
+              ]
+          }
+
+  it "parses empty source" $
+    decode emptySource
+      `shouldBe` Success
+        []
+        Sources
+          { sources =
+              [ ( Source
+                    { provider = "danbooru"
+                    , ids = ["834871"]
+                    , overrides = Nothing
+                    , filters = Nothing
+                    , previews = Nothing
                     }
                 )
               ]
