@@ -161,9 +161,103 @@ simplePreviewsParsed =
             }
     }
 
+multiSource :: Text
+multiSource =
+  [quoteStr|
+  [[sources]]
+  provider = "danbooru"
+  ids = ["185245", "1876678"]
+  [sources.filters]
+  characters = { list = ["kokomi"], inverted = true }
+  [sources.previews]
+  enabled = true
+  [sources.previews.filters]
+  ratings = { list = ["g"], inverted = true }
+
+  [[sources]]
+  provider = "danbooru"
+  ids = ["8717178", "1678428"]
+  [sources.filters]
+  copyrights = { list = ["nier_automata"], inverted = true }
+  [sources.previews]
+  enabled = true
+  [sources.previews.filters]
+  ratings = { list = ["e"], inverted = false }
+  |]
+
+multiSourceParsed :: Sources
+multiSourceParsed =
+  Sources
+    { sources =
+        [ ( Source
+              { provider = "danbooru"
+              , ids = ["185245", "1876678"]
+              , overrides = Nothing
+              , filters =
+                  Just
+                    Filters
+                      { fcharacters = Just Filter{list = ["kokomi"], inverted = True}
+                      , fcopyrights = Nothing
+                      , fids = Nothing
+                      , ftags = Nothing
+                      , fartists = Nothing
+                      , fratings = Nothing
+                      }
+              , previews =
+                  Just
+                    Previews
+                      { enabled = True
+                      , pfilters =
+                          Just
+                            Filters
+                              { fratings = Just Filter{list = ["g"], inverted = True}
+                              , fcopyrights = Nothing
+                              , fids = Nothing
+                              , ftags = Nothing
+                              , fartists = Nothing
+                              , fcharacters = Nothing
+                              }
+                      }
+              }
+          )
+        , ( Source
+              { provider = "danbooru"
+              , ids = ["8717178", "1678428"]
+              , overrides = Nothing
+              , filters =
+                  Just
+                    Filters
+                      { fcopyrights = Just Filter{list = ["nier_automata"], inverted = True}
+                      , fcharacters = Nothing
+                      , fids = Nothing
+                      , ftags = Nothing
+                      , fartists = Nothing
+                      , fratings = Nothing
+                      }
+              , previews =
+                  Just
+                    Previews
+                      { enabled = True
+                      , pfilters =
+                          Just
+                            Filters
+                              { fratings = Just Filter{list = ["e"], inverted = False}
+                              , fcopyrights = Nothing
+                              , fids = Nothing
+                              , ftags = Nothing
+                              , fartists = Nothing
+                              , fcharacters = Nothing
+                              }
+                      }
+              }
+          )
+        ]
+    }
+
 spec :: Spec
 spec = do
   it "parses exhaustive Source" $ decode fullSource `shouldBe` Success [] fullSourceParsed
   it "parses empty source" $ decode emptySource `shouldBe` Success [] emptySourceParsed
   it "parses simple filter" $ decode simpleFilter `shouldBe` Success [] simpleFilterParsed
   it "parses simple previews" $ decode simplePreviews `shouldBe` Success [] simplePreviewsParsed
+  it "parses multi sources" $ decode multiSource `shouldBe` Success [] multiSourceParsed
