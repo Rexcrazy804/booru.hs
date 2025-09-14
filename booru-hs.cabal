@@ -22,7 +22,10 @@ common warnings
 
 library
   import:             warnings
-  exposed-modules:    Booru.Schema.Sources
+  exposed-modules:
+    Booru.Schema.Providers
+    Booru.Schema.Sources
+
   default-extensions: QuasiQuotes
   build-depends:
     , base         ^>=4.19.2.0
@@ -54,12 +57,14 @@ test-suite booru-hs-test
   main-is:            Main.hs
   build-depends:
     , base              ^>=4.19.2.0
+    , booru-hs
     , hspec             ^>=2.11.12
     , template-haskell  ^>=2.21.0.0
     , text              ^>=2.1.1
     , toml-parser       ^>=2.0.1.2
-    , booru-hs
+
   other-modules:
-    Schema.SourceSpec
     QuoteStr
+    Schema.SourceSpec
+
   build-tool-depends: hspec-discover:hspec-discover ^>=2.11.12
