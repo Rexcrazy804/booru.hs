@@ -5,6 +5,8 @@
   toml-parser,
   template-haskell,
   text,
+  hspec,
+  hspec-discover,
 }: let
   inherit (lib.fileset) toSource unions fileFilter;
   hsfilter = fileFilter (file: lib.any file.hasExt ["hs"]);
@@ -28,9 +30,16 @@ in
     version = "0.0.0.1";
     isLibrary = true;
     isExecutable = true;
-    libraryHaskellDepends = [base template-haskell toml-parser text];
+    libraryHaskellDepends = [base text toml-parser];
     executableHaskellDepends = [base];
-    testHaskellDepends = [base];
+    testHaskellDepends = [
+      base
+      hspec
+      template-haskell
+      text
+      toml-parser
+    ];
+    testToolDepends = [hspec-discover];
     homepage = "https://github.com/Rexcrazy804/booru.hs";
     description = "Extensible Auto-categorizing image library";
     license = lib.licenses.mpl20;
