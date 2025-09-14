@@ -14,5 +14,5 @@ jobs:
     - uses: cachix/install-nix-action@v25
       with:
         nix_path: nixpkgs=channel:nixos-unstable
-    - run: nix develop --command cabal update
-    - run: nix develop --command cabal test --test-show-details=direct
+    - run: nix develop .#ci --command cabal update
+    - run: nix develop .#ci --command cabal test --test-show-details=direct
