@@ -33,6 +33,8 @@ fullSource =
 
   [sources.previews]
   enabled = true
+
+  [sources.previews.filters]
   characters = { list = ["abc", "xyz"], inverted = false }
   copyrights = { list = ["arknights"], inverted = false }
   artists = { list = ["mourncolor", "elodias"], inverted = true }
@@ -75,12 +77,16 @@ fullSourceParsed =
                   Just
                     Previews
                       { enabled = True
-                      , pcharacters = Just Filter{list = ["abc", "xyz"], inverted = False}
-                      , pcopyrights = Just Filter{list = ["arknights"], inverted = False}
-                      , partists = Just Filter{list = ["mourncolor", "elodias"], inverted = True}
-                      , ptags = Just Filter{list = ["bird", "horse"], inverted = False}
-                      , pids = Just Filter{list = ["11112"], inverted = False}
-                      , pratings = Just Filter{list = ["g"], inverted = True}
+                      , pfilters =
+                          Just
+                            Filters
+                              { fcharacters = Just Filter{list = ["abc", "xyz"], inverted = False}
+                              , fcopyrights = Just Filter{list = ["arknights"], inverted = False}
+                              , fartists = Just Filter{list = ["mourncolor", "elodias"], inverted = True}
+                              , ftags = Just Filter{list = ["bird", "horse"], inverted = False}
+                              , fids = Just Filter{list = ["11112"], inverted = False}
+                              , fratings = Just Filter{list = ["g"], inverted = True}
+                              }
                       }
               }
           )
