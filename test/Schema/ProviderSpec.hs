@@ -18,22 +18,22 @@ fullProvider =
   file = "file_url"
   preview_file = "sample_url"
   tags = "tags"
-  |]
 
--- [[providers]]
--- name = "urls"
--- url = "%%ID%%"
---
--- [[providers]]
--- name = "danbooru"
--- url = "https://danbooru.donmai.us/posts/%%ID%%.json"
--- file = "file_url"
--- preview_file = "preview_file_url"
--- artists = "tag_string_artist"
--- characters = "tag_string_character"
--- copyrights = "tag_string_copyright"
--- tags = "tag_string_general"
--- rating = "rating"
+  [[providers]]
+  name = "urls"
+  url = "%%ID%%"
+
+  [[providers]]
+  name = "danbooru"
+  url = "https://danbooru.donmai.us/posts/%%ID%%.json"
+  file = "file_url"
+  preview_file = "preview_file_url"
+  artists = "tag_string_artist"
+  characters = "tag_string_character"
+  copyrights = "tag_string_copyright"
+  tags = "tag_string_general"
+  rating = "rating"
+  |]
 
 fullProviderParsed :: Providers
 fullProviderParsed =
@@ -49,6 +49,30 @@ fullProviderParsed =
               , characters = Nothing
               , copyrights = Nothing
               , rating = Nothing
+              }
+          )
+        , ( Provider
+              { name = "urls"
+              , url = "%%ID%%"
+              , file = Nothing
+              , preview_file = Nothing
+              , tags = Nothing
+              , artists = Nothing
+              , characters = Nothing
+              , copyrights = Nothing
+              , rating = Nothing
+              }
+          )
+        , ( Provider
+              { name = "danbooru"
+              , url = "https://danbooru.donmai.us/posts/%%ID%%.json"
+              , file = Just "file_url"
+              , preview_file = Just "preview_file_url"
+              , artists = Just "tag_string_artist"
+              , characters = Just "tag_string_character"
+              , copyrights = Just "tag_string_copyright"
+              , tags = Just "tag_string_general"
+              , rating = Just "rating"
               }
           )
         ]
