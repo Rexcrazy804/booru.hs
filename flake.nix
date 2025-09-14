@@ -27,6 +27,7 @@
     });
     devShells = eachSystem (_: pkgs: {
       default = pkgs.callPackage ./nix/shell.nix {inherit self;};
+      ci = pkgs.callPackage ./nix/cishell.nix {inherit self;};
     });
   };
 }
