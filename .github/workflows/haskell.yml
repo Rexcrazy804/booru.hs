@@ -1,13 +1,13 @@
 name: "Haskell Tests"
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - master
-    paths:
-      - '**.hs'
+    branches: [ "master" ]
+    paths: ['**.hs']
+  pull_request:
+    branches: [ "master" ]
+    paths: ['**.hs']
 jobs:
-  benchmark:
+  test-library:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
