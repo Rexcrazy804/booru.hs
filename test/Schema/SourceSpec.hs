@@ -50,7 +50,7 @@ fullSourceParsed =
     { sources =
         [ ( Source
               { provider = "myprovider"
-              , ids = ["12 kok", "13", "14"]
+              , ids = [WithNick{id = "12", nickname = "kok"}, Id "13", Id "14"]
               , overrides =
                   Just
                     [ ( Override
@@ -108,7 +108,7 @@ emptySourceParsed =
     { sources =
         [ ( Source
               { provider = "danbooru"
-              , ids = ["834871"]
+              , ids = [Id "834871"]
               , overrides = Nothing
               , filters = Nothing
               , previews = Nothing
@@ -192,7 +192,7 @@ multiSourceParsed =
     { sources =
         [ ( Source
               { provider = "danbooru"
-              , ids = ["185245", "1876678"]
+              , ids = [Id "185245", Id "1876678"]
               , overrides = Nothing
               , filters =
                   Just
@@ -223,7 +223,7 @@ multiSourceParsed =
           )
         , ( Source
               { provider = "danbooru"
-              , ids = ["8717178", "1678428"]
+              , ids = [Id "8717178", Id "1678428"]
               , overrides = Nothing
               , filters =
                   Just

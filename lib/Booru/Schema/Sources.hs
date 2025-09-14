@@ -9,10 +9,12 @@ module Booru.Schema.Sources (
   Filters (..),
   Filter (..),
   Previews (..),
+  Identifier (..),
   Tag,
 )
 where
 
+import Data.Text (unpack)
 import GHC.Generics (Generic)
 import Toml.Schema
 
@@ -24,7 +26,7 @@ type Tag = String
 
 data Source = Source
   { provider :: String
-  , ids :: [String]
+  , ids :: [Identifier]
   , overrides :: Maybe [Override]
   , filters :: Maybe Filters
   , previews :: Maybe Previews
@@ -68,3 +70,19 @@ data Previews = Previews
   }
   deriving (Eq, Show, Generic)
   deriving (ToTable, ToValue, FromValue) via GenericTomlTable Previews
+
+data Identifier = Id String | WithNick {id :: String, nickname :: String}
+  deriving (Eq, Show, Generic)
+
+instance ToValue Identifier where
+  toValue (Id id') = toValue id'
+  toValue (WithNick id' nick) = toValue $ unwords [id', nick]
+
+instance FromValue Identifier where
+  fromValue (Text' l packed)
+    | [y, z] <- x = return $ WithNick { id = y, nickname = z }
+    | [x'] <- x =  return $ Id x'
+    | otherwise = failAt l "Expected a string of '<id>' or '<id> <nickname>'"
+   where
+    x = words $ unpack packed
+  fromValue _ = fail "expected a string"
