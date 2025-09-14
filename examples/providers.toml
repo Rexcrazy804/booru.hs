@@ -1,10 +1,35 @@
 [[providers]]                                                                         # provider specification
 name = "safebooru"                                                                    # name of the provider
 url = "https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&id=%%ID%%"     # %%ID%% is required
-file = { enabled = true, attr = "file_url" }                                          # if disabled, url is treated as file. see `urls` provider
-preview_file = { enabled = true, attr = "sample_url" }                                # leveraged by preview.md thumbnails
-characters = { enabled = false, attr = ""}                                            # each attribute is a nested table where
-artists = { enabled = false, attr = ""}                                               # enabled: determines whether the provider supports
-tags = { enabled = true, attr = "tags" }                                              #          supports the attribute
-copyrights = { enabled = false, attr = "" }                                           # attr:    the json attribute containing the required
-ratings = { enabled = false, attr = "" }                                              #          attriute info
+file = "file_url"                                                                     # when unset the url is treated as the file see NOTE
+preview_file = "sample_url"                                                           # attribute containing downscaled image for inclusion in pewview.md
+# artists                                                                             # attribute containing artists of image
+# characters                                                                          # attribute containing list of characters in image
+# copyrights                                                                          # attribute containing copyrights of image
+tags = "tags"                                                                         # attribute containing every other tag
+# rating                                                                              # attribute containing age rating of image
+
+# NOTE
+# all attributes below url is optional.
+# The file attribute is a soft requirement for most providers,
+# with the exception for the `urls` provider.
+# If a provider does not provide the file attribute,
+# the url field is treated as the file to download
+# rather than as a json to parse.
+# Hence, all other attributes are ignored as there is no json to retreive
+# when file attribute is not provided.
+
+[[providers]]                                                                         # A special builtin provider
+name = "urls"                                                                         # accepts a list of urls in the id's field and simply
+url = "%%ID%%"                                                                        # downloads them with no tag information
+
+[[providers]]
+name = "danbooru"
+url = "https://danbooru.donmai.us/posts/%%ID%%.json"
+file = "file_url"
+preview_file = "preview_file_url"
+artists = "tag_string_artist"
+characters = "tag_string_character"
+copyrights = "tag_string_copyright"
+tags = "tag_string_general"
+rating = "rating"
