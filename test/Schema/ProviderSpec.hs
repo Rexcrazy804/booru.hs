@@ -18,6 +18,7 @@ fullProvider =
   file = "file_url"
   preview_file = "sample_url"
   tags = "tags"
+  rating = "$general"
 
   [[providers]]
   name = "urls"
@@ -42,13 +43,13 @@ fullProviderParsed =
         [ ( Provider
               { name = "safebooru"
               , url = "https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&id=%%ID%%"
-              , file = Just "file_url"
-              , preview_file = Just "sample_url"
-              , tags = Just "tags"
+              , file = Just $ Attr ["file_url"]
+              , preview_file = Just $ Attr ["sample_url"]
+              , tags = Just $ Attr ["tags"]
               , artists = Nothing
               , characters = Nothing
               , copyrights = Nothing
-              , rating = Nothing
+              , rating = Just $ Default "general"
               }
           )
         , ( Provider
@@ -66,13 +67,13 @@ fullProviderParsed =
         , ( Provider
               { name = "danbooru"
               , url = "https://danbooru.donmai.us/posts/%%ID%%.json"
-              , file = Just "file_url"
-              , preview_file = Just "preview_file_url"
-              , artists = Just "tag_string_artist"
-              , characters = Just "tag_string_character"
-              , copyrights = Just "tag_string_copyright"
-              , tags = Just "tag_string_general"
-              , rating = Just "rating"
+              , file = Just $ Attr ["file_url"]
+              , preview_file = Just $ Attr ["preview_file_url"]
+              , artists = Just $ Attr ["tag_string_artist"]
+              , characters = Just $ Attr ["tag_string_character"]
+              , copyrights = Just $ Attr ["tag_string_copyright"]
+              , tags = Just $ Attr ["tag_string_general"]
+              , rating = Just $ Attr ["rating"]
               }
           )
         ]
