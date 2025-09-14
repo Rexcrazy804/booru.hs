@@ -28,7 +28,9 @@ ratings = { list = ["g"], inverted = true }                                 # pr
 
 [sources.previews]                                                          # previews and filters for the auto generated pewview.md
 enabled = true                                                              # determines whether this source is included in preview.md
-characters = { list = ["abc", "xyz"], inverted = false }                    # each field is the same as sources.<sourcename>.filters.
+
+[sources.preview.filters]                                                   # filters for previews
+characters = { list = ["abc", "xyz"], inverted = false }
 copyrights = { list = ["arknights"], inverted = false }
 artists = { list = ["mourncolor", "elodias"], inverted = true }
 tags = { list = ["bird", "horse"], inverted = false }
