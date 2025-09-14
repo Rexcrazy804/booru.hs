@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module SourceParseSpec (spec) where
+module Schema.SourceSpec (spec) where
 
 import Booru.Schema.Sources
 import Data.Text (Text)
@@ -43,7 +43,7 @@ source =
 
 spec :: Spec
 spec = do
-  it "parses Source" $
+  it "parses exhaustive Source.toml" $
     decode source
       `shouldBe` ( Success [] $
                     Sources

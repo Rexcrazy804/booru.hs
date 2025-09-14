@@ -60,6 +60,6 @@ test-suite booru-hs-test
     , toml-parser       ^>=2.0.1.2
     , booru-hs
   other-modules:
-    SourceParseSpec
+    Schema.SourceSpec
     QuoteStr
   build-tool-depends: hspec-discover:hspec-discover ^>=2.11.12
