@@ -257,7 +257,7 @@ multiSourceParsed =
 
 spec :: Spec
 spec = do
-  it "parses exhaustive Source" $ decode fullSource `shouldBe` Success [] fullSourceParsed
+  it "parses exhaustive source" $ decode fullSource `shouldBe` Success [] fullSourceParsed
   it "parses empty source" $ decode emptySource `shouldBe` Success [] emptySourceParsed
   it "parses simple filter" $ decode simpleFilter `shouldBe` Success [] simpleFilterParsed
   it "parses simple previews" $ decode simplePreviews `shouldBe` Success [] simplePreviewsParsed
