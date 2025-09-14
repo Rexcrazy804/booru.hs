@@ -94,39 +94,20 @@ instance FromValue Filters where
 
 data Previews = Previews
   { enabled :: Bool
-  , pcharacters :: Maybe Filter
-  , pcopyrights :: Maybe Filter
-  , partists :: Maybe Filter
-  , ptags :: Maybe Filter
-  , pids :: Maybe Filter
-  , pratings :: Maybe Filter
+  , pfilters :: Maybe Filters
   }
   deriving (Eq, Show, Generic)
+
+instance ToValue Previews where
+  toValue = defaultTableToValue
+
+instance ToTable Previews where
+  toTable (Previews enb filts) =
+    table (("enabled" .= enb) : toElem "filters" filts)
 
 instance FromValue Previews where
   fromValue =
     parseTableFromValue $
       Previews
         <$> reqKey "enabled"
-        <*> optKey "characters"
-        <*> optKey "copyrights"
-        <*> optKey "artists"
-        <*> optKey "tags"
-        <*> optKey "ids"
-        <*> optKey "ratings"
-
-instance ToValue Previews where
-  toValue = defaultTableToValue
-
-instance ToTable Previews where
-  toTable (Previews en cha cop art tag id' rat) =
-    table $
-      concat
-        [ ["enabled" .= en]
-        , toElem "characters" cha
-        , toElem "copyrights" cop
-        , toElem "artists" art
-        , toElem "tags" tag
-        , toElem "ids" id'
-        , toElem "ratings" rat
-        ]
+        <*> optKey "filters"
