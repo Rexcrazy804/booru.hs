@@ -9,7 +9,7 @@ module Booru.Schema.Sources (
   Filters (..),
   Filter (..),
   Previews (..),
-  Tags,
+  Tag,
 )
 where
 
@@ -40,7 +40,7 @@ data Override = Override
   , copyrights :: Maybe [Tag]
   , artists :: Maybe [Tag]
   , tags :: Maybe [Tag]
-  , rating :: Maybe [Tag]
+  , rating :: Maybe Tag
   }
   deriving (Eq, Show, Generic)
   deriving (ToTable, ToValue, FromValue) via GenericTomlTable Override

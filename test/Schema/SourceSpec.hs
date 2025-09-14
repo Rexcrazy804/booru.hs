@@ -21,7 +21,7 @@ fullSource =
   characters = ["kokomi"]
   copyrights = ["genshin_impact"]
   tags = ["jellyfish", "underwater"]
-  ratings = ["explicit"]
+  rating = "explicit"
 
   [sources.filters]
   characters = { list = ["abc", "xyz"], inverted = false }
@@ -59,7 +59,7 @@ fullSourceParsed =
                           , characters = Just ["kokomi"]
                           , copyrights = Just ["genshin_impact"]
                           , tags = Just ["jellyfish", "underwater"]
-                          , ratings = Just ["explicit"]
+                          , rating = Just "explicit"
                           }
                       )
                     ]

@@ -16,7 +16,7 @@ append = true                                                               # if
 characters = ["kokomi"]                                                     # all fields are valid, regardless of the provider.
 copyrights = ["genshin_impact"]                                             # this is great for the `urls` provider which adds no extra information
 tags = ["jellyfish", "underwater"]
-ratings = ["explicit"]
+rating = "explicit"
 
 [sources.filters]                                                           # per source filters
 characters = { list = ["abc", "xyz"], inverted = false }                    # a filter contains two attributes
