@@ -8,8 +8,8 @@ import QuoteStr (quoteStr)
 import Test.Hspec (Spec, it, shouldBe)
 import Toml (Result (..), decode)
 
-source :: Text
-source =
+fullsource :: Text
+fullsource =
   [quoteStr|
   [[sources]]
   provider = "myprovider"
@@ -44,49 +44,49 @@ source =
 spec :: Spec
 spec = do
   it "parses exhaustive Source.toml" $
-    decode source
-      `shouldBe` ( Success [] $
-                    Sources
-                      { sources =
-                          [ ( Source
-                                { provider = "myprovider"
-                                , ids = ["12 kok", "13", "14"]
-                                , overrides =
-                                    Just
-                                      [ ( Override
-                                            { identifier = "kok"
-                                            , append = True
-                                            , artists = Nothing
-                                            , characters = Just ["kokomi"]
-                                            , copyrights = Just ["genshin_impact"]
-                                            , tags = Just ["jellyfish", "underwater"]
-                                            , ratings = Just ["explicit"]
-                                            }
-                                        )
-                                      ]
-                                , filters =
-                                    Just $
-                                      Filters
-                                        { fcharacters = Just Filter{list = ["abc", "xyz"], inverted = False}
-                                        , fcopyrights = Just Filter{list = ["arknights"], inverted = False}
-                                        , fartists = Just Filter{list = ["mourncolor", "elodias"], inverted = True}
-                                        , ftags = Just Filter{list = ["bird", "horse"], inverted = False}
-                                        , fids = Just Filter{list = ["11112"], inverted = False}
-                                        , fratings = Just Filter{list = ["g"], inverted = True}
-                                        }
-                                , previews =
-                                    Just $
-                                      Previews
-                                        { enabled = True
-                                        , pcharacters = Just Filter{list = ["abc", "xyz"], inverted = False}
-                                        , pcopyrights = Just Filter{list = ["arknights"], inverted = False}
-                                        , partists = Just Filter{list = ["mourncolor", "elodias"], inverted = True}
-                                        , ptags = Just Filter{list = ["bird", "horse"], inverted = False}
-                                        , pids = Just Filter{list = ["11112"], inverted = False}
-                                        , pratings = Just Filter{list = ["g"], inverted = True}
-                                        }
+    decode fullsource
+      `shouldBe` Success
+        []
+        Sources
+          { sources =
+              [ ( Source
+                    { provider = "myprovider"
+                    , ids = ["12 kok", "13", "14"]
+                    , overrides =
+                        Just
+                          [ ( Override
+                                { identifier = "kok"
+                                , append = True
+                                , artists = Nothing
+                                , characters = Just ["kokomi"]
+                                , copyrights = Just ["genshin_impact"]
+                                , tags = Just ["jellyfish", "underwater"]
+                                , ratings = Just ["explicit"]
                                 }
                             )
                           ]
-                      }
-                 )
+                    , filters =
+                        Just $
+                          Filters
+                            { fcharacters = Just Filter{list = ["abc", "xyz"], inverted = False}
+                            , fcopyrights = Just Filter{list = ["arknights"], inverted = False}
+                            , fartists = Just Filter{list = ["mourncolor", "elodias"], inverted = True}
+                            , ftags = Just Filter{list = ["bird", "horse"], inverted = False}
+                            , fids = Just Filter{list = ["11112"], inverted = False}
+                            , fratings = Just Filter{list = ["g"], inverted = True}
+                            }
+                    , previews =
+                        Just $
+                          Previews
+                            { enabled = True
+                            , pcharacters = Just Filter{list = ["abc", "xyz"], inverted = False}
+                            , pcopyrights = Just Filter{list = ["arknights"], inverted = False}
+                            , partists = Just Filter{list = ["mourncolor", "elodias"], inverted = True}
+                            , ptags = Just Filter{list = ["bird", "horse"], inverted = False}
+                            , pids = Just Filter{list = ["11112"], inverted = False}
+                            , pratings = Just Filter{list = ["g"], inverted = True}
+                            }
+                    }
+                )
+              ]
+          }
