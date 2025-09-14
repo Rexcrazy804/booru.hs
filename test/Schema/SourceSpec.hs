@@ -110,7 +110,27 @@ emptySourceParsed =
         ]
     }
 
+simpleFilter :: Text
+simpleFilter =
+  [quoteStr|
+  ids = { list = ["123"], inverted = false }
+  characters = { list = ["barbara"], inverted = true}
+  ratings = { list = ["e"], inverted = false }
+  |]
+
+simpleFilterParsed :: Filters
+simpleFilterParsed =
+  Filters
+    { fids = Just Filter{list = ["123"], inverted = False}
+    , fartists = Nothing
+    , fcharacters = Just Filter{list = ["barbara"], inverted = True}
+    , fcopyrights = Nothing
+    , ftags = Nothing
+    , fratings = Just Filter{list = ["e"], inverted = False}
+    }
+
 spec :: Spec
 spec = do
   it "parses exhaustive Source" $ decode fullSource `shouldBe` Success [] fullSourceParsed
   it "parses empty source" $ decode emptySource `shouldBe` Success [] emptySourceParsed
+  it "parses simple filter" $ decode simpleFilter `shouldBe` Success [] simpleFilterParsed
