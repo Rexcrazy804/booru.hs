@@ -7,6 +7,7 @@ module Booru.Schema.Sources (
   Source (..),
   Override (..),
   Filters (..),
+  Filter (..),
   Previews (..),
   Tags,
 )
