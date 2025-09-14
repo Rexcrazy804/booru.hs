@@ -21,7 +21,7 @@ newtype Sources = Sources {sources :: [Source]}
   deriving (Eq, Show, Generic)
   deriving (ToTable, ToValue, FromValue) via GenericTomlTable Sources
 
-type Tags = String
+type Tag = String
 
 data Source = Source
   { provider :: String
@@ -36,17 +36,17 @@ data Source = Source
 data Override = Override
   { identifier :: String
   , append :: Bool
-  , characters :: Maybe [Tags]
-  , copyrights :: Maybe [Tags]
-  , artists :: Maybe [Tags]
-  , tags :: Maybe [Tags]
-  , ratings :: Maybe [Tags]
+  , characters :: Maybe [Tag]
+  , copyrights :: Maybe [Tag]
+  , artists :: Maybe [Tag]
+  , tags :: Maybe [Tag]
+  , rating :: Maybe [Tag]
   }
   deriving (Eq, Show, Generic)
   deriving (ToTable, ToValue, FromValue) via GenericTomlTable Override
 
 data Filter = Filter
-  { list :: [Tags]
+  { list :: [Tag]
   , inverted :: Bool
   }
   deriving (Eq, Show, Generic)
