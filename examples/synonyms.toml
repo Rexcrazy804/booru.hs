@@ -34,17 +34,12 @@
 # ||- ZZZ1.png
 # ||- ZZZ2.png
 
-[synonyms.characters]
-"sangonomiya_kokomi" = ["kokomi" "sangonomiya kokomi" "sangonomiya_kokomi_(genshin_impact)"]
-
-[synonyms.tags]
-"girl" = ["1girl" "female"]
-
-[synonyms.copyrights]
-"genshin_impact" = ["genshin impact", "yuanshen"]
-
-[synonyms.artists]
-"elodias" = ["little ello"]
-
-[synonyms.ratings]
-"e" = ["explicit", "n$fw"]
+[synonyms]
+characters = [
+  {main = "sangonomiya_kokomi", synonyms = ["kokomi", "sangonomiya kokomi", "sangonomiya_kokomi_(genshin_impact)"]},
+  {main = "yoimiya", synonyms = ["yoi", "fireworks_girl"]}
+]
+tags = [ {main = "girl", synonyms = ["1girl", "female"]} ]
+copyrights = [{main = "genshin_impact", synonyms = ["genshin impact", "yuanshen"]}]
+artists = [{main = "elodias", synonyms = ["little ello"]}]
+ratings = [{main = "e", synonyms = ["explicit", "n$fw"]}]
