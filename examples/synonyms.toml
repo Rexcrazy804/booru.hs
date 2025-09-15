@@ -22,7 +22,8 @@
 # they were separated into different folders.
 
 # If we configured our synonyms to say
-# character [{main = "kokomi", synonyms = ["sangonomiya_kokomi", "kokomi sangonomiya"]]
+# [character] 
+# kokomi = ["sangonomiya_kokomi", "kokomi sangonomiya"]
 # we will then have a cleaner stucutre as follows
 
 # characters/
@@ -34,12 +35,18 @@
 # ||- ZZZ1.png
 # ||- ZZZ2.png
 
-[synonyms]
-characters = [
-  {main = "sangonomiya_kokomi", synonyms = ["kokomi", "sangonomiya kokomi", "sangonomiya_kokomi_(genshin_impact)"]},
-  {main = "yoimiya", synonyms = ["yoi", "fireworks_girl"]}
-]
-tags = [ {main = "girl", synonyms = ["1girl", "female"]} ]
-copyrights = [{main = "genshin_impact", synonyms = ["genshin impact", "yuanshen"]}]
-artists = [{main = "elodias", synonyms = ["little ello"]}]
-ratings = [{main = "e", synonyms = ["explicit", "n$fw"]}]
+[characters]
+sangonomiya_kokomi = ["kokomi", "sangonomiya kokomi", "sangonomiya_kokomi_(genshin_impact)"]
+yoimiya = ["yoi", "fireworks_girl"]
+
+[tags]
+girl = ["1girl", "female"]
+
+[copyrights]
+genshin_impact = ["genshin impact", "yuanshen"]
+
+[artists]
+elodias = ["little ello"]
+
+[ratings]
+e = ["explicit", "n$fw"]
