@@ -1,6 +1,6 @@
 # Raw Revision history for booru-hs
 
-## 0.0.0.1 -- YYYY-mm-dd
+## 0.0.0.1 -- 2025-09-13
 
 Let there be light
 
