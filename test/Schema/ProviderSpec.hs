@@ -101,8 +101,18 @@ minimalProviderParsed =
         ]
     }
 
+multiProvider :: Text
+multiProvider = minimalProvider `mappend` partialProvider
+
+multiProviderParsed :: Providers
+multiProviderParsed =
+  Providers
+    { providers = providers minimalProviderParsed ++ providers partialProviderParsed
+    }
+
 spec :: Spec
 spec = do
   it "parses full provider" $ decode fullProvider `shouldBe` Success [] fullProviderParsed
   it "parses partial provider" $ decode partialProvider `shouldBe` Success [] partialProviderParsed
   it "parses minimal provider" $ decode minimalProvider `shouldBe` Success [] minimalProviderParsed
+  it "parses multi providers" $ decode multiProvider `shouldBe` Success [] multiProviderParsed
