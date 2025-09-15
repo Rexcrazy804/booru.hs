@@ -7,7 +7,7 @@ module Booru.Schema.Images (
 )
 where
 
-import Booru.Schema.Sources (Identifier, Tag)
+import Booru.Schema.Sources (Tag)
 import GHC.Generics (Generic)
 import Toml.Schema
 
@@ -15,7 +15,7 @@ newtype Images = Images {images :: [Image]}
 
 data Image = Image
   { resolvedName :: String
-  , id :: Identifier
+  , url :: String
   , artists :: [Tag]
   , characters :: [Tag]
   , copyrights :: [Tag]

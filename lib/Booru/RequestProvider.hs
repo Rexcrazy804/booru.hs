@@ -67,7 +67,7 @@ extractImage
     Just
       Image
         { resolvedName = nam ++ show (hash url')
-        , id = Id url'
+        , url = url'
         , artists = getDefault art
         , characters = getDefault cha
         , copyrights = getDefault cop
@@ -94,7 +94,7 @@ extractImage
     Just
       Image
         { resolvedName = nam ++ show (hash url')
-        , id = Id url'
+        , url = url'
         , artists = getAttribute art
         , characters = getAttribute cha
         , copyrights = getAttribute cop
