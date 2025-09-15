@@ -13,18 +13,6 @@ fullProvider :: Text
 fullProvider =
   [quoteStr|
   [[providers]]
-  name = "safebooru"
-  url = "https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&id=%%ID%%"
-  file = "file_url"
-  preview_file = "sample_url"
-  tags = "tags"
-  rating = "$general"
-
-  [[providers]]
-  name = "urls"
-  url = "%%ID%%"
-
-  [[providers]]
   name = "danbooru"
   url = "https://danbooru.donmai.us/posts/%%ID%%.json"
   file = "file_url"
@@ -41,30 +29,6 @@ fullProviderParsed =
   Providers
     { providers =
         [ ( Provider
-              { name = "safebooru"
-              , url = "https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&id=%%ID%%"
-              , file = Just $ Attr ["file_url"]
-              , preview_file = Just $ Attr ["sample_url"]
-              , tags = Just $ Attr ["tags"]
-              , artists = Nothing
-              , characters = Nothing
-              , copyrights = Nothing
-              , rating = Just $ Default "general"
-              }
-          )
-        , ( Provider
-              { name = "urls"
-              , url = "%%ID%%"
-              , file = Nothing
-              , preview_file = Nothing
-              , tags = Nothing
-              , artists = Nothing
-              , characters = Nothing
-              , copyrights = Nothing
-              , rating = Nothing
-              }
-          )
-        , ( Provider
               { name = "danbooru"
               , url = "https://danbooru.donmai.us/posts/%%ID%%.json"
               , file = Just $ Attr ["file_url"]
@@ -79,6 +43,66 @@ fullProviderParsed =
         ]
     }
 
+partialProvider :: Text
+partialProvider =
+  [quoteStr|
+  [[providers]]
+  name = "safebooru"
+  url = "https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&id=%%ID%%"
+  file = "file_url"
+  preview_file = "sample_url"
+  tags = "tags"
+  rating = "$general"
+  |]
+
+partialProviderParsed :: Providers
+partialProviderParsed =
+  Providers
+    { providers =
+        [ ( Provider
+              { name = "safebooru"
+              , url = "https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&id=%%ID%%"
+              , file = Just $ Attr ["file_url"]
+              , preview_file = Just $ Attr ["sample_url"]
+              , tags = Just $ Attr ["tags"]
+              , artists = Nothing
+              , characters = Nothing
+              , copyrights = Nothing
+              , rating = Just $ Default "general"
+              }
+          )
+        ]
+    }
+
+minimalProvider :: Text
+minimalProvider =
+  [quoteStr|
+  [[providers]]
+  name = "urls"
+  url = "%%ID%%"
+  |]
+
+minimalProviderParsed :: Providers
+minimalProviderParsed =
+  Providers
+    { providers =
+        [ ( Provider
+              { name = "urls"
+              , url = "%%ID%%"
+              , file = Nothing
+              , preview_file = Nothing
+              , tags = Nothing
+              , artists = Nothing
+              , characters = Nothing
+              , copyrights = Nothing
+              , rating = Nothing
+              }
+          )
+        ]
+    }
+
 spec :: Spec
 spec = do
-  it "parses exhaustive providers" $ decode fullProvider `shouldBe` Success [] fullProviderParsed
+  it "parses full provider" $ decode fullProvider `shouldBe` Success [] fullProviderParsed
+  it "parses partial provider" $ decode partialProvider `shouldBe` Success [] partialProviderParsed
+  it "parses minimal provider" $ decode minimalProvider `shouldBe` Success [] minimalProviderParsed
