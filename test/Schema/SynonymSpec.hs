@@ -45,6 +45,23 @@ fullSynonymsParsed =
     , tags = Just $ fromList [("girl", ["1girl", "female"])]
     }
 
+partialSynonyms :: Text
+partialSynonyms =
+  [quoteStr|
+  [characters]
+  kokomi = ["my", "beloved"]
+  |]
+partialSynonymsParsed :: Synonyms
+partialSynonymsParsed =
+  Synonyms
+    { characters = Just $ fromList [("kokomi", ["my", "beloved"])]
+    , artists = Nothing
+    , copyrights = Nothing
+    , ratings = Nothing
+    , tags = Nothing
+    }
+
 spec :: Spec
 spec = do
   it "parses exhaustive synonyms" $ decode fullSynonyms `shouldBe` Success [] fullSynonymsParsed
+  it "parses partial synonyms" $ decode partialSynonyms `shouldBe` Success [] partialSynonymsParsed
