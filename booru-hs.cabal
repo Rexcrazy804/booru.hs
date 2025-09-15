@@ -1,6 +1,6 @@
 cabal-version:   3.0
 name:            booru-hs
-version:         0.0.0.1
+version:         0.0.1.0
 synopsis:        Extensible Auto-categorizing image library
 
 -- description:
