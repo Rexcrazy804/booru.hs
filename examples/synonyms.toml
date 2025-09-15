@@ -22,7 +22,7 @@
 # they were separated into different folders.
 
 # If we configured our synonyms to say
-# kokomi = ["sangonomiya_kokomi" "kokomi sangonomiya"]
+# character [{main = "kokomi", synonyms = ["sangonomiya_kokomi", "kokomi sangonomiya"]]
 # we will then have a cleaner stucutre as follows
 
 # characters/
