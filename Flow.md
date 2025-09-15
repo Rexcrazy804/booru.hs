@@ -1,0 +1,50 @@
+# Flow of controll
+```
+parse configuration
+
+identify missing files
+| reduces the parsed information to simply include only files
+| that are not presently in the database. NOTE 1
+
+  get json Info for missing files
+  | essentially we retreive information about the file to download
+  | we would store this info in the DB if we plan on using sqlite or similar
+  | for 'urls' provider and the like this step is skipped
+
+  create image strucutre containing all information
+  | Image {
+  |   dbname "<qualified representation>",
+  |   artists,
+  |   characters,
+  |   copyrights,
+  |   tags,
+  |   rating,
+  | }
+  | Of course this step has to account for synonyms,
+  | as well as defaults set by the provider
+
+  store image structure information into db/info/<qualified name>.toml
+  | again, this step may not be required if I decide to use a proper
+  | db to inser this information into
+
+  download images into central folder
+  | with the current proposal the db is a folder
+  | where all images are dumped
+
+| At this point, we should have a list containing information about available and missing files combined
+
+fold information into structured set
+| the bread and butter of booru flake
+| at the end of this step we should have structure like so
+| (<attribute>, (<attribute_value>, [Image]))
+| where attribute is character, copyright, artist, (optional) provider, (optional) tag
+
+leverage the above structure to create symlinks at DEST directory
+```
+
+## NOTE 1
+the database I am thinking of at the moment is simply a folder containing
+`provider`-(hash of `id`).
+
+##  NOTE 2
+add a gc step to remove unused files and data from the db folder
