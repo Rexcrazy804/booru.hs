@@ -26,10 +26,12 @@ library
   exposed-modules:
     Booru.Schema.Providers
     Booru.Schema.Sources
+    Booru.Schema.Synonyms
 
   default-extensions: QuasiQuotes
   build-depends:
     , base         ^>=4.19.2.0
+    , containers   ^>=0.6.8
     , text         ^>=2.1.1
     , toml-parser  ^>=2.0.1.2
 
@@ -59,6 +61,7 @@ test-suite booru-hs-test
   build-depends:
     , base              ^>=4.19.2.0
     , booru-hs
+    , containers        ^>=0.6.8
     , hspec             ^>=2.11.12
     , template-haskell  ^>=2.21.0.0
     , text              ^>=2.1.1
@@ -68,6 +71,7 @@ test-suite booru-hs-test
     QuoteStr
     Schema.ProviderSpec
     Schema.SourceSpec
+    Schema.SynonymSpec
     SpecHook
 
   build-tool-depends: hspec-discover:hspec-discover ^>=2.11.12
