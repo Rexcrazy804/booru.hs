@@ -1,6 +1,9 @@
 # Flow of controll
 ```
 parse configuration
+| infer providers
+| infer synonyms
+| infer sources
 
 identify missing files
 | reduces the parsed information to simply include only files
@@ -48,3 +51,8 @@ the database I am thinking of at the moment is simply a folder containing
 
 ##  NOTE 2
 add a gc step to remove unused files and data from the db folder
+
+## Note 3
+add option to force update information for a specified source
+uhh ideally you don't wanna do this, specially if you've amassed a large collection
+but yeah this must be provided as an option
