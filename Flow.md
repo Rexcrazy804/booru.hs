@@ -23,8 +23,11 @@ identify missing files
   |   tags,
   |   rating,
   | }
-  | Of course this step has to account for synonyms,
-  | as well as defaults set by the provider
+  | information here is based off of provider spec
+
+  pass image structure through Overrides
+
+  pass image structure throught Synonyms
 
   store image structure information into db/info/<qualified name>.toml
   | again, this step may not be required if I decide to use a proper
