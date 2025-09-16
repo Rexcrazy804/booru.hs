@@ -38,6 +38,31 @@ booruImg =
     , tags = ["1girl", "blush", "bow-shaped_hair", "crying", "crying_with_eyes_open", "gradient_hair", "multicolored_hair", "pink_hair", "purple_eyes", "simple_background", "tears", "trembling"]
     }
 
+safeBooruObject :: Maybe Object
+safeBooruObject =
+  toObject
+    [aesonQQ|
+    [{"preview_url":"https:\/\/safebooru.org\/thumbnails\/539\/thumbnail_6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg","sample_url":"https:\/\/safebooru.org\/samples\/539\/sample_6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg","file_url":"https:\/\/safebooru.org\/images\/539\/6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg","directory":539,"hash":"563c6fbe5761ac4ba720ae0da9a15b8a","width":2160,"height":1215,"id":6077620,"image":"6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg","change":1757694622,"owner":"danbooru","parent_id":0,"rating":"general","sample":true,"sample_height":478,"sample_width":850,"score":null,"tags":"6+girls :d animal_ears animal_hairband bird blonde_hair blue_eyes brown_hair cane cat_ears chicken chocolate_chip_cookie closed_eyes clumsy_nun_(diva) cookie diva_(hyxpk) duck english_commentary fake_animal_ears fake_beak food froggy_nun_(diva) grey_hair hedge hedgehog highres holding holding_jar jar little_nuns_(diva) multiple_girls nun old old_woman shy_nun_(diva) smile spicy_nun_(diva) star_nun_(diva) star_ornament traditional_nun triangle_mouth yellow_eyes","source":"https:\/\/www.threads.com\/@diva_hyxpk\/post\/DOghRhxEgeM","status":"active","has_notes":false,"comment_count":0}]
+    |]
+
+safeBooruReqId :: Identifier
+safeBooruReqId = Id "6077620"
+
+safeBooruImg :: Image
+safeBooruImg =
+  Image
+    { resolvedName = "safebooru-4101269329609855106"
+    , provider = "safebooru"
+    , id = safeBooruReqId
+    , file = "https://safebooru.org/images/539/6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg"
+    , preview_file = "https://safebooru.org/samples/539/sample_6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg"
+    , artists = []
+    , characters = []
+    , copyrights = []
+    , rating = "general"
+    , tags = ["6+girls", ":d", "animal_ears", "animal_hairband", "bird", "blonde_hair", "blue_eyes", "brown_hair", "cane", "cat_ears", "chicken", "chocolate_chip_cookie", "closed_eyes", "clumsy_nun_(diva)", "cookie", "diva_(hyxpk)", "duck", "english_commentary", "fake_animal_ears", "fake_beak", "food", "froggy_nun_(diva)", "grey_hair", "hedge", "hedgehog", "highres", "holding", "holding_jar", "jar", "little_nuns_(diva)", "multiple_girls", "nun", "old", "old_woman", "shy_nun_(diva)", "smile", "spicy_nun_(diva)", "star_nun_(diva)", "star_ornament", "traditional_nun", "triangle_mouth", "yellow_eyes"]
+    }
+
 allowOnline :: IO Bool
 allowOnline = do
   skip <- lookupEnv "ENABLE_ONLINE_TESTS"
@@ -45,8 +70,10 @@ allowOnline = do
 
 spec :: Spec
 spec = do
-  it "extracts image from static object" $ extractImage danbooruDonmaiUs booruReqId booruObject `shouldBe` Just booruImg
+  it "extracts image from danbooru object" $ extractImage danbooruDonmaiUs booruReqId booruObject `shouldBe` Just booruImg
+  it "extracts image from safebooru object" $ extractImage safebooruOrg safeBooruReqId safeBooruObject `shouldBe` Just safeBooruImg
 
   online <- runIO allowOnline
   describe "Online" $ unless online $ do
     it "extracts image from remote object" $ resolveProvider danbooruDonmaiUs booruReqId >>= (`shouldBe` Just booruImg)
+    it "extracts image from safebooru object" $ resolveProvider safebooruOrg safeBooruReqId >>= (`shouldBe` Just safeBooruImg)
