@@ -77,6 +77,7 @@ test-suite booru-hs-test
     , toml-parser       ^>=2.0.1.2
 
   other-modules:
+    Builtin.ProviderSpec
     QuoteStr
     RequestSpec
     Schema.ImageSpec
