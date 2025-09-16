@@ -31,6 +31,15 @@ safebooruOrgToml =
   tags = "tags"
   url = "https://safebooru.org/index.php?page=dapi&s=post&q=index&json=1&id=%%ID%%"|]
 
+zerochanNetToml :: String
+zerochanNetToml =
+  [quoteStr|
+  file = "full"
+  name = "zerochan"
+  preview_file = "small"
+  tags = "tags"
+  url = "https://www.zerochan.net/%%ID%%?json"|]
+
 specialUrlsToml :: String
 specialUrlsToml =
   [quoteStr|
@@ -41,4 +50,5 @@ spec :: Spec
 spec = do
   it "verifies danbooruDonmaiUs integrity" $ show (encode danbooruDonmaiUs) `shouldBe` danbooruDonmaiUsToml
   it "verifies safebooruOrg integrity" $ show (encode safebooruOrg) `shouldBe` safebooruOrgToml
+  it "verifies zerochanNet integrity" $ show (encode zerochanNet) `shouldBe` zerochanNetToml
   it "verifies specialUrls integrity" $ show (encode specialUrls) `shouldBe` specialUrlsToml
