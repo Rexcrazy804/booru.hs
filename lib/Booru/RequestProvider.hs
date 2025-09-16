@@ -104,7 +104,7 @@ extractImage
             _ -> []
         }
    where
-    getAttribute (Just (Default x)) = [x]
+    getAttribute (Just (Default x)) = wordsBy x (== ' ')
     -- currently we only take the first attribute
     -- TODO figure out a way to extend this
     getAttribute (Just (Attr (x : _))) = words $ fromMaybe [] (getAttribute' x)
