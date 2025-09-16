@@ -18,7 +18,7 @@ import Data.Maybe
 import Data.String (fromString)
 import Data.Text (pack, replace, unpack)
 import Data.Vector ((!?))
-import Helpers (wordsBy)
+import Helpers (extractId, wordsBy)
 import Network.HTTP.Client.Conduit (Response)
 import Network.HTTP.Simple (getResponseBody, httpJSON, parseRequest, setRequestHeader)
 
@@ -29,12 +29,9 @@ getProviderMap Providers{providers = prs} = fromList $ foldl mkProviderFns [] pr
 
 resolveProvider :: Provider -> Identifier -> IO (Maybe Image)
 resolveProvider prvdr@Provider{url = u, file = Just _} id' = do
-  let url' = replace (pack "%%ID%%") (pack $ getId id') (pack u)
+  let url' = replace (pack "%%ID%%") (pack $ extractId id') (pack u)
   raw <- requestJson (unpack url')
   return $ extractImage prvdr raw
- where
-  getId (Id x) = x
-  getId WithNick{id = x} = x
 resolveProvider prvdr _ = return $ extractImage prvdr Nothing
 
 requestJson :: String -> IO (Maybe Object)
