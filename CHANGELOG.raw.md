@@ -1,10 +1,7 @@
 # Raw Revision history for booru-hs
 
-## 0.0.0.1 -- 2025-09-13
-
-Let there be light
-
 ## 0.0.1.0 -- 2025-09-15
+
 - feat(lib,tests): addition of structure and tests for synonyms
 - fix(spec): simplified synonyms
 - feat(lib,tests): extended Sources to support nickname in id fields
@@ -46,3 +43,7 @@ Let there be light
 - feat(spec): init synonyms spec
 - feat: add early nix infra
 - feat(spec): inclusion of nicknames for id fields + relocated sources.sourcename.meta
+
+## 0.0.0.1 -- 2025-09-13
+
+Let there be light
