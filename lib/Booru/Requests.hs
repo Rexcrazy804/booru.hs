@@ -25,6 +25,7 @@ import Data.Vector (toList, (!?))
 import Helpers (extractId, wordsBy)
 import Network.HTTP.Client.Conduit (Response)
 import Network.HTTP.Simple (getResponseBody, httpJSON, parseRequest, setRequestHeader)
+import System.Environment (lookupEnv)
 
 getProviderMap :: Providers -> Map ProviderName (Identifier -> IO (Maybe Image))
 getProviderMap Providers{providers = prs} = fromList $ foldl mkProviderFns [] prs
@@ -57,7 +58,9 @@ resolveProvider prvdr id' = return $ extractImage prvdr id' Nothing
 requestJson :: String -> IO (Maybe Object)
 requestJson url' = do
   request' <- parseRequest url'
-  let request = setRequestHeader "User-Agent" ["curl/8.14.1"] request'
+  username <- lookupEnv "USER"
+  let header = "Booru.hs - " ++ fromMaybe "unkownBooruUser" username
+  let request = setRequestHeader "User-Agent" [fromString header] request'
   response <- (httpJSON request :: IO (Response (Maybe Value)))
   return $ getResponseBody response >>= toObject
 
