@@ -1,5 +1,36 @@
 # Raw Revision history for booru-hs
 
+## 0.0.2.0 -- 2025-09-17
+
+- feat(tests): added zerochanNet test for requests
+- feat(lib): dynamic User-Agent header complying with zerochan
+- feat(tests): included zerochanNet to builtin provider integrity test
+- feat(lib): added zerochan provider
+- feat(lib): added ability to parse array of strings for tags
+- feat(tests): extend request tests to include safebooru reqs
+- feat(tests): integrity tests for builtin providers
+- feat(lib): addition of builtin providers
+- feat(workflows): enable online tests
+- fix(nix): undo disabling of tests in nix package
+- feat(tests): parition online tests
+- fix(nix): bump static nix package
+- fix(lib): downgrade hashable version
+- feat(tests): REMOTE OBJECT PARSING!!!
+- fix(lib+test): correctly hash the fileurl for providers with file attr
+- feat(lib): initial test for Requests
+- feat(lib): created and exported toObject function
+- feat(lib): export extractImage and resolveProvider functions
+- fix(lib): update RequestProvider's Image struct and logical fixes
+- feat(tests): added tests for Image structure
+- feat(lib): extended Images to store file(url), preview, and provider information
+- fix(lib): correctly derrive generics for Images type
+- feat(lib): addition of extractId helper
+- fix(lib): correctly use words by for getAttribute helper
+- fix: removed non dependencies for executable
+- fix(lib): altered Image to hold url instead of id
+- feat(lib): addition of Request Provider
+- feat(lib): addition of Image schema
+
 ## 0.0.1.0 -- 2025-09-15
 
 - feat(lib,tests): addition of structure and tests for synonyms

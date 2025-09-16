@@ -1,5 +1,14 @@
 # Revision history for booru-hs
 
+## 0.0.2.0 -- 2025-09-17
+- Addition of networking infrastrucutre
+- Addition of builtin providers
+- Initialization of Image strucutre
+- Addition of Dynamic User-Agent header
+
+Last Revision
+- [afe8666](https://github.com/Rexcrazy804/booru.hs/tree/a54a8e6cf77b2fe2aeb8c559c5c1571840f6d056) docs: correctly order changelog in decending order of recency
+
 ## 0.0.1.0 -- 2025-09-15
 
 Initial Structures for the following
