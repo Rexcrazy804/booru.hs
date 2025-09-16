@@ -12,6 +12,8 @@ import GHC.Generics (Generic)
 import Toml.Schema
 
 newtype Images = Images {images :: [Image]}
+  deriving (Eq, Show, Generic)
+  deriving (ToTable, ToValue, FromValue) via GenericTomlTable Images
 
 data Image = Image
   { resolvedName :: String
