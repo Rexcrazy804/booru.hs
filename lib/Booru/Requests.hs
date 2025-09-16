@@ -6,6 +6,7 @@ module Booru.Requests (
   requestJson,
   extractImage,
   resolveProvider,
+  toObject,
 ) where
 
 import Booru.Schema.Images (Image (..))
@@ -51,26 +52,24 @@ resolveProvider prvdr@Provider{url = u, file = Just _} id' = do
   return $ extractImage prvdr id' raw
 resolveProvider prvdr id' = return $ extractImage prvdr id' Nothing
 
-{- |
-# Accepts a url, and potentially returns a json object
-If the response contains an object, the object is returned.
-however, in the event where a non empty array of objects is returned,
-the function returns the frist object in the array
--}
+-- | Accepts a url, and potentially returns a json object
 requestJson :: String -> IO (Maybe Object)
 requestJson url' = do
   request' <- parseRequest url'
   let request = setRequestHeader "User-Agent" ["curl/8.14.1"] request'
   response <- (httpJSON request :: IO (Response (Maybe Value)))
-  -- handle dumb api's that give you a list of objects
-  -- with the first object containing all the data
-  -- I am looking at you safeboooru
-  return $ case getResponseBody response of
-    Just (Atyp.Object x) -> return x
-    Just (Atyp.Array x) -> case x !? 0 of
-      Just (Atyp.Object x') -> return x'
-      _ -> Nothing
-    _ -> Nothing
+  return $ getResponseBody response >>= toObject
+
+{- |
+# Converts any Value to Maybe Object
+If the response contains an object, the object is returned.
+however, in the event where a non empty array of objects is returned,
+the function returns the first object in the array
+-}
+toObject :: Value -> Maybe Object
+toObject (Atyp.Object x) = Just x
+toObject (Atyp.Array x) = x !? 0 >>= toObject
+toObject _ = Nothing
 
 {- |
 # Constructs the final `Image` representation
