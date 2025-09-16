@@ -123,7 +123,6 @@ extractImage
 extractImage
   Provider
     { name = nam
-    , url = url'
     , file = fl
     , preview_file = pf
     , artists = art
@@ -134,21 +133,22 @@ extractImage
     }
   idnfr
   (Just obj) =
-    Just
-      Image
-        { resolvedName = nam ++ show (hash url')
-        , provider = nam
-        , id = idnfr
-        , file = unwords $ getAttribute fl
-        , preview_file = unwords $ getAttribute pf
-        , artists = getAttribute art
-        , characters = getAttribute cha
-        , copyrights = getAttribute cop
-        , tags = getAttribute tag
-        , rating = case getAttribute rat of
-            x : _ -> x
-            _ -> []
-        }
+    let file' = unwords $ getAttribute fl
+     in Just
+          Image
+            { resolvedName = nam ++ show (hash file')
+            , provider = nam
+            , id = idnfr
+            , file = file'
+            , preview_file = unwords $ getAttribute pf
+            , artists = getAttribute art
+            , characters = getAttribute cha
+            , copyrights = getAttribute cop
+            , tags = getAttribute tag
+            , rating = case getAttribute rat of
+                x : _ -> x
+                _ -> []
+            }
    where
     getAttribute (Just (Default x)) = wordsBy x (== ' ')
     -- currently we only take the first attribute

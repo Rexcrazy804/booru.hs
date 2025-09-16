@@ -10,7 +10,6 @@ import Booru.Schema.Sources (Identifier (..))
 import Data.Aeson (Object)
 import Data.Aeson.QQ (aesonQQ)
 import Test.Hspec (Spec, it, shouldBe)
-import Toml (Result (..), decode)
 
 booruObject :: Maybe Object
 booruObject =
@@ -39,7 +38,7 @@ requestIdentifier = WithNick{id = "9969513", nickname = "kokomi_chibbi"}
 resultImage :: Image
 resultImage =
   Image
-    { resolvedName = "danbooru-5261634959473372100"
+    { resolvedName = "danbooru-7822550126567983155"
     , provider = "danbooru"
     , id = requestIdentifier
     , file = "https://cdn.donmai.us/original/bd/6c/bd6cde0ec3b896251118d59b4d0e01b4.jpg"
@@ -53,4 +52,4 @@ resultImage =
 
 spec :: Spec
 spec = do
-  it "IT FUCKING WORKS!!!" $ extractImage danbooruProvider requestIdentifier booruObject `shouldBe` Just resultImage
+  it "extracts Image from static object" $ extractImage danbooruProvider requestIdentifier booruObject `shouldBe` Just resultImage
