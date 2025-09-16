@@ -119,7 +119,7 @@ extractImage
   Nothing =
     Just
       Image
-        { resolvedName = nam ++ show (hash file')
+        { resolvedName = nam ++ '|' : show (hash $ extractId idnfr)
         , provider = nam
         , id = idnfr
         , file = file'
@@ -150,7 +150,7 @@ extractImage
   (Just obj) =
     Just
       Image
-        { resolvedName = nam ++ show (hash file')
+        { resolvedName = nam ++ '|' : show (hash $ extractId idnfr)
         , provider = nam
         , id = idnfr
         , file = file'
