@@ -119,10 +119,10 @@ extractImage
   Nothing =
     Just
       Image
-        { resolvedName = nam ++ show (hash url')
+        { resolvedName = nam ++ show (hash file')
         , provider = nam
         , id = idnfr
-        , file = unpack $ replace (pack "%%ID%%") (pack $ extractId idnfr) (pack url')
+        , file = file'
         , preview_file = unwords $ getDefault pf
         , artists = getDefault art
         , characters = getDefault cha
@@ -131,6 +131,7 @@ extractImage
         , tags = getDefault tag
         }
    where
+    file' = unpack $ replace (pack "%%ID%%") (pack $ extractId idnfr) (pack url')
     getDefault (Just (Default x)) = wordsBy x (== ' ')
     getDefault (Just _) = []
     getDefault Nothing = []
