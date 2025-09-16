@@ -3,7 +3,7 @@
 
 module RequestSpec (spec) where
 
-import Booru.Requests (extractImage, toObject)
+import Booru.Requests (extractImage, resolveProvider, toObject)
 import Booru.Schema.Images (Image (..))
 import Booru.Schema.Providers (Attribute (..), Provider (..))
 import Booru.Schema.Sources (Identifier (..))
@@ -50,6 +50,25 @@ resultImage =
     , tags = ["1girl", "blush", "bow-shaped_hair", "crying", "crying_with_eyes_open", "gradient_hair", "multicolored_hair", "pink_hair", "purple_eyes", "simple_background", "tears", "trembling"]
     }
 
+remoteRequestIdentifier :: Identifier
+remoteRequestIdentifier = Id "9590836"
+
+remoteResultImage :: Image
+remoteResultImage =
+  Image
+    { resolvedName = "danbooru-6881072646420435259"
+    , provider = "danbooru"
+    , id = remoteRequestIdentifier
+    , file = "https://cdn.donmai.us/original/24/59/2459e4c38fa4737cb316d76b40e826ed.jpg"
+    , preview_file = "https://cdn.donmai.us/180x180/24/59/2459e4c38fa4737cb316d76b40e826ed.jpg"
+    , artists = ["ryuuki_(hydrangea)"]
+    , characters = ["sangonomiya_kokomi"]
+    , copyrights = ["genshin_impact"]
+    , rating = "s"
+    , tags = ["1girl", "air_bubble", "artist_name", "bare_shoulders", "breasts", "bubble", "cleavage", "gem", "gloves", "light_particles", "light_smile", "long_hair", "looking_at_viewer", "multicolored_eyes", "multicolored_hair", "pink_hair", "ribbon", "sandals", "solo", "thighhighs", "underwater", "white_gloves"]
+    }
+
 spec :: Spec
 spec = do
-  it "extracts Image from static object" $ extractImage danbooruProvider requestIdentifier booruObject `shouldBe` Just resultImage
+  it "extracts image from static object" $ extractImage danbooruProvider requestIdentifier booruObject `shouldBe` Just resultImage
+  it "extracts image from remote object" $ resolveProvider danbooruProvider remoteRequestIdentifier >>= (`shouldBe` Just remoteResultImage)
