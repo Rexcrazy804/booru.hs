@@ -31,8 +31,8 @@ resolveProvider :: Provider -> Identifier -> IO (Maybe Image)
 resolveProvider prvdr@Provider{url = u, file = Just _} id' = do
   let url' = replace (pack "%%ID%%") (pack $ extractId id') (pack u)
   raw <- requestJson (unpack url')
-  return $ extractImage prvdr raw
-resolveProvider prvdr _ = return $ extractImage prvdr Nothing
+  return $ extractImage prvdr id' raw
+resolveProvider prvdr id' = return $ extractImage prvdr id' Nothing
 
 requestJson :: String -> IO (Maybe Object)
 requestJson url' = do
@@ -50,27 +50,31 @@ requestJson url' = do
     _ -> Nothing
 
 extractImage :: Provider -> Maybe Object -> Maybe Image
+extractImage :: Provider -> Identifier -> Maybe Object -> Maybe Image
 extractImage
   Provider
     { name = nam
     , url = url'
+    , preview_file = pf
     , artists = art
     , characters = cha
     , copyrights = cop
     , rating = rat
     , tags = tag
     }
+  idnfr
   Nothing =
     Just
       Image
         { resolvedName = nam ++ show (hash url')
-        , url = url'
+        , provider = nam
+        , id = idnfr
+        , file = unpack $ replace (pack "%%ID%%") (pack $ extractId idnfr) (pack url')
+        , preview_file = unwords $ getDefault pf
         , artists = getDefault art
         , characters = getDefault cha
         , copyrights = getDefault cop
-        , rating = case getDefault rat of
-            x : _ -> x
-            _ -> []
+        , rating = unwords $ getDefault rat
         , tags = getDefault tag
         }
    where
@@ -81,17 +85,23 @@ extractImage
   Provider
     { name = nam
     , url = url'
+    , file = fl
+    , preview_file = pf
     , artists = art
     , characters = cha
     , copyrights = cop
     , rating = rat
     , tags = tag
     }
+  idnfr
   (Just obj) =
     Just
       Image
         { resolvedName = nam ++ show (hash url')
-        , url = url'
+        , provider = nam
+        , id = idnfr
+        , file = unwords $ getAttribute fl
+        , preview_file = unwords $ getAttribute pf
         , artists = getAttribute art
         , characters = getAttribute cha
         , copyrights = getAttribute cop
