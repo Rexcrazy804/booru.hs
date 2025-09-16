@@ -16,6 +16,12 @@ newtype Images = Images {images :: [Image]}
   deriving (Eq, Show, Generic)
   deriving (ToTable, ToValue, FromValue) via GenericTomlTable Images
 
+{-
+NOTE to self
+listend here you forgetfull dummy
+the resolved name is gonna be used for quickly correlating
+a provider, id pair to a cached provider-hashedID.toml file
+-}
 data Image = Image
   { resolvedName :: String
   , provider :: ProviderName
