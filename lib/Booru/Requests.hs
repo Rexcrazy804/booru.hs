@@ -144,23 +144,23 @@ extractImage
     }
   idnfr
   (Just obj) =
-    let file' = unwords $ getAttribute fl
-     in Just
-          Image
-            { resolvedName = nam ++ show (hash file')
-            , provider = nam
-            , id = idnfr
-            , file = file'
-            , preview_file = unwords $ getAttribute pf
-            , artists = getAttribute art
-            , characters = getAttribute cha
-            , copyrights = getAttribute cop
-            , tags = getAttribute tag
-            , rating = case getAttribute rat of
-                x : _ -> x
-                _ -> []
-            }
+    Just
+      Image
+        { resolvedName = nam ++ show (hash file')
+        , provider = nam
+        , id = idnfr
+        , file = file'
+        , preview_file = unwords $ getAttribute pf
+        , artists = getAttribute art
+        , characters = getAttribute cha
+        , copyrights = getAttribute cop
+        , tags = getAttribute tag
+        , rating = case getAttribute rat of
+            x : _ -> x
+            _ -> []
+        }
    where
+    file' = unwords $ getAttribute fl
     getAttribute (Just (Default x)) = wordsBy x (== ' ')
     -- currently we only take the first attribute
     -- TODO figure out a way to extend this
