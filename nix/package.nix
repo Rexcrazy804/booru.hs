@@ -7,6 +7,12 @@
   text,
   hspec,
   hspec-discover,
+  aeson,
+  containers,
+  hashable,
+  http-conduit,
+  vector,
+  aeson-qq,
 }: let
   inherit (lib.fileset) toSource unions fileFilter;
   hsfilter = fileFilter (file: lib.any file.hasExt ["hs"]);
@@ -26,14 +32,28 @@
 in
   mkDerivation {
     inherit src;
+    # some tests require internet connection
+    doCheck = false;
     pname = "booru-hs";
-    version = "0.0.0.1";
+    version = "0.0.1.0";
     isLibrary = true;
     isExecutable = true;
-    libraryHaskellDepends = [base text toml-parser];
+    libraryHaskellDepends = [
+      aeson
+      base
+      containers
+      hashable
+      http-conduit
+      text
+      toml-parser
+      vector
+    ];
     executableHaskellDepends = [base];
     testHaskellDepends = [
+      aeson
+      aeson-qq
       base
+      containers
       hspec
       template-haskell
       text
