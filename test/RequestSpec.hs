@@ -7,9 +7,11 @@ import Booru.Requests (extractImage, resolveProvider, toObject)
 import Booru.Schema.Images (Image (..))
 import Booru.Schema.Providers (Attribute (..), Provider (..))
 import Booru.Schema.Sources (Identifier (..))
+import Control.Monad (unless)
 import Data.Aeson (Object)
 import Data.Aeson.QQ (aesonQQ)
-import Test.Hspec (Spec, it, shouldBe)
+import System.Environment (lookupEnv)
+import Test.Hspec (Spec, describe, it, runIO, shouldBe)
 
 booruObject :: Maybe Object
 booruObject =
@@ -68,7 +70,15 @@ remoteResultImage =
     , tags = ["1girl", "air_bubble", "artist_name", "bare_shoulders", "breasts", "bubble", "cleavage", "gem", "gloves", "light_particles", "light_smile", "long_hair", "looking_at_viewer", "multicolored_eyes", "multicolored_hair", "pink_hair", "ribbon", "sandals", "solo", "thighhighs", "underwater", "white_gloves"]
     }
 
+allowOnline :: IO Bool
+allowOnline = do
+  skip <- lookupEnv "ENABLE_ONLINE_TESTS"
+  return (skip /= Just "1")
+
 spec :: Spec
 spec = do
   it "extracts image from static object" $ extractImage danbooruProvider requestIdentifier booruObject `shouldBe` Just resultImage
-  it "extracts image from remote object" $ resolveProvider danbooruProvider remoteRequestIdentifier >>= (`shouldBe` Just remoteResultImage)
+
+  online <- runIO allowOnline
+  describe "Online" $ unless online $ do
+    it "extracts image from remote object" $ resolveProvider danbooruProvider remoteRequestIdentifier >>= (`shouldBe` Just remoteResultImage)
