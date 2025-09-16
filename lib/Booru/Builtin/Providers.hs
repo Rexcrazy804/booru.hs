@@ -36,6 +36,24 @@ safebooruOrg =
     , rating = Just $ Default "general"
     }
 
+{- |
+Zero chan has a field called primary but it maybe of [Artist, Copyright, Character].
+Hence it is unreliable to be used for either feilds :/
+-}
+zerochanNet :: Provider
+zerochanNet =
+  Provider
+    { name = "zerochan"
+    , url = "https://www.zerochan.net/%%ID%%?json"
+    , file = Just $ Attr ["full"]
+    , preview_file = Just $ Attr ["small"]
+    , tags = Just $ Attr ["tags"]
+    , artists = Nothing
+    , characters = Nothing
+    , copyrights = Nothing
+    , rating = Nothing
+    }
+
 -- | Special builtin provider accepting an entire url as id
 specialUrls :: Provider
 specialUrls =
