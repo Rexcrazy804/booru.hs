@@ -101,6 +101,6 @@ spec = do
 
   online <- runIO allowOnline
   describe "Online" $ unless online $ do
-    it "extracts image from remote object" $ resolveProvider danbooruDonmaiUs booruReqId >>= (`shouldBe` Just booruImg)
-    it "extracts image from safebooru object" $ resolveProvider safebooruOrg safeBooruReqId >>= (`shouldBe` Just safeBooruImg)
-    it "extracts image from zerochan object" $ resolveProvider zerochanNet zeroReqId >>= (`shouldBe` Just zeroImg)
+    it "extracts image from danbooru api" $ resolveProvider danbooruDonmaiUs booruReqId >>= (`shouldBe` Just booruImg)
+    it "extracts image from safebooru api" $ resolveProvider safebooruOrg safeBooruReqId >>= (`shouldBe` Just safeBooruImg)
+    it "extracts image from zerochan api" $ resolveProvider zerochanNet zeroReqId >>= (`shouldBe` Just zeroImg)
