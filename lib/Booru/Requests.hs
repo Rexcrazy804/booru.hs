@@ -158,9 +158,7 @@ extractImage
         , characters = getAttribute cha
         , copyrights = getAttribute cop
         , tags = getAttribute tag
-        , rating = case getAttribute rat of
-            x : _ -> x
-            _ -> []
+        , rating = unwords $ getAttribute rat
         }
    where
     file' = unwords $ getAttribute fl
