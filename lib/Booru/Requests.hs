@@ -7,6 +7,7 @@ module Booru.Requests (
   extractImage,
   resolveProvider,
   toObject,
+  toArray,
 ) where
 
 import Booru.Schema.Images (Image (..))
@@ -20,7 +21,7 @@ import Data.Map (Map, fromList)
 import Data.Maybe
 import Data.String (fromString)
 import Data.Text (pack, replace, unpack)
-import Data.Vector ((!?))
+import Data.Vector (toList, (!?))
 import Helpers (extractId, wordsBy)
 import Network.HTTP.Client.Conduit (Response)
 import Network.HTTP.Simple (getResponseBody, httpJSON, parseRequest, setRequestHeader)
@@ -70,6 +71,16 @@ toObject :: Value -> Maybe Object
 toObject (Atyp.Object x) = Just x
 toObject (Atyp.Array x) = x !? 0 >>= toObject
 toObject _ = Nothing
+
+toArray :: Value -> Maybe [String]
+toArray (Atyp.String x) = Just $ words (unpack x)
+toArray (Atyp.Array x)
+  | xt <- toList x = Just $ foldl getStr [] xt
+ where
+  getStr :: [String] -> Value -> [String]
+  getStr acc (Atyp.String str) = unpack str : acc
+  getStr acc _ = acc
+toArray _ = Nothing
 
 {- |
 # Constructs the final `Image` representation
@@ -153,8 +164,8 @@ extractImage
     getAttribute (Just (Default x)) = wordsBy x (== ' ')
     -- currently we only take the first attribute
     -- TODO figure out a way to extend this
-    getAttribute (Just (Attr (x : _))) = words $ fromMaybe [] (getAttribute' x)
+    getAttribute (Just (Attr (x : _))) = fromMaybe [] (getAttribute' x)
     getAttribute _ = []
 
-    getAttribute' :: String -> Maybe String
-    getAttribute' x = parseMaybe (\ob -> ob .: fromString x) obj
+    getAttribute' :: String -> Maybe [String]
+    getAttribute' x = parseMaybe (\ob -> ob .: fromString x) obj >>= toArray
