@@ -33,7 +33,6 @@ in
   mkDerivation {
     inherit src;
     # some tests require internet connection
-    doCheck = false;
     pname = "booru-hs";
     version = "0.0.1.0";
     isLibrary = true;
