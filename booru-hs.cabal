@@ -24,6 +24,7 @@ library
   import:             warnings
   other-modules:      Helpers
   exposed-modules:
+    Booru.Builtin.Providers
     Booru.Requests
     Booru.Schema.Images
     Booru.Schema.Providers
