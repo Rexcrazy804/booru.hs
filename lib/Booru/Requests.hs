@@ -163,10 +163,10 @@ extractImage
    where
     file' = unwords $ getAttribute fl
     getAttribute (Just (Default x)) = wordsBy x (== ' ')
-    -- currently we only take the first attribute
-    -- TODO figure out a way to extend this
     getAttribute (Just (Attr (x : _))) = fromMaybe [] (getAttribute' x)
     getAttribute _ = []
 
+    -- currently we only take the first attribute
+    -- TODO figure out a way to extend this
     getAttribute' :: String -> Maybe [String]
     getAttribute' x = parseMaybe (\ob -> ob .: fromString x) obj >>= toArray
