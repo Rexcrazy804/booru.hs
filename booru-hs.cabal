@@ -78,6 +78,7 @@ test-suite booru-hs-test
     Schema.ProviderSpec
     Schema.SourceSpec
     Schema.SynonymSpec
+    Schema.ImageSpec
     SpecHook
 
   build-tool-depends: hspec-discover:hspec-discover ^>=2.11.12
