@@ -63,6 +63,31 @@ safeBooruImg =
     , tags = ["6+girls", ":d", "animal_ears", "animal_hairband", "bird", "blonde_hair", "blue_eyes", "brown_hair", "cane", "cat_ears", "chicken", "chocolate_chip_cookie", "closed_eyes", "clumsy_nun_(diva)", "cookie", "diva_(hyxpk)", "duck", "english_commentary", "fake_animal_ears", "fake_beak", "food", "froggy_nun_(diva)", "grey_hair", "hedge", "hedgehog", "highres", "holding", "holding_jar", "jar", "little_nuns_(diva)", "multiple_girls", "nun", "old", "old_woman", "shy_nun_(diva)", "smile", "spicy_nun_(diva)", "star_nun_(diva)", "star_ornament", "traditional_nun", "triangle_mouth", "yellow_eyes"]
     }
 
+zeroObject :: Maybe Object
+zeroObject =
+  toObject
+    [aesonQQ|
+    { "id": 4585899, "small": "https://s1.zerochan.net/75/49/17/4585899.jpg", "medium": "https://s3.zerochan.net/240/49/17/4585899.jpg", "large": "https://s1.zerochan.net/Honkai.Star.Rail.600.4585899.jpg", "full": "https://static.zerochan.net/Honkai.Star.Rail.full.4585899.jpg", "width": 1092, "height": 1336, "size": 986112, "hash": "72221567cd1eb33ff2600ebdd5dd2c27", "source": "https://www.pixiv.net/en/artworks/135136150", "primary": "Honkai Star Rail", "tags": [ "Female", "Fanart", "Long Hair", "Red Eyes", "Pink Hair", "Blush", "Two Girls", "Yuri", "White Background", "Pixiv", "Duo", "Smile", "Sidelocks", "Simple Background", "Dark Persona", "Looking At Another", "Fanart from Pixiv", "Multi-colored Eyes", "Light Background", "Honkai Star Rail", "March 7th", "oiro ik", "Jellyfish Hair", "Very Long Hair", "Evernight" ] }
+    |]
+
+zeroReqId :: Identifier
+zeroReqId = Id "4585899"
+
+zeroImg :: Image
+zeroImg =
+  Image
+    { resolvedName = "zerochan1243684339792621446"
+    , provider = "zerochan"
+    , id = zeroReqId
+    , file = "https://static.zerochan.net/Honkai.Star.Rail.full.4585899.jpg"
+    , preview_file = "https://s1.zerochan.net/75/49/17/4585899.jpg"
+    , artists = []
+    , characters = []
+    , copyrights = []
+    , rating = ""
+    , tags = ["Evernight", "Very Long Hair", "Jellyfish Hair", "oiro ik", "March 7th", "Honkai Star Rail", "Light Background", "Multi-colored Eyes", "Fanart from Pixiv", "Looking At Another", "Dark Persona", "Simple Background", "Sidelocks", "Smile", "Duo", "Pixiv", "White Background", "Yuri", "Two Girls", "Blush", "Pink Hair", "Red Eyes", "Long Hair", "Fanart", "Female"]
+    }
+
 allowOnline :: IO Bool
 allowOnline = do
   skip <- lookupEnv "ENABLE_ONLINE_TESTS"
@@ -72,8 +97,10 @@ spec :: Spec
 spec = do
   it "extracts image from danbooru object" $ extractImage danbooruDonmaiUs booruReqId booruObject `shouldBe` Just booruImg
   it "extracts image from safebooru object" $ extractImage safebooruOrg safeBooruReqId safeBooruObject `shouldBe` Just safeBooruImg
+  it "extracts image from zerochan object" $ extractImage zerochanNet zeroReqId zeroObject `shouldBe` Just zeroImg
 
   online <- runIO allowOnline
   describe "Online" $ unless online $ do
     it "extracts image from remote object" $ resolveProvider danbooruDonmaiUs booruReqId >>= (`shouldBe` Just booruImg)
     it "extracts image from safebooru object" $ resolveProvider safebooruOrg safeBooruReqId >>= (`shouldBe` Just safeBooruImg)
+    it "extracts image from zerochan object" $ resolveProvider zerochanNet zeroReqId >>= (`shouldBe` Just zeroImg)
