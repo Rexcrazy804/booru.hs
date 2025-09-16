@@ -4,6 +4,8 @@
 module Booru.RequestProvider (
   getProviderMap,
   requestJson,
+  extractImage,
+  resolveProvider,
 ) where
 
 import Booru.Schema.Images (Image (..))
