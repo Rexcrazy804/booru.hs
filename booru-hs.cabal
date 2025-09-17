@@ -31,7 +31,6 @@ library
     Booru.Schema.Sources
     Booru.Schema.Synonyms
 
-  default-extensions: QuasiQuotes
   build-depends:
     , aeson         ^>=2.2.3.0
     , base          ^>=4.19.2.0
