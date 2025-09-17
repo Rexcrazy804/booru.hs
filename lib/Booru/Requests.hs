@@ -23,7 +23,7 @@ import Data.Maybe
 import Data.String (fromString)
 import Data.Text (pack, replace, unpack)
 import Data.Vector (toList, (!?))
-import Helpers (extractId, wordsBy)
+import Helpers (extractId)
 import Network.HTTP.Client.Conduit (Response)
 import Network.HTTP.Simple (getResponseBody, httpJSON, parseRequest, setRequestHeader)
 import System.Environment (lookupEnv)
