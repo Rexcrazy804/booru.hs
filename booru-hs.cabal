@@ -78,6 +78,7 @@ test-suite booru-hs-test
 
   other-modules:
     Builtin.ProviderSpec
+    OverrideSpec
     QuoteStr
     RequestSpec
     Schema.ImageSpec
