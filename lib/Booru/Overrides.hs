@@ -10,6 +10,7 @@ module Booru.Overrides (
 import Booru.Schema.Images
 import Booru.Schema.Sources
 import qualified Data.Map as M
+import Data.Maybe (fromMaybe)
 
 type OverrideMap = M.Map String Override
 
@@ -65,7 +66,8 @@ overrideImage
       , artists = merge art iart
       , characters = merge cha icha
       , copyrights = merge cop icop
-      , rating = unwords $ merge ((: []) <$> rat) [irat]
+      , -- you can't append to rating, its not a list
+        rating = fromMaybe irat rat
       , tags = merge tag itag
       }
    where
