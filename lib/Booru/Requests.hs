@@ -10,7 +10,8 @@ module Booru.Requests (
   toArray,
 ) where
 
-import Booru.Schema.Images (Image (..))
+import Booru.Schema.Images (Image (Image))
+import qualified Booru.Schema.Images as Img
 import Booru.Schema.Providers (Attribute (..), Provider (..), ProviderName, Providers (..))
 import Booru.Schema.Sources (Identifier (..))
 import Data.Aeson
@@ -104,70 +105,47 @@ hence extract image populates default information (provided with $<value>).
 and specially processes the provider url substituing %%img%% with id as requried
 -}
 extractImage :: Provider -> Identifier -> Maybe Object -> Maybe Image
-extractImage
-  Provider
-    { name = nam
-    , url = url'
-    , preview_file = pf
-    , artists = art
-    , characters = cha
-    , copyrights = cop
-    , rating = rat
-    , tags = tag
-    }
-  idnfr
-  Nothing =
-    Just
-      Image
-        { resolvedName = nam ++ '|' : show (hash $ extractId idnfr)
-        , provider = nam
-        , id = idnfr
-        , file = file'
-        , preview_file = unwords $ getDefault pf
-        , artists = getDefault art
-        , characters = getDefault cha
-        , copyrights = getDefault cop
-        , rating = unwords $ getDefault rat
-        , tags = getDefault tag
-        }
-   where
-    file' = unpack $ replace (pack "%%ID%%") (pack $ extractId idnfr) (pack url')
-    getDefault (Just (Default x)) = wordsBy x (== ' ')
-    getDefault (Just _) = []
-    getDefault Nothing = []
-extractImage
-  Provider
-    { name = nam
-    , file = fl
-    , preview_file = pf
-    , artists = art
-    , characters = cha
-    , copyrights = cop
-    , rating = rat
-    , tags = tag
-    }
-  idnfr
-  (Just obj) =
-    Just
-      Image
-        { resolvedName = nam ++ '|' : show (hash $ extractId idnfr)
-        , provider = nam
-        , id = idnfr
-        , file = file'
-        , preview_file = unwords $ getAttribute pf
-        , artists = getAttribute art
-        , characters = getAttribute cha
-        , copyrights = getAttribute cop
-        , tags = getAttribute tag
-        , rating = unwords $ getAttribute rat
-        }
-   where
-    file' = unwords $ getAttribute fl
-    getAttribute (Just (Default x)) = wordsBy x (== ' ')
-    getAttribute (Just (Attr (x : _))) = fromMaybe [] (getAttribute' x)
-    getAttribute _ = []
+extractImage prvdr idnfr Nothing =
+  Just
+    Image
+      { resolvedName = name prvdr ++ '|' : show (hash id')
+      , provider = name prvdr
+      , id = idnfr
+      , file = file'
+      , preview_file = unwords $ getDefault $ preview_file prvdr
+      , artists = getDefault $ artists prvdr
+      , characters = getDefault $ characters prvdr
+      , copyrights = getDefault $ copyrights prvdr
+      , tags = getDefault $ tags prvdr
+      , rating = unwords $ getDefault $ rating prvdr
+      }
+ where
+  id' = extractId idnfr
+  file' = unpack $ replace (pack "%%ID%%") (pack id') (pack $ url prvdr)
+  getDefault (Just (Default x)) = wordsBy x (== ' ')
+  getDefault (Just _) = []
+  getDefault Nothing = []
+extractImage prvdr idnfr (Just obj) =
+  return
+    Image
+      { resolvedName = name prvdr ++ '|' : show (hash $ extractId idnfr)
+      , provider = name prvdr
+      , id = idnfr
+      , file = file'
+      , preview_file = unwords $ getAttribute $ preview_file prvdr
+      , artists = getAttribute $ artists prvdr
+      , characters = getAttribute $ characters prvdr
+      , copyrights = getAttribute $ copyrights prvdr
+      , tags = getAttribute $ tags prvdr
+      , rating = unwords $ getAttribute $ rating prvdr
+      }
+ where
+  file' = unwords $ getAttribute $ file prvdr
+  getAttribute (Just (Default x)) = wordsBy x (== ' ')
+  getAttribute (Just (Attr (x : _))) = fromMaybe [] (getAttribute' x)
+  getAttribute _ = []
 
-    -- currently we only take the first attribute
-    -- TODO figure out a way to extend this
-    getAttribute' :: String -> Maybe [String]
-    getAttribute' x = parseMaybe (\ob -> ob .: fromString x) obj >>= toArray
+  -- currently we only take the first attribute
+  -- TODO figure out a way to extend this
+  getAttribute' :: String -> Maybe [String]
+  getAttribute' x = parseMaybe (\ob -> ob .: fromString x) obj >>= toArray
