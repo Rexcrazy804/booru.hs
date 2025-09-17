@@ -7,8 +7,9 @@ module Booru.Overrides (
   OverrideMap,
 ) where
 
-import Booru.Schema.Images
-import Booru.Schema.Sources
+import Booru.Schema.Images (Image (Image, id))
+import qualified Booru.Schema.Images as Img
+import Booru.Schema.Sources (Identifier (..), Override (..), Source (..), Tag)
 import qualified Data.Map as M
 import Data.Maybe (fromMaybe)
 
@@ -32,48 +33,18 @@ getOverrideMap ovrs = M.fromList $ foldl (\acc ovr -> (identifier ovr, ovr) : ac
 
 overrideImage :: Maybe Override -> Image -> Image
 overrideImage Nothing img = img
-overrideImage
-  ( Just
-      ( Override
-          { append = app
-          , artists = art
-          , characters = cha
-          , copyrights = cop
-          , tags = tag
-          , rating = rat
-          }
-        )
-    )
-  ( Image
-      { resolvedName = ires
-      , provider = ipro
-      , id = iid
-      , file = ifil
-      , preview_file = ipre
-      , artists = iart
-      , characters = icha
-      , copyrights = icop
-      , rating = irat
-      , tags = itag
-      }
-    ) =
-    Image
-      { resolvedName = ires
-      , provider = ipro
-      , id = iid
-      , file = ifil
-      , preview_file = ipre
-      , artists = merge art iart
-      , characters = merge cha icha
-      , copyrights = merge cop icop
-      , -- you can't append to rating, its not a list
-        rating = fromMaybe irat rat
-      , tags = merge tag itag
-      }
-   where
-    merge :: Maybe [Tag] -> [Tag] -> [Tag]
-    merge Nothing tag' = tag'
-    -- if append is true, append, otherwise overrwrite
-    merge (Just ovrTag) tag'
-      | app = tag' ++ ovrTag
-      | otherwise = ovrTag
+overrideImage (Just ovrd@Override{append = append'}) img =
+  img
+    { Img.artists = merge (artists ovrd) (Img.artists img)
+    , Img.characters = merge (characters ovrd) (Img.characters img)
+    , Img.copyrights = merge (copyrights ovrd) (Img.copyrights img)
+    , Img.tags = merge (tags ovrd) (Img.tags img)
+    , -- you can't append to rating, its not a list
+      Img.rating = fromMaybe (Img.rating img) (rating ovrd)
+    }
+ where
+  merge :: Maybe [Tag] -> [Tag] -> [Tag]
+  merge Nothing tag' = tag'
+  merge (Just ovrTag) tag'
+    | append' = tag' ++ ovrTag
+    | otherwise = ovrTag
