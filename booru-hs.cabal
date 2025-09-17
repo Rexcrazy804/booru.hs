@@ -31,6 +31,7 @@ library
     Booru.Schema.Providers
     Booru.Schema.Sources
     Booru.Schema.Synonyms
+    Booru.Synonyms
 
   build-depends:
     , aeson         ^>=2.2.3.0
