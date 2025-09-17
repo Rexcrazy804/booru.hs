@@ -122,7 +122,7 @@ extractImage prvdr idnfr Nothing =
  where
   id' = extractId idnfr
   file' = unpack $ replace (pack "%%ID%%") (pack id') (pack $ url prvdr)
-  getDefault (Just (Default x)) = wordsBy x (== ' ')
+  getDefault (Just (Default x)) = words x
   getDefault (Just _) = []
   getDefault Nothing = []
 extractImage prvdr idnfr (Just obj) =
@@ -141,7 +141,7 @@ extractImage prvdr idnfr (Just obj) =
       }
  where
   file' = unwords $ getAttribute $ file prvdr
-  getAttribute (Just (Default x)) = wordsBy x (== ' ')
+  getAttribute (Just (Default x)) = words x
   getAttribute (Just (Attr (x : _))) = fromMaybe [] (getAttribute' x)
   getAttribute _ = []
 
