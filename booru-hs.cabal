@@ -25,6 +25,7 @@ library
   other-modules:      Helpers
   exposed-modules:
     Booru.Builtin.Providers
+    Booru.Overrides
     Booru.Requests
     Booru.Schema.Images
     Booru.Schema.Providers
