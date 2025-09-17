@@ -6,6 +6,7 @@ module RequestSpec (spec) where
 import Booru.Builtin.Providers
 import Booru.Requests (extractImage, resolveProvider, toObject)
 import Booru.Schema.Images (Image (..))
+import Booru.Schema.Providers (Attribute (Default), Provider (..))
 import Booru.Schema.Sources (Identifier (..))
 import Control.Monad (unless)
 import Data.Aeson (Object)
@@ -88,6 +89,42 @@ zeroImg =
     , tags = ["Evernight", "Very Long Hair", "Jellyfish Hair", "oiro ik", "March 7th", "Honkai Star Rail", "Light Background", "Multi-colored Eyes", "Fanart from Pixiv", "Looking At Another", "Dark Persona", "Simple Background", "Sidelocks", "Smile", "Duo", "Pixiv", "White Background", "Yuri", "Two Girls", "Blush", "Pink Hair", "Red Eyes", "Long Hair", "Fanart", "Female"]
     }
 
+specialId :: Identifier
+specialId =
+  WithNick
+    { id = "https://sjc1.vultrobjects.com/cucdn/gallery-39/art/gi-sangonomiya-kokomi-birthday-2023.jpg"
+    , nickname = "kokomi-smile"
+    }
+
+specialProvider :: Provider
+specialProvider =
+  Provider
+    { name = "kokomiOnly"
+    , url = "%%ID%%"
+    , file = Nothing
+    , preview_file = Nothing
+    , tags = Just $ Default "cute lovely pink jellyfish"
+    , artists = Nothing
+    , characters = Just $ Default "kokomi"
+    , copyrights = Just $ Default "genshin_impact"
+    , rating = Nothing
+    }
+
+specialImg :: Image
+specialImg =
+  Image
+    { resolvedName = "kokomiOnly|-190304692471648127"
+    , provider = "kokomiOnly"
+    , id = WithNick{id = "https://sjc1.vultrobjects.com/cucdn/gallery-39/art/gi-sangonomiya-kokomi-birthday-2023.jpg", nickname = "kokomi-smile"}
+    , file = "https://sjc1.vultrobjects.com/cucdn/gallery-39/art/gi-sangonomiya-kokomi-birthday-2023.jpg"
+    , preview_file = ""
+    , artists = []
+    , characters = ["kokomi"]
+    , copyrights = ["genshin_impact"]
+    , rating = ""
+    , tags = ["cute", "lovely", "pink", "jellyfish"]
+    }
+
 allowOnline :: IO Bool
 allowOnline = do
   skip <- lookupEnv "ENABLE_ONLINE_TESTS"
@@ -98,6 +135,7 @@ spec = do
   it "extracts image from danbooru object" $ extractImage danbooruDonmaiUs booruReqId booruObject `shouldBe` Just booruImg
   it "extracts image from safebooru object" $ extractImage safebooruOrg safeBooruReqId safeBooruObject `shouldBe` Just safeBooruImg
   it "extracts image from zerochan object" $ extractImage zerochanNet zeroReqId zeroObject `shouldBe` Just zeroImg
+  it "extracts image from specialProvider" $ extractImage specialProvider specialId Nothing `shouldBe` Just specialImg
 
   online <- runIO allowOnline
   describe "Online" $ unless online $ do
