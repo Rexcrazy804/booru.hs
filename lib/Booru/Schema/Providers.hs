@@ -39,6 +39,7 @@ data Provider = Provider
   deriving (Eq, Show, Generic)
   deriving (ToTable, ToValue, FromValue) via GenericTomlTable Provider
 
+-- accepts a string, converts to list as required
 data Attribute = Default String | Attr JsonAttr
   deriving (Eq, Show, Generic)
 
