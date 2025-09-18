@@ -25,6 +25,7 @@ library
   other-modules:    Helpers
   exposed-modules:
     Booru.Builtin.Providers
+    Booru.Core
     Booru.Overrides
     Booru.Requests
     Booru.Schema.Images
@@ -32,7 +33,6 @@ library
     Booru.Schema.Sources
     Booru.Schema.Synonyms
     Booru.Synonyms
-    Booru.Core
 
   build-depends:
     , aeson         ^>=2.2.3.0
@@ -80,6 +80,7 @@ test-suite booru-hs-test
 
   other-modules:
     Builtin.ProviderSpec
+    CoreSpec
     OverrideSpec
     QuoteStr
     RequestSpec
