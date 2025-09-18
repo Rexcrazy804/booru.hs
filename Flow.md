@@ -39,6 +39,8 @@ identify missing files
 
 | At this point, we should have a list containing information about available and missing files combined
 
+pass image through filters
+
 fold information into structured set
 | the bread and butter of booru flake
 | at the end of this step we should have structure like so
