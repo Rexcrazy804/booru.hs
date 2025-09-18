@@ -34,5 +34,5 @@ data Image = Image
   , rating :: Tag
   , tags :: [Tag]
   }
-  deriving (Eq, Show, Ord, Generic)
+  deriving (Eq, Show, Generic)
   deriving (ToTable, ToValue, FromValue) via GenericTomlTable Image
