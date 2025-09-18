@@ -38,7 +38,7 @@ data Synonyms' = Synonyms'
 realizeSynonyms :: Synonyms -> [Image] -> [Image]
 realizeSynonyms syns img =
   let syns' = toSynonyms' syns
-   in map (replaceSynonyms syns') img
+  in  map (replaceSynonyms syns') img
 
 toSynonyms' :: Synonyms -> Synonyms'
 toSynonyms' syns =

@@ -80,8 +80,8 @@ instance ToValue Identifier where
 
 instance FromValue Identifier where
   fromValue (Text' l packed)
-    | [y, z] <- x = return $ WithNick { id = y, nickname = z }
-    | [x'] <- x =  return $ Id x'
+    | [y, z] <- x = return $ WithNick{id = y, nickname = z}
+    | [x'] <- x = return $ Id x'
     | otherwise = failAt l "Expected a string of '<id>' or '<id> <nickname>'"
    where
     x = words $ unpack packed
