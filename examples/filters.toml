@@ -1,0 +1,7 @@
+characters = { list = ["abc", "xyz"], inverted = false }                    # a filter contains two attributes
+copyrights = { list = ["arknights"], inverted = false }                     # list:     a list of strings where each element is a tag to be filtered
+artists = { list = ["mourncolor", "elodias"], inverted = true }             # inverted: determins whether the values are filter out
+tags = { list = ["bird", "horse"], inverted = false }                       #           OR only those values are kept
+ids = { list = ["11112"], inverted = false }                                
+ratings = { list = ["g"], inverted = true }                                 
+providers = { list = [], inverted = false}
