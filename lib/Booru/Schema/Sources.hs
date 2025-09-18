@@ -72,7 +72,7 @@ data Previews = Previews
   deriving (ToTable, ToValue, FromValue) via GenericTomlTable Previews
 
 data Identifier = Id String | WithNick {id :: String, nickname :: String}
-  deriving (Eq, Show, Generic)
+  deriving (Eq, Show, Ord, Generic)
 
 instance ToValue Identifier where
   toValue (Id id') = toValue id'
