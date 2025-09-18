@@ -1,5 +1,20 @@
 # Raw Revision history for booru-hs
 
+## 0.0.3.0 -- 2025-09-19
+- feat(tests): added tests for categorization
+- feat(lib): addition of CORE categoriztion module
+- feat: addition of explicit fourmolu.yaml for styling
+- feat(tests): added tests for synonym processing
+- feat(lib): addition of synonym processing
+- feat(tests): added tests for special providers
+- feat(tests): added tests for overrides
+- fix(lib): correctly handly overrides for rating
+- feat(lib): addition of override application unit
+- fix: removed QQ default extension for lib
+- fix(tests): reflect resolvedName change in last commit
+- fix(lib): correctly derrive resolvedName based on id
+- fix(lib): correctly hash the processed url for special providers
+
 ## 0.0.2.0 -- 2025-09-17
 
 - feat(tests): added zerochanNet test for requests

@@ -1,5 +1,15 @@
 # Revision history for booru-hs
 
+## 0.0.3.0 -- 2025-09-19
+- Addition of Core categorization module (MILESTONE)
+- Support for Synonym Processing
+- SUpport for applying Overrides
+- Correct hashing and Derriation of unique resolveName (IMP)
+- added explicit styling with fourmolu
+
+Last Revision
+- [4993ebb](https://github.com/Rexcrazy804/booru.hs/tree/4993ebbd195313fd9fd090ae9b8509b13eb4a71f) feat(tests): added tests for categorization
+
 ## 0.0.2.0 -- 2025-09-17
 - Addition of networking infrastrucutre
 - Addition of builtin providers
