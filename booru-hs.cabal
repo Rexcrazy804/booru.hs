@@ -87,5 +87,6 @@ test-suite booru-hs-test
     Schema.SourceSpec
     Schema.SynonymSpec
     SpecHook
+    SynonymSpec
 
   build-tool-depends: hspec-discover:hspec-discover ^>=2.11.12
