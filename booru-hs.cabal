@@ -27,6 +27,7 @@ library
     Booru.Builtin.Providers
     Booru.Core
     Booru.Overrides
+    Booru.Preview
     Booru.Requests
     Booru.Schema.Filters
     Booru.Schema.Images
@@ -41,6 +42,7 @@ library
     , containers    ^>=0.6.8
     , hashable      ^>=1.4.7.0
     , http-conduit  ^>=2.3.9.1
+    , split         ^>=0.2.5
     , text          ^>=2.1.1
     , toml-parser   ^>=2.0.1.2
     , vector        ^>=0.13.2.0
