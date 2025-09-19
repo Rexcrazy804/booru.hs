@@ -1,4 +1,4 @@
-module Booru.Core (
+module Booru.Core.Core (
   Category (..),
   TagMap,
   newCategory,

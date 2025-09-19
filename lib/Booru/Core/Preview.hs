@@ -1,4 +1,4 @@
-module Booru.Preview (
+module Booru.Core.Preview (
   generatePreview,
   filterImages,
 )

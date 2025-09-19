@@ -1,6 +1,6 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 
-module Booru.Overrides (
+module Booru.Core.Overrides (
   applyOverrides,
   getOverrideMap,
   overrideImage,

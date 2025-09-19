@@ -25,10 +25,11 @@ library
   other-modules:    Helpers
   exposed-modules:
     Booru.Builtin.Providers
-    Booru.Core
-    Booru.Overrides
-    Booru.Preview
-    Booru.Requests
+    Booru.Core.Core
+    Booru.Core.Overrides
+    Booru.Core.Preview
+    Booru.Core.Requests
+    Booru.Core.Synonyms
     Booru.Schema.Filters
     Booru.Schema.Images
     Booru.Schema.PFilters

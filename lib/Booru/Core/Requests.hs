@@ -1,7 +1,7 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Booru.Requests (
+module Booru.Core.Requests (
   getProviderMap,
   requestJson,
   extractImage,

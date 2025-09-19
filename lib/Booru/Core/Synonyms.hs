@@ -1,6 +1,6 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 
-module Booru.Synonyms (
+module Booru.Core.Synonyms (
   NormalSynoMap,
   Synonyms' (..),
   realizeSynonyms,
