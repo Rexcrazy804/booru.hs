@@ -26,6 +26,7 @@ data Filters = Filters
   , tags :: Maybe Filter
   , ids :: Maybe Filter
   , ratings :: Maybe Filter
+  , providers :: Maybe Filter
   }
   deriving (Eq, Show, Generic)
   deriving (ToTable, ToValue, FromValue) via GenericTomlTable Filters
