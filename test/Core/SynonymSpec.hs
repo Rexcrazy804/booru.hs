@@ -1,12 +1,12 @@
 {-# LANGUAGE DisambiguateRecordFields #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module SynonymSpec (spec) where
+module Core.SynonymSpec (spec) where
 
 import Booru.Schema.Images
 import Booru.Schema.Synonyms (Synonyms (Synonyms))
 import qualified Booru.Schema.Synonyms
-import Booru.Synonyms (Synonyms', realizeSynonyms, replaceSynonyms, toSynonyms')
+import Booru.Core.Synonyms (Synonyms', realizeSynonyms, replaceSynonyms, toSynonyms')
 import Data.Map (fromList)
 import Test.Hspec (Spec, it, shouldBe)
 

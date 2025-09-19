@@ -1,10 +1,10 @@
 {-# LANGUAGE DisambiguateRecordFields #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module RequestSpec (spec) where
+module Core.RequestSpec (spec) where
 
 import Booru.Builtin.Providers
-import Booru.Requests (extractImage, resolveProvider, toObject)
+import Booru.Core.Requests (extractImage, resolveProvider, toObject)
 import Booru.Schema.Images (Identifier (..), Image (..))
 import Booru.Schema.Providers (Attribute (Default), Provider (..))
 import Control.Monad (unless)

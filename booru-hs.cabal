@@ -36,7 +36,6 @@ library
     Booru.Schema.Providers
     Booru.Schema.Sources
     Booru.Schema.Synonyms
-    Booru.Synonyms
 
   build-depends:
     , aeson         ^>=2.2.3.0
@@ -85,17 +84,17 @@ test-suite booru-hs-test
 
   other-modules:
     Builtin.ProviderSpec
-    CoreSpec
-    OverrideSpec
-    PreviewSpec
+    Core.CoreSpec
+    Core.OverrideSpec
+    Core.PreviewSpec
+    Core.RequestSpec
+    Core.SynonymSpec
     QuoteStr
-    RequestSpec
     Schema.FilterSpec
     Schema.ImageSpec
     Schema.ProviderSpec
     Schema.SourceSpec
     Schema.SynonymSpec
     SpecHook
-    SynonymSpec
 
   build-tool-depends: hspec-discover:hspec-discover ^>=2.11.12

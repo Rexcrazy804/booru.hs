@@ -1,8 +1,8 @@
 {-# LANGUAGE DisambiguateRecordFields #-}
 
-module PreviewSpec (spec) where
+module Core.PreviewSpec (spec) where
 
-import Booru.Preview
+import Booru.Core.Preview
 import Booru.Schema.Filters (Filter (..))
 import Booru.Schema.Images (Identifier (..), Image (..))
 import Booru.Schema.PFilters (PFilters (..))

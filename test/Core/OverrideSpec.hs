@@ -1,8 +1,8 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 
-module OverrideSpec (spec) where
+module Core.OverrideSpec (spec) where
 
-import Booru.Overrides
+import Booru.Core.Overrides
 import Booru.Schema.Images
 import qualified Booru.Schema.Images as Img
 import Booru.Schema.Sources
