@@ -4,4 +4,4 @@ artists = { list = ["mourncolor", "elodias"], inverted = true }             # in
 tags = { list = ["bird", "horse"], inverted = false }                       #           OR only those values are kept
 ids = { list = ["11112"], inverted = false }                                
 ratings = { list = ["g"], inverted = true }                                 
-providers = { list = [], inverted = false}
+providers = { list = ["s34"], inverted = false}
