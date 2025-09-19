@@ -14,7 +14,7 @@ module Booru.Schema.Sources (
 )
 where
 
-import Data.Text (unpack)
+import Booru.Schema.Images (Identifier, Tag)
 import GHC.Generics (Generic)
 import Toml.Schema
 
@@ -22,16 +22,14 @@ newtype Sources = Sources {sources :: [Source]}
   deriving (Eq, Show, Generic)
   deriving (ToTable, ToValue, FromValue) via GenericTomlTable Sources
 
-type Tag = String
-
 data Source = Source
   { provider :: String
   , ids :: [Identifier]
   , overrides :: Maybe [Override]
-  , filters :: Maybe Filters
-  , previews :: Maybe Previews
   }
   deriving (Eq, Show, Generic)
+  , filters :: Maybe Filters
+  , previews :: Maybe Previews
   deriving (ToTable, ToValue, FromValue) via GenericTomlTable Source
 
 data Override = Override
