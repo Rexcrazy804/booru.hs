@@ -1,5 +1,16 @@
 # Revision history for booru-hs
 
+## 0.0.4.0 -- 2025-09-20
+- Addition of Preview generation
+- Decoupling of Fitlers and Previews from Sources
+- Sepation of Filters into Filter and PFilter
+- Relocated processing functions into Core
+- Relocated Tags and Identifiers under Images
+- PFilters now supports provider filtering
+
+Last Revision
+- [f840d5c](https://github.com/Rexcrazy804/booru.hs/tree/f840d5c74cd0a67c834a03608e7ffa4c9b9bf607) feat(tests): added tests for category filtering
+
 ## 0.0.3.0 -- 2025-09-19
 - Addition of Core categorization module (MILESTONE)
 - Support for Synonym Processing

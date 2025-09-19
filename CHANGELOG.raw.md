@@ -1,5 +1,25 @@
 # Raw Revision history for booru-hs
 
+## 0.0.4.0 -- 2025-09-20
+f840d5c feat(tests): added tests for category filtering
+6d733dd feat(lib): added filter category unit
+5a219a4 fix(tests): reflected relocation of lib files
+9c2b749 fix(lib,tests): corrected Previews references to PFilter refernces
+e21c7f3 feat(lib): separated Previews into PFilters
+3649a77 feat(tests): tests for preview generation and filtering
+7b3600c feat(lib): addition of preview generation and filtering
+3a2f44c feat(lib): addition of alternate extractId'
+ad2ef9f fix(tests): reflect decomposiiton of Filters
+aafad04 feat(lib): decompose Fitlers into Fitlers and Previews
+ffc4167 feat(tests): reflected addition to Filter
+7d65f85 feat(lib): extended filters to support filtering by provider
+7764951 feat(tests): return tests for filters
+4534c0a fix(tests): reflect removal of filters and previews in source tests
+de2296d fix(tests): correct imports to reflect relocation
+682d733 fix(lib): correct imports to reflect relocation
+49b697d feat(lib): seperation of Filters from Sources
+eb5f3dc feat(lib): relocation of tags and identifiers to images
+
 ## 0.0.3.0 -- 2025-09-19
 - feat(tests): added tests for categorization
 - feat(lib): addition of CORE categoriztion module
