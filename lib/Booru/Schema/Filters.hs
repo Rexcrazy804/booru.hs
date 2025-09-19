@@ -1,12 +1,7 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE DerivingVia #-}
-{-# LANGUAGE DuplicateRecordFields #-}
 
-module Booru.Schema.Filters (
-  Filter (..),
-  Filters (..),
-  Previews (..),
-)
+module Booru.Schema.Filters (Filter (..), Filters (..))
 where
 
 import Booru.Schema.Images (Tag)
@@ -28,15 +23,3 @@ data Filters = Filters
   }
   deriving (Eq, Show, Generic)
   deriving (ToTable, ToValue, FromValue) via GenericTomlTable Filters
-
-data Previews = Previews
-  { characters :: Maybe Filter
-  , copyrights :: Maybe Filter
-  , artists :: Maybe Filter
-  , tags :: Maybe Filter
-  , ids :: Maybe Filter
-  , ratings :: Maybe Filter
-  , providers :: Maybe Filter
-  }
-  deriving (Eq, Show, Generic)
-  deriving (ToTable, ToValue, FromValue) via GenericTomlTable Previews

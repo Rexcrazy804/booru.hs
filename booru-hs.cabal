@@ -31,6 +31,7 @@ library
     Booru.Requests
     Booru.Schema.Filters
     Booru.Schema.Images
+    Booru.Schema.PFilters
     Booru.Schema.Providers
     Booru.Schema.Sources
     Booru.Schema.Synonyms
