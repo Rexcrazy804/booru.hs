@@ -2,14 +2,17 @@
 
 module Schema.FilterSpec (spec) where
 
-import Booru.Schema.Filters
+-- NOTE
+-- we are only testing Previews since
+-- Filters is a subset of Previews
+import Booru.Schema.Filters (Filter (..), Previews (..))
 import Data.Text (Text)
 import QuoteStr (quoteStr)
 import Test.Hspec (Spec, it, shouldBe)
 import Toml (Result (..), decode)
 
-fullFilter :: Text
-fullFilter =
+fullPreview :: Text
+fullPreview =
   [quoteStr|
   characters = { list = ["abc", "xyz"], inverted = false }
   copyrights = { list = ["arknights"], inverted = false }
@@ -20,9 +23,9 @@ fullFilter =
   providers = { list = ["s34"], inverted = false}
   |]
 
-fullFilterParsed :: Filters
-fullFilterParsed =
-  Filters
+fullPreviewParsed :: Previews
+fullPreviewParsed =
+  Previews
     { characters = Just Filter{list = ["abc", "xyz"], inverted = False}
     , copyrights = Just Filter{list = ["arknights"], inverted = False}
     , artists = Just Filter{list = ["mourncolor", "elodias"], inverted = True}
@@ -32,14 +35,14 @@ fullFilterParsed =
     , providers = Just Filter{list = ["s34"], inverted = False}
     }
 
-emptyFilter :: Text
-emptyFilter =
+emptyPreview :: Text
+emptyPreview =
   [quoteStr|
   |]
 
-emptyFilterParsed :: Filters
-emptyFilterParsed =
-  Filters
+emptyPreviewParsed :: Previews
+emptyPreviewParsed =
+  Previews
     { characters = Nothing
     , copyrights = Nothing
     , artists = Nothing
@@ -51,5 +54,5 @@ emptyFilterParsed =
 
 spec :: Spec
 spec = do
-  it "parses exhaustive filter" $ decode fullFilter `shouldBe` Success [] fullFilterParsed
-  it "parses empty filter" $ decode emptyFilter `shouldBe` Success [] emptyFilterParsed
+  it "parses exhaustive filter" $ decode fullPreview `shouldBe` Success [] fullPreviewParsed
+  it "parses empty filter" $ decode emptyPreview `shouldBe` Success [] emptyPreviewParsed
