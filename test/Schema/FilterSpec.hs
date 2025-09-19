@@ -5,7 +5,8 @@ module Schema.FilterSpec (spec) where
 -- NOTE
 -- we are only testing Previews since
 -- Filters is a subset of Previews
-import Booru.Schema.Filters (Filter (..), Previews (..))
+import Booru.Schema.Filters (Filter (..))
+import Booru.Schema.PFilters (PFilters (..))
 import Data.Text (Text)
 import QuoteStr (quoteStr)
 import Test.Hspec (Spec, it, shouldBe)
@@ -23,9 +24,9 @@ fullPreview =
   providers = { list = ["s34"], inverted = false}
   |]
 
-fullPreviewParsed :: Previews
+fullPreviewParsed :: PFilters
 fullPreviewParsed =
-  Previews
+  PFilters
     { characters = Just Filter{list = ["abc", "xyz"], inverted = False}
     , copyrights = Just Filter{list = ["arknights"], inverted = False}
     , artists = Just Filter{list = ["mourncolor", "elodias"], inverted = True}
@@ -40,9 +41,9 @@ emptyPreview =
   [quoteStr|
   |]
 
-emptyPreviewParsed :: Previews
+emptyPreviewParsed :: PFilters
 emptyPreviewParsed =
-  Previews
+  PFilters
     { characters = Nothing
     , copyrights = Nothing
     , artists = Nothing

@@ -3,8 +3,9 @@
 module PreviewSpec (spec) where
 
 import Booru.Preview
-import Booru.Schema.Filters (Filter (..), Previews (..))
+import Booru.Schema.Filters (Filter (..))
 import Booru.Schema.Images (Identifier (..), Image (..))
+import Booru.Schema.PFilters (PFilters (..))
 import Test.Hspec (Spec, it, shouldBe)
 
 imgWPrv :: Image
@@ -33,9 +34,9 @@ generatedPreview =
   , "|![generalImg](https://safebooru.org/images/539/6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg)|"
   ]
 
-prvFilter :: Previews
+prvFilter :: PFilters
 prvFilter =
-  Previews
+  PFilters
     { characters = Just Filter{list = ["kokomi"], inverted = False}
     , copyrights = Just Filter{list = ["genshin_impact"], inverted = False}
     , artists = Just Filter{list = ["mourncolor"], inverted = False}
@@ -45,9 +46,9 @@ prvFilter =
     , providers = Just Filter{list = ["danbooru"], inverted = False}
     }
 
-prvFilter' :: Previews
+prvFilter' :: PFilters
 prvFilter' =
-  Previews
+  PFilters
     { characters = Just Filter{list = ["kokomi"], inverted = True}
     , copyrights = Just Filter{list = ["genshin_impact"], inverted = True}
     , artists = Just Filter{list = ["mourncolor"], inverted = True}
@@ -57,9 +58,9 @@ prvFilter' =
     , providers = Just Filter{list = ["danbooru"], inverted = True}
     }
 
-emptyFilter :: Previews
+emptyFilter :: PFilters
 emptyFilter =
-  Previews
+  PFilters
     { characters = Nothing
     , copyrights = Nothing
     , artists = Nothing

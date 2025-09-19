@@ -4,18 +4,19 @@ module Booru.Preview (
 )
 where
 
-import Booru.Schema.Filters (Filter (..), Previews (..))
+import Booru.Schema.Filters (Filter (..))
 import Booru.Schema.Images (Image (Image), Tag, extractId', file, preview_file, resolvedName)
 import qualified Booru.Schema.Images (Image (id))
 import qualified Booru.Schema.Images as Img
+import Booru.Schema.PFilters (PFilters (..))
 import Data.Bits (Bits (xor))
 import Data.List (intercalate)
 import Data.List.Split (chunksOf)
 
-filterImages :: Previews -> [Image] -> [Image]
+filterImages :: PFilters -> [Image] -> [Image]
 filterImages pr = filter (applyFilter' pr)
 
-applyFilter' :: Previews -> Image -> Bool
+applyFilter' :: PFilters -> Image -> Bool
 applyFilter' pr img =
   not $
     any
