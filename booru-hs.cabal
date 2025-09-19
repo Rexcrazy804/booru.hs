@@ -26,6 +26,7 @@ library
   exposed-modules:
     Booru.Builtin.Providers
     Booru.Core.Category
+    Booru.Core.FilterCat
     Booru.Core.Overrides
     Booru.Core.Preview
     Booru.Core.Requests
