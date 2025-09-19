@@ -6,8 +6,7 @@ module Booru.Core (
   getImageCat,
 ) where
 
-import Booru.Schema.Images (Image (..), resolvedName)
-import Booru.Schema.Sources (Tag)
+import Booru.Schema.Images (Image (..), resolvedName, Tag)
 import Data.Map (Map, empty)
 import qualified Data.Map as M
 import Data.Set (Set)

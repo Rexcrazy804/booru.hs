@@ -7,9 +7,9 @@ module Booru.Overrides (
   OverrideMap,
 ) where
 
-import Booru.Schema.Images (Image (Image, id))
+import Booru.Schema.Images (Identifier (..), Image (Image, id), Tag)
 import qualified Booru.Schema.Images as Img
-import Booru.Schema.Sources (Identifier (..), Override (..), Source (..), Tag)
+import Booru.Schema.Sources (Override (..), Source (..))
 import qualified Data.Map as M
 import Data.Maybe (fromMaybe)
 

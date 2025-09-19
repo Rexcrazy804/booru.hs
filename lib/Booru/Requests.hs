@@ -10,10 +10,9 @@ module Booru.Requests (
   toArray,
 ) where
 
-import Booru.Schema.Images (Image (Image))
+import Booru.Schema.Images (Identifier (..), Image (Image), extractId)
 import qualified Booru.Schema.Images as Img
 import Booru.Schema.Providers (Attribute (..), Provider (..), ProviderName, Providers (..))
-import Booru.Schema.Sources (Identifier (..))
 import Data.Aeson
 import Data.Aeson.Types (parseMaybe)
 import qualified Data.Aeson.Types as Atyp
@@ -23,7 +22,6 @@ import Data.Maybe
 import Data.String (fromString)
 import Data.Text (pack, replace, unpack)
 import Data.Vector (toList, (!?))
-import Helpers (extractId)
 import Network.HTTP.Client.Conduit (Response)
 import Network.HTTP.Simple (getResponseBody, httpJSON, parseRequest, setRequestHeader)
 import System.Environment (lookupEnv)
