@@ -7,10 +7,8 @@ module Booru.Core (
 ) where
 
 import Booru.Schema.Images (Image (..), Tag, resolvedName)
-import Data.Map (Map, empty)
-import qualified Data.Map as M
-import Data.Set (Set)
-import qualified Data.Set as S
+import Data.Map (Map, empty, insert, unionWith)
+import Data.Set (Set, singleton, union)
 
 data Category = Category
   { artistC :: TagMap
@@ -28,7 +26,7 @@ instance Semigroup Category where
       , charactersC = aux (charactersC cat1) (charactersC cat2)
       }
    where
-    aux = M.unionWith S.union
+    aux = unionWith union
 
 newCategory :: Category
 newCategory =
@@ -52,4 +50,4 @@ getImageCat img =
   ctm = createTagMap img
 
 createTagMap :: Image -> [Tag] -> TagMap
-createTagMap Image{resolvedName = rname} = foldr (`M.insert` S.singleton rname) empty
+createTagMap Image{resolvedName = rname} = foldr (`insert` singleton rname) empty
