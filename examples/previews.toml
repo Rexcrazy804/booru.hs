@@ -1,8 +1,12 @@
-# same as filters
 characters = { list = ["abc", "xyz"], inverted = false }                    # a filter contains two attributes
 copyrights = { list = ["arknights"], inverted = false }                     # list:     a list of strings where each element is a tag to be filtered
-artists = { list = ["mourncolor", "elodias"], inverted = true }             # inverted: determins whether the values are filter out
+artists = { list = ["mourncolor", "elodias"], inverted = false }            # inverted: determins whether the values are filter out
 tags = { list = ["bird", "horse"], inverted = false }                       #           OR only those values are kept
 ids = { list = ["11112"], inverted = false }                                
 ratings = { list = ["g"], inverted = true }                                 
 providers = { list = ["s34"], inverted = false}
+
+# NOTE
+# these filters will completely remove an image from being included in the final preview
+# if any of its attributes match.
+# use inverted attribute carefully here
