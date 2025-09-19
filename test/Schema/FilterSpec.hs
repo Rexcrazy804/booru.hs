@@ -17,6 +17,7 @@ fullFilter =
   tags = { list = ["bird", "horse"], inverted = false }
   ids = { list = ["11112"], inverted = false }
   ratings = { list = ["g"], inverted = true }
+  providers = { list = ["s34"], inverted = false}
   |]
 
 fullFilterParsed :: Filters
@@ -28,6 +29,7 @@ fullFilterParsed =
     , tags = Just Filter{list = ["bird", "horse"], inverted = False}
     , ids = Just Filter{list = ["11112"], inverted = False}
     , ratings = Just Filter{list = ["g"], inverted = True}
+    , providers = Just Filter{list = ["s34"], inverted = False}
     }
 
 emptyFilter :: Text
@@ -44,6 +46,7 @@ emptyFilterParsed =
     , tags = Nothing
     , ids = Nothing
     , ratings = Nothing
+    , providers = Nothing
     }
 
 spec :: Spec
