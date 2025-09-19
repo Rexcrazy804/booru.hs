@@ -4,6 +4,7 @@
 module Booru.Core.Requests (
   getProviderMap,
   requestJson,
+  requestFile,
   extractImage,
   resolveProvider,
   toObject,
@@ -23,8 +24,9 @@ import Data.String (fromString)
 import Data.Text (pack, replace, unpack)
 import Data.Vector (toList, (!?))
 import Network.HTTP.Client.Conduit (Response)
-import Network.HTTP.Simple (getResponseBody, httpJSON, parseRequest, setRequestHeader)
+import Network.HTTP.Simple (getResponseBody, httpBS, httpJSON, parseRequest, setRequestHeader)
 import System.Environment (lookupEnv)
+import Data.ByteString (ByteString)
 
 getProviderMap :: Providers -> Map ProviderName (Identifier -> IO (Maybe Image))
 getProviderMap Providers{providers = prs} = fromList $ foldl mkProviderFns [] prs
@@ -62,6 +64,15 @@ requestJson url' = do
   let request = setRequestHeader "User-Agent" [fromString header] request'
   response <- (httpJSON request :: IO (Response (Maybe Value)))
   return $ getResponseBody response >>= toObject
+
+requestFile :: Image -> IO ByteString
+requestFile Image{file = f} = do
+  request' <- parseRequest f
+  username <- lookupEnv "USER"
+  let header = "Booru.hs - " ++ fromMaybe "unkownBooruUser" username
+  let request = setRequestHeader "User-Agent" [fromString header] request'
+  response <- httpBS request
+  return $ getResponseBody response
 
 {- |
 # Converts any Value to Maybe Object
