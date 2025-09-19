@@ -5,9 +5,8 @@ module RequestSpec (spec) where
 
 import Booru.Builtin.Providers
 import Booru.Requests (extractImage, resolveProvider, toObject)
-import Booru.Schema.Images (Image (..))
+import Booru.Schema.Images (Identifier (..), Image (..))
 import Booru.Schema.Providers (Attribute (Default), Provider (..))
-import Booru.Schema.Sources (Identifier (..))
 import Control.Monad (unless)
 import Data.Aeson (Object)
 import Data.Aeson.QQ (aesonQQ)

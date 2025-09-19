@@ -4,7 +4,6 @@
 module SynonymSpec (spec) where
 
 import Booru.Schema.Images
-import Booru.Schema.Sources (Identifier (..))
 import Booru.Schema.Synonyms (Synonyms (Synonyms))
 import qualified Booru.Schema.Synonyms
 import Booru.Synonyms (Synonyms', realizeSynonyms, replaceSynonyms, toSynonyms')

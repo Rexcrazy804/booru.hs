@@ -4,7 +4,6 @@
 module Schema.ImageSpec (spec) where
 
 import Booru.Schema.Images
-import Booru.Schema.Sources (Identifier (..))
 import Data.Text (Text)
 import QuoteStr (quoteStr)
 import Test.Hspec (Spec, it, shouldBe)

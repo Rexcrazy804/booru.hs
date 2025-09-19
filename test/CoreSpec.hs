@@ -4,9 +4,8 @@
 module CoreSpec (spec) where
 
 import Booru.Core (Category (..), genCategory, getImageCat)
-import Booru.Schema.Images (Image (Image))
+import Booru.Schema.Images (Identifier (..), Image (Image))
 import qualified Booru.Schema.Images
-import Booru.Schema.Sources (Identifier (..))
 import qualified Data.Map as M
 import qualified Data.Set as S
 import Test.Hspec (Spec, it, shouldBe)

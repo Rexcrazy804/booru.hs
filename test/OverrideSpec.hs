@@ -70,8 +70,6 @@ simpleSource =
     { provider = "ignored"
     , ids = [Id "ignored"]
     , overrides = Just [appendOverride]
-    , filters = Nothing
-    , previews = Nothing
     }
 
 skippingSource :: Source
