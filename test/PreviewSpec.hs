@@ -6,6 +6,7 @@ import Booru.Preview
 import Booru.Schema.Filters (Filter (..))
 import Booru.Schema.Images (Identifier (..), Image (..))
 import Booru.Schema.PFilters (PFilters (..))
+import qualified Booru.Schema.PFilters as PF
 import Test.Hspec (Spec, it, shouldBe)
 
 imgWPrv :: Image
@@ -46,16 +47,19 @@ prvFilter =
     , providers = Just Filter{list = ["danbooru"], inverted = False}
     }
 
+invertFilter :: Filter -> Maybe Filter
+invertFilter ft@Filter{inverted = inv} = Just ft{inverted = not inv}
+
 prvFilter' :: PFilters
 prvFilter' =
   PFilters
-    { characters = Just Filter{list = ["kokomi"], inverted = True}
-    , copyrights = Just Filter{list = ["genshin_impact"], inverted = True}
-    , artists = Just Filter{list = ["mourncolor"], inverted = True}
-    , tags = Just Filter{list = ["s34"], inverted = True}
-    , ids = Just Filter{list = ["BKA"], inverted = True}
-    , ratings = Just Filter{list = ["g"], inverted = True}
-    , providers = Just Filter{list = ["danbooru"], inverted = True}
+    { characters = PF.characters prvFilter >>= invertFilter
+    , copyrights = PF.copyrights prvFilter >>= invertFilter
+    , artists = PF.artists prvFilter >>= invertFilter
+    , tags = PF.tags prvFilter >>= invertFilter
+    , ids = ids prvFilter >>= invertFilter
+    , ratings = ratings prvFilter >>= invertFilter
+    , providers = providers prvFilter >>= invertFilter
     }
 
 emptyFilter :: PFilters
