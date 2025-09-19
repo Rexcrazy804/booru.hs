@@ -8,6 +8,7 @@ module Booru.Schema.Images (
   Tag,
   Identifier (..),
   extractId,
+  extractId',
 )
 where
 
@@ -62,3 +63,8 @@ instance FromValue Identifier where
 extractId :: Identifier -> String
 extractId (Id x) = x
 extractId WithNick{id = x} = x
+
+-- returns a list, containing any matchable id information
+extractId' :: Identifier -> [Tag]
+extractId' (Id x) = [x]
+extractId' WithNick{id = x, nickname = n} = [x, n]
