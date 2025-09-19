@@ -1,0 +1,110 @@
+{-# LANGUAGE DisambiguateRecordFields #-}
+
+module PreviewSpec (spec) where
+
+import Booru.Preview
+import Booru.Schema.Filters (Filter (..), Previews (..))
+import Booru.Schema.Images (Identifier (..), Image (..))
+import Test.Hspec (Spec, it, shouldBe)
+
+imgWPrv :: Image
+imgWPrv =
+  Image
+    { resolvedName = "generalImg"
+    , provider = "danbooru"
+    , id = WithNick{id = "9969513", nickname = "kokomi_chibbi"}
+    , file = "https://safebooru.org/images/539/6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg"
+    , preview_file = "https://safebooru.org/samples/539/sample_6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg"
+    , artists = []
+    , characters = []
+    , copyrights = []
+    , rating = "g"
+    , tags = ["cat"]
+    }
+
+imgWoPrv :: Image
+imgWoPrv = imgWPrv{preview_file = ""}
+
+generatedPreview :: [String]
+generatedPreview =
+  [ "| Column 1 | Column 2 | Column 3 | Column 4 |"
+  , "|----------|----------|----------|----------|"
+  , "|[![generalImg](https://safebooru.org/samples/539/sample_6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg)](https://safebooru.org/images/539/6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg)|![generalImg](https://safebooru.org/images/539/6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg)|![generalImg](https://safebooru.org/images/539/6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg)|![generalImg](https://safebooru.org/images/539/6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg)|"
+  , "|![generalImg](https://safebooru.org/images/539/6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg)|"
+  ]
+
+prvFilter :: Previews
+prvFilter =
+  Previews
+    { characters = Just Filter{list = ["kokomi"], inverted = False}
+    , copyrights = Just Filter{list = ["genshin_impact"], inverted = False}
+    , artists = Just Filter{list = ["mourncolor"], inverted = False}
+    , tags = Just Filter{list = ["s34"], inverted = False}
+    , ids = Just Filter{list = ["BKA"], inverted = False}
+    , ratings = Just Filter{list = ["g"], inverted = False}
+    , providers = Just Filter{list = ["danbooru"], inverted = False}
+    }
+
+prvFilter' :: Previews
+prvFilter' =
+  Previews
+    { characters = Just Filter{list = ["kokomi"], inverted = True}
+    , copyrights = Just Filter{list = ["genshin_impact"], inverted = True}
+    , artists = Just Filter{list = ["mourncolor"], inverted = True}
+    , tags = Just Filter{list = ["s34"], inverted = True}
+    , ids = Just Filter{list = ["BKA"], inverted = True}
+    , ratings = Just Filter{list = ["g"], inverted = True}
+    , providers = Just Filter{list = ["danbooru"], inverted = True}
+    }
+
+emptyFilter :: Previews
+emptyFilter =
+  Previews
+    { characters = Nothing
+    , copyrights = Nothing
+    , artists = Nothing
+    , tags = Nothing
+    , ids = Nothing
+    , ratings = Nothing
+    , providers = Nothing
+    }
+
+bakaImg :: Image
+bakaImg =
+  Image
+    { resolvedName = "baka"
+    , provider = "danbooru"
+    , id = Id "BKA"
+    , file = "ignored"
+    , preview_file = "ignored"
+    , artists = ["mourncolor"]
+    , characters = ["kokomi"]
+    , copyrights = ["genshin_impact"]
+    , rating = "g"
+    , tags = ["s34"]
+    }
+
+bakaImg' :: Image
+bakaImg' =
+  Image
+    { resolvedName = "notbaka"
+    , provider = "notdanbooru"
+    , id = Id "NBKA"
+    , file = "ignored"
+    , preview_file = "ignored"
+    , artists = ["colormourn"]
+    , characters = ["kokolala"]
+    , copyrights = ["honkaiSteelBallRun"]
+    , rating = "e"
+    , tags = ["r84"]
+    }
+
+mapToName :: [Image] -> [String]
+mapToName = map resolvedName
+
+spec :: Spec
+spec = do
+  it "generates preview.md from image list" $ lines (generatePreview [imgWPrv, imgWoPrv, imgWoPrv, imgWoPrv, imgWoPrv]) `shouldBe` generatedPreview
+  it "filters images (non inverted)" $ mapToName (filterImages prvFilter [bakaImg, bakaImg']) `shouldBe` [resolvedName bakaImg']
+  it "filters images (inverted)" $ mapToName (filterImages prvFilter' [bakaImg, bakaImg']) `shouldBe` [resolvedName bakaImg]
+  it "filters images (empty)" $ mapToName (filterImages emptyFilter [bakaImg, bakaImg']) `shouldBe` mapToName [bakaImg, bakaImg']
