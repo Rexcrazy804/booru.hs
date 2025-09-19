@@ -25,7 +25,7 @@ library
   other-modules:    Helpers
   exposed-modules:
     Booru.Builtin.Providers
-    Booru.Core.Core
+    Booru.Core.Category
     Booru.Core.Overrides
     Booru.Core.Preview
     Booru.Core.Requests
@@ -84,7 +84,7 @@ test-suite booru-hs-test
 
   other-modules:
     Builtin.ProviderSpec
-    Core.CoreSpec
+    Core.CategorySpec
     Core.OverrideSpec
     Core.PreviewSpec
     Core.RequestSpec

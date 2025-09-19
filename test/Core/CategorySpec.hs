@@ -1,9 +1,9 @@
 {-# LANGUAGE DisambiguateRecordFields #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Core.CoreSpec (spec) where
+module Core.CategorySpec (spec) where
 
-import Booru.Core.Core (Category (..), genCategory, getImageCat)
+import Booru.Core.Category (Category (..), genCategory, getImageCat)
 import Booru.Schema.Images (Identifier (..), Image (Image))
 import qualified Booru.Schema.Images
 import qualified Data.Map as M
