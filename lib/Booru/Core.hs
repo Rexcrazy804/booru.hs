@@ -6,7 +6,7 @@ module Booru.Core (
   getImageCat,
 ) where
 
-import Booru.Schema.Images (Image (..), resolvedName, Tag)
+import Booru.Schema.Images (Image (..), Tag, resolvedName)
 import Data.Map (Map, empty)
 import qualified Data.Map as M
 import Data.Set (Set)
@@ -20,14 +20,6 @@ data Category = Category
   deriving (Show, Eq)
 type TagMap = Map Tag (Set String)
 
-newCategory :: Category
-newCategory =
-  Category
-    { artistC = empty
-    , copyrightsC = empty
-    , charactersC = empty
-    }
-
 instance Semigroup Category where
   (<>) cat1 cat2 =
     cat1
@@ -37,6 +29,14 @@ instance Semigroup Category where
       }
    where
     aux = M.unionWith S.union
+
+newCategory :: Category
+newCategory =
+  Category
+    { artistC = empty
+    , copyrightsC = empty
+    , charactersC = empty
+    }
 
 genCategory :: [Image] -> Category
 genCategory = foldr ((<>) . getImageCat) newCategory
