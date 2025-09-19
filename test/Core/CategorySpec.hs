@@ -44,8 +44,8 @@ simpleImgCat :: Category
 simpleImgCat =
   Category
     { artistC = M.fromList [("mikurumikurumi", S.fromList ["danbooru|-8916590893211164014"])]
-    , copyrightsC = M.fromList [("genshin_impact", S.fromList ["danbooru|-8916590893211164014"])]
-    , charactersC = M.fromList [("sangonomiya_kokomi", S.fromList ["danbooru|-8916590893211164014"])]
+    , copyrightC = M.fromList [("genshin_impact", S.fromList ["danbooru|-8916590893211164014"])]
+    , characterC = M.fromList [("sangonomiya_kokomi", S.fromList ["danbooru|-8916590893211164014"])]
     }
 
 combinedImgCat :: Category
@@ -56,13 +56,13 @@ combinedImgCat =
           [ ("mikurumikurumi", S.fromList ["danbooru|-8916590893211164014"])
           , ("togo_uzuki", S.fromList ["danbooru|-4278074931642418858"])
           ]
-    , copyrightsC =
+    , copyrightC =
         M.fromList
           [ ("genshin_impact", S.fromList ["danbooru|-4278074931642418858", "danbooru|-8916590893211164014"])
           , ("mihoyo", S.fromList ["danbooru|-4278074931642418858"])
           , ("zenless_zone_zero", S.fromList ["danbooru|-4278074931642418858"])
           ]
-    , charactersC =
+    , characterC =
         M.fromList
           [ ("nilou_(genshin_impact)", S.fromList ["danbooru|-4278074931642418858"])
           , ("sangonomiya_kokomi", S.fromList ["danbooru|-8916590893211164014"])

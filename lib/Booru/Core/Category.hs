@@ -12,8 +12,8 @@ import Data.Set (Set, singleton, union)
 
 data Category = Category
   { artistC :: TagMap
-  , copyrightsC :: TagMap
-  , charactersC :: TagMap
+  , copyrightC :: TagMap
+  , characterC :: TagMap
   }
   deriving (Show, Eq)
 type TagMap = Map Tag (Set String)
@@ -22,8 +22,8 @@ instance Semigroup Category where
   (<>) cat1 cat2 =
     cat1
       { artistC = aux (artistC cat1) (artistC cat2)
-      , copyrightsC = aux (copyrightsC cat1) (copyrightsC cat2)
-      , charactersC = aux (charactersC cat1) (charactersC cat2)
+      , copyrightC = aux (copyrightC cat1) (copyrightC cat2)
+      , characterC = aux (characterC cat1) (characterC cat2)
       }
    where
     aux = unionWith union
@@ -32,8 +32,8 @@ newCategory :: Category
 newCategory =
   Category
     { artistC = empty
-    , copyrightsC = empty
-    , charactersC = empty
+    , copyrightC = empty
+    , characterC = empty
     }
 
 genCategory :: [Image] -> Category
@@ -43,8 +43,8 @@ getImageCat :: Image -> Category
 getImageCat img =
   Category
     { artistC = ctm (artists img)
-    , copyrightsC = ctm (copyrights img)
-    , charactersC = ctm (characters img)
+    , copyrightC = ctm (copyrights img)
+    , characterC = ctm (characters img)
     }
  where
   ctm = createTagMap img
