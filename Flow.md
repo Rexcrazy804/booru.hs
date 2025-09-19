@@ -39,13 +39,17 @@ identify missing files
 
 | At this point, we should have a list containing information about available and missing files combined
 
-pass image through filters
+collect previews using preview filter -> PREVIEW_IMAGES
 
 fold information into structured set
 | the bread and butter of booru flake
 | at the end of this step we should have structure like so
 | (<attribute>, (<attribute_value>, [Image]))
 | where attribute is character, copyright, artist, (optional) provider, (optional) tag
+
+filter the categorized structure use FILTERS
+| this filter, unlike preview filters is used to filter out
+| creation of uneeded folders more info in filter spec
 
 leverage the above structure to create symlinks at DEST directory
 ```
