@@ -85,6 +85,7 @@ test-suite booru-hs-test
     OverrideSpec
     QuoteStr
     RequestSpec
+    Schema.FilterSpec
     Schema.ImageSpec
     Schema.ProviderSpec
     Schema.SourceSpec
