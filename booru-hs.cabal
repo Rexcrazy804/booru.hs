@@ -86,6 +86,7 @@ test-suite booru-hs-test
   other-modules:
     Builtin.ProviderSpec
     Core.CategorySpec
+    Core.FilterCatSpec
     Core.OverrideSpec
     Core.PreviewSpec
     Core.RequestSpec
