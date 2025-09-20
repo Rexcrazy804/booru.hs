@@ -1,6 +1,7 @@
 module Cli.Options (
   Options (..),
   DownloadOpts (..),
+  CommonOpts (..),
   Commands (..),
   parseOpts,
 ) where
@@ -20,22 +21,38 @@ parseOpts =
 **config:** contains the path to config.toml
 -}
 data Options = Options
-  { config :: String
+  { common :: CommonOpts
   , subcommand :: Commands
   }
 
 optionParser :: Parser Options
 optionParser =
   Options
+    <$> commonOptsParser
+    <*> commandsParser
+
+data CommonOpts = CommonOpts
+  { configDir :: String
+  , dataDir :: String
+  }
+
+commonOptsParser :: Parser CommonOpts
+commonOptsParser =
+  CommonOpts
     <$> strOption
       ( long "config"
           <> short 'c'
           <> metavar "CONFIG_FILE"
-          <> showDefault
           <> value "$XDG_CONFIG_HOME/booru/config.toml"
           <> help "Toml file containing booru-hs configuration"
       )
-    <*> commandsParser
+    <*> strOption
+      ( long "data"
+          <> short 'd'
+          <> metavar "DATA_DIR"
+          <> value "$XDG_DATA_HOME/booru"
+          <> help "Directory to populate images and other data"
+      )
 
 -- | Available subcommands and their option records
 data Commands
