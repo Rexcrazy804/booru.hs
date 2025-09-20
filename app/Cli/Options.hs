@@ -52,7 +52,6 @@ commonOptsParser =
           ( long "data"
               <> short 'd'
               <> metavar "DATA_DIR"
-              <> value "$XDG_DATA_HOME/booru"
               <> help "Directory to populate images and other data"
           )
       )
