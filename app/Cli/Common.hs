@@ -19,7 +19,7 @@ extractCfg cfg = do
       putStrLn $ unlines $ map ("[Warning] config: " ++) wns
       return c
 
-getDir :: Maybe String -> IO String
+getDir :: Maybe String -> IO FilePath
 getDir dir = do
   booruDir <- getUserDataDir "booru"
   return $ fromMaybe booruDir dir
