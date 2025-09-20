@@ -1,10 +1,10 @@
-module Booru.Core.Parsers (parseFile)
+module Booru.Core.Parsers (parseFile, encode)
 where
 
 import Data.Text (pack)
 
 import System.IO (IOMode (ReadMode), hGetContents', withFile)
-import Toml (decode)
+import Toml (decode, encode)
 import Toml.Schema (Result (..))
 import Toml.Schema.FromValue (FromValue)
 
