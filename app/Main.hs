@@ -1,13 +1,12 @@
 module Main where
 
-import Booru.Builtin.Providers (danbooruDonmaiUs, specialUrls)
+import Booru.Builtin.Providers (danbooruDonmaiUs, safebooruOrg, specialUrls, zerochanNet)
 import Booru.Core.Requests (getProviderMap, requestFile)
 import Booru.Schema.Images (
   Identifier (Id),
   Image (Image, resolvedName),
   resolvedName,
  )
-import Booru.Schema.Providers (Providers (..))
 import Cli.Commands (Commands (Download), DownloadOpts (..))
 import Cli.Options
 import qualified Cli.Options as Op
@@ -32,7 +31,7 @@ dispatch _ = return ()
 getImages :: DownloadOpts -> IO ()
 getImages DownloadOpts{provider = prv, ids = ids'} = do
   let
-    provMap = getProviderMap $ Providers{providers = [danbooruDonmaiUs, specialUrls]}
+    provMap = getProviderMap [danbooruDonmaiUs, specialUrls, safebooruOrg, zerochanNet]
     idnfrs = map Id ids'
   (Just fetchImage) <- return $ M.lookup prv provMap
   imgs' <- forM idnfrs fetchImage
