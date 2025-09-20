@@ -1,5 +1,3 @@
-{-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
-
 module Cli.Commands.Download where
 
 import Booru.Builtin.Providers (builtinProviders)
