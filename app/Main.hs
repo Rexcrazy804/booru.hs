@@ -1,18 +1,21 @@
 module Main where
 
-import Booru.Builtin.Providers (danbooruDonmaiUs)
-import Booru.Core.Requests (requestFile, resolveProvider)
+import Booru.Builtin.Providers (danbooruDonmaiUs, specialUrls)
+import Booru.Core.Requests (getProviderMap, requestFile)
 import Booru.Schema.Images (
   Identifier (Id),
   Image (Image, resolvedName),
   resolvedName,
  )
+import Booru.Schema.Providers (Providers (..))
+import Cli.Commands (Commands (Download), DownloadOpts (..))
 import Cli.Options
+import qualified Cli.Options as Op
 import Control.Monad (forM, forM_)
 import qualified Data.ByteString as L
+import qualified Data.Map as M
 import Data.Maybe (catMaybes)
 import Options.Applicative
-import System.Environment (getArgs)
 
 main :: IO ()
 main = dispatch =<< execParser opts
@@ -23,14 +26,16 @@ main = dispatch =<< execParser opts
       (fullDesc <> header "Booru-hs Cli for booru needs")
 
 dispatch :: Options -> IO ()
+dispatch Options{Op.command = Download opts} = getImages opts
 dispatch _ = return ()
 
-main' :: IO ()
-main' = do
-  ids <- getArgs
-  let booruFetcher = resolveProvider danbooruDonmaiUs
-      idnfrs = map Id ids
-  imgs' <- forM idnfrs booruFetcher
+getImages :: DownloadOpts -> IO ()
+getImages DownloadOpts{provider = prv, ids = ids'} = do
+  let
+    provMap = getProviderMap $ Providers{providers = [danbooruDonmaiUs, specialUrls]}
+    idnfrs = map Id ids'
+  (Just fetchImage) <- return $ M.lookup prv provMap
+  imgs' <- forM idnfrs fetchImage
   let imgs = catMaybes imgs'
   forM_ imgs downloadImage
 
