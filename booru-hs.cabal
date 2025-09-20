@@ -31,6 +31,7 @@ library
     Booru.Core.Preview
     Booru.Core.Requests
     Booru.Core.Synonyms
+    Booru.Schema.Config
     Booru.Schema.Filters
     Booru.Schema.Images
     Booru.Schema.PFilters
@@ -93,6 +94,7 @@ test-suite booru-hs-test
     Core.RequestSpec
     Core.SynonymSpec
     QuoteStr
+    Schema.ConfigSpec
     Schema.FilterSpec
     Schema.ImageSpec
     Schema.ProviderSpec
