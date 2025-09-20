@@ -1,4 +1,4 @@
-module Cli.Commands.Download (download) where
+module Cli.Commands.Download (download, nullProvider) where
 
 import Booru.Builtin.Providers (builtinProviders)
 import Booru.Core.Requests (getProviderMap, requestFile)
@@ -22,7 +22,7 @@ download DownloadOpts{provider = prv, ids = ids'} CommonOpts{configDir = cfg} = 
     configPrv = fromMaybe [] prvs
     provMap = getProviderMap (builtinProviders ++ configPrv)
     idnfrs = map Id ids'
-    fetchImage = fromMaybe (nullProvider prv) $ M.lookup prv provMap
+    fetchImage = M.findWithDefault (nullProvider prv) prv provMap
 
   imgs' <- forM idnfrs fetchImage
   let imgs = catMaybes imgs'
