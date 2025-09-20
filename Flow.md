@@ -52,6 +52,11 @@ filter the categorized structure use FILTERS
 | creation of uneeded folders more info in filter spec
 
 leverage the above structure to create symlinks at DEST directory
+| read the file system at DEST into a Category
+| let genCat = new category
+| let fsCat = category in file system
+| then, files to create =  genCat - fsCat
+| and, files to delete = fsCat - genCat
 ```
 
 ## NOTE 1
