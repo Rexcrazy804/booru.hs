@@ -14,7 +14,7 @@ import Data.Map (fromList)
 import Data.Text (Text)
 import QuoteStr (quoteStr)
 import Test.Hspec (Spec, it, shouldBe)
-import Toml (Result (..), decode)
+import Toml (decode)
 
 emptyConfig :: Config
 emptyConfig =
