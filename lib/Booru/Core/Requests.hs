@@ -13,7 +13,7 @@ module Booru.Core.Requests (
 
 import Booru.Schema.Images (Identifier (..), Image (Image), extractId)
 import qualified Booru.Schema.Images as Img
-import Booru.Schema.Providers (Attribute (..), Provider (..), ProviderName, Providers (..))
+import Booru.Schema.Providers (Attribute (..), Provider (..), ProviderName)
 import Data.Aeson
 import Data.Aeson.Types (parseMaybe)
 import qualified Data.Aeson.Types as Atyp
@@ -28,8 +28,8 @@ import Network.HTTP.Simple (getResponseBody, httpBS, httpJSON, parseRequest, set
 import System.Environment (lookupEnv)
 import Data.ByteString (ByteString)
 
-getProviderMap :: Providers -> Map ProviderName (Identifier -> IO (Maybe Image))
-getProviderMap Providers{providers = prs} = fromList $ foldl mkProviderFns [] prs
+getProviderMap :: [Provider] -> Map ProviderName (Identifier -> IO (Maybe Image))
+getProviderMap prs = fromList $ foldl mkProviderFns [] prs
  where
   mkProviderFns acc p@(Provider{name = n}) = (n, resolveProvider p) : acc
 
