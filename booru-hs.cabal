@@ -58,7 +58,9 @@ executable booru-hs
   import:           warnings
   main-is:          Main.hs
 
-  -- other-modules:
+  other-modules:
+    Cli.Commands
+    Cli.Options
   -- other-extensions:
   build-depends:
     , base                  ^>=4.19.2.0
