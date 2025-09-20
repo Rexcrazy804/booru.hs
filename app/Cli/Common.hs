@@ -2,12 +2,12 @@ module Cli.Common where
 
 import Booru.Schema.Config (Config, Result (..), parseConfig)
 import Data.Maybe (fromMaybe)
-import System.Environment.XDG.BaseDir (getUserConfigDir, getUserDataDir)
+import System.Directory (XdgDirectory (XdgConfig, XdgData), getXdgDirectory)
 import System.FilePath ((</>))
 
 extractCfg :: Maybe String -> IO Config
 extractCfg cfg = do
-  booruDir <- getUserConfigDir "booru"
+  booruDir <- getXdgDirectory XdgConfig "booru"
   let
     defaultCfg = booruDir </> "config.toml"
     cfg' = fromMaybe defaultCfg cfg
@@ -21,5 +21,5 @@ extractCfg cfg = do
 
 getDir :: Maybe String -> IO FilePath
 getDir dir = do
-  booruDir <- getUserDataDir "booru"
+  booruDir <- getXdgDirectory XdgData "booru"
   return $ fromMaybe booruDir dir
