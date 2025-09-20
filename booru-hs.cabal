@@ -59,6 +59,7 @@ executable booru-hs
   main-is:          Main.hs
   other-modules:
     Cli.Commands.Download
+    Cli.Common
     Cli.Dispatcher
     Cli.Options
 
