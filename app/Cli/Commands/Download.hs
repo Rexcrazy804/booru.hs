@@ -1,4 +1,4 @@
-module Cli.Commands.Download where
+module Cli.Commands.Download (download) where
 
 import Booru.Builtin.Providers (builtinProviders)
 import Booru.Core.Requests (getProviderMap, requestFile)
@@ -15,8 +15,8 @@ import qualified Data.ByteString as L
 import qualified Data.Map as M
 import Data.Maybe (catMaybes, fromMaybe)
 
-getImages :: DownloadOpts -> CommonOpts -> IO ()
-getImages DownloadOpts{provider = prv, ids = ids'} CommonOpts{configDir = cfg} = do
+download :: DownloadOpts -> CommonOpts -> IO ()
+download DownloadOpts{provider = prv, ids = ids'} CommonOpts{configDir = cfg} = do
   Config{providers = prvs} <- extractCfg cfg
   let
     configPrv = fromMaybe [] prvs

@@ -11,5 +11,5 @@ dispatch Options{subcommand = sub, common = copts} = do
   runSubCommand sub copts
 
 runSubCommand :: Commands -> CommonOpts -> IO ()
-runSubCommand (Download opts) = getImages opts
+runSubCommand (Download opts) = download opts
 runSubCommand _ = (print <=< extractCfg) . configDir
