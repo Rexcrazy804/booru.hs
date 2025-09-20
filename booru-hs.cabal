@@ -28,6 +28,7 @@ library
     Booru.Core.Category
     Booru.Core.FilterCat
     Booru.Core.Overrides
+    Booru.Core.Parsers
     Booru.Core.Preview
     Booru.Core.Requests
     Booru.Core.Synonyms
@@ -58,6 +59,7 @@ executable booru-hs
   import:           warnings
   main-is:          Main.hs
   other-modules:
+    Cli.Commands.Build
     Cli.Commands.Download
     Cli.Common
     Cli.Dispatcher
