@@ -32,26 +32,29 @@ optionParser =
     <*> commandsParser
 
 data CommonOpts = CommonOpts
-  { configDir :: String
-  , dataDir :: String
+  { configDir :: Maybe String
+  , dataDir :: Maybe String
   }
 
 commonOptsParser :: Parser CommonOpts
 commonOptsParser =
   CommonOpts
-    <$> strOption
-      ( long "config"
-          <> short 'c'
-          <> metavar "CONFIG_FILE"
-          <> value "$XDG_CONFIG_HOME/booru/config.toml"
-          <> help "Toml file containing booru-hs configuration"
+    <$> optional
+      ( strOption
+          ( long "config"
+              <> short 'c'
+              <> metavar "CONFIG_FILE"
+              <> help "Toml file containing booru-hs configuration"
+          )
       )
-    <*> strOption
-      ( long "data"
-          <> short 'd'
-          <> metavar "DATA_DIR"
-          <> value "$XDG_DATA_HOME/booru"
-          <> help "Directory to populate images and other data"
+    <*> optional
+      ( strOption
+          ( long "data"
+              <> short 'd'
+              <> metavar "DATA_DIR"
+              <> value "$XDG_DATA_HOME/booru"
+              <> help "Directory to populate images and other data"
+          )
       )
 
 -- | Available subcommands and their option records
