@@ -8,6 +8,14 @@ where
 
 import Booru.Schema.Providers
 
+builtinProviders :: [Provider]
+builtinProviders =
+  [ danbooruDonmaiUs
+  , safebooruOrg
+  , zerochanNet
+  , specialUrls
+  ]
+
 danbooruDonmaiUs :: Provider
 danbooruDonmaiUs =
   Provider
