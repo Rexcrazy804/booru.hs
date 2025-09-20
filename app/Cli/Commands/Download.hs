@@ -2,6 +2,7 @@ module Cli.Commands.Download where
 
 import Booru.Builtin.Providers (builtinProviders)
 import Booru.Core.Requests (getProviderMap, requestFile)
+import Booru.Schema.Config (Config (Config, providers))
 import Booru.Schema.Images (
   Identifier (Id),
   Image (Image, resolvedName),
@@ -13,10 +14,11 @@ import qualified Data.ByteString as L
 import qualified Data.Map as M
 import Data.Maybe (catMaybes, fromMaybe)
 
-getImages :: DownloadOpts -> IO ()
-getImages DownloadOpts{provider = prv, ids = ids'} = do
+getImages :: DownloadOpts -> Config -> IO ()
+getImages DownloadOpts{provider = prv, ids = ids'} Config{providers = prvs} = do
   let
-    provMap = getProviderMap builtinProviders
+    configPrv = fromMaybe [] prvs
+    provMap = getProviderMap (builtinProviders ++ configPrv)
     idnfrs = map Id ids'
     fetchImage = fromMaybe (nullProvider prv) $ M.lookup prv provMap
 

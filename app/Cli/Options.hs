@@ -20,21 +20,22 @@ parseOpts =
 **config:** contains the path to config.toml
 -}
 data Options = Options
-  { subcommand :: Commands
-  , config :: String
+  { config :: String
+  , subcommand :: Commands
   }
 
 optionParser :: Parser Options
 optionParser =
   Options
-    <$> commandsParser
-    <*> strOption
+    <$> strOption
       ( long "config"
           <> short 'c'
           <> metavar "CONFIG_FILE"
-          <> value "/home/rexies/.config/booru/config.toml"
+          <> showDefault
+          <> value "$XDG_CONFIG_HOME/booru/config.toml"
           <> help "Toml file containing booru-hs configuration"
       )
+    <*> commandsParser
 
 -- | Available subcommands and their option records
 data Commands
