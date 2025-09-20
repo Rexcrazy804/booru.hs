@@ -7,9 +7,8 @@ import Control.Monad ((<=<))
 
 -- | reads the options structure and dispatches subcommands
 dispatch :: Options -> IO ()
-dispatch Options{subcommand = sub, common = copts} = do
-  runSubCommand sub copts
-
-runSubCommand :: Commands -> CommonOpts -> IO ()
-runSubCommand (Download opts) = download opts
-runSubCommand _ = (print <=< extractCfg) . configDir
+dispatch Options{subcommand = sub, common = copts} =
+  case sub of
+    (Download opts) -> download opts
+    Build -> (print <=< extractCfg) . configDir
+    $ copts
