@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-incomplete-uni-patterns #-}
+
 module Cli.Commands.Download where
 
 import Booru.Builtin.Providers (builtinProviders)
@@ -8,14 +10,16 @@ import Booru.Schema.Images (
   Image (Image, resolvedName),
   resolvedName,
  )
-import Cli.Options (DownloadOpts (..))
+import Cli.Common
+import Cli.Options (CommonOpts (..), DownloadOpts (..))
 import Control.Monad (forM, forM_)
 import qualified Data.ByteString as L
 import qualified Data.Map as M
 import Data.Maybe (catMaybes, fromMaybe)
 
-getImages :: DownloadOpts -> Config -> IO ()
-getImages DownloadOpts{provider = prv, ids = ids'} Config{providers = prvs} = do
+getImages :: DownloadOpts -> CommonOpts -> IO ()
+getImages DownloadOpts{provider = prv, ids = ids'} CommonOpts{configDir = cfg} = do
+  Config{providers = prvs} <- extractCfg cfg
   let
     configPrv = fromMaybe [] prvs
     provMap = getProviderMap (builtinProviders ++ configPrv)
