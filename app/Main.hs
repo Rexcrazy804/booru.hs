@@ -1,5 +1,7 @@
 module Main where
 
+import Cli.Dispatcher (dispatch)
+import Cli.Options (parseOpts)
+
 main :: IO ()
-main = do
-  print "Hello world!!"
+main = dispatch =<< parseOpts
