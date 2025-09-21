@@ -11,12 +11,14 @@ module Booru.Core.Requests (
   toArray,
 ) where
 
-import Booru.Schema.Images (Identifier (..), Image (Image), extractId)
+import Booru.Schema.Identifier (Identifier, extractId)
+import Booru.Schema.Images (Image (Image))
 import qualified Booru.Schema.Images as Img
 import Booru.Schema.Providers (Attribute (..), Provider (..), ProviderName)
 import Data.Aeson
 import Data.Aeson.Types (parseMaybe)
 import qualified Data.Aeson.Types as Atyp
+import Data.ByteString (ByteString)
 import Data.Hashable (hash)
 import Data.Map (Map, fromList)
 import Data.Maybe
@@ -26,7 +28,6 @@ import Data.Vector (toList, (!?))
 import Network.HTTP.Client.Conduit (Response)
 import Network.HTTP.Simple (getResponseBody, httpBS, httpJSON, parseRequest, setRequestHeader)
 import System.Environment (lookupEnv)
-import Data.ByteString (ByteString)
 
 getProviderMap :: [Provider] -> Map ProviderName (Identifier -> IO (Maybe Image))
 getProviderMap prs = fromList $ foldl mkProviderFns [] prs

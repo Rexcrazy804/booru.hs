@@ -5,8 +5,8 @@ module Booru.Core.Preview (
 where
 
 import Booru.Schema.Filters (Filter (..))
-import Booru.Schema.Images (Image (Image), Tag, extractId', file, preview_file, resolvedName)
-import qualified Booru.Schema.Images (Image (id))
+import Booru.Schema.Identifier (extractId')
+import Booru.Schema.Images (Image (Image), Tag, file, preview_file, resolvedName)
 import qualified Booru.Schema.Images as Img
 import Booru.Schema.PFilters (PFilters (..))
 import Data.Bits (Bits (xor))
@@ -25,7 +25,7 @@ applyFilter' pr img =
       , (copyrights pr, Img.copyrights img)
       , (artists pr, Img.artists img)
       , (tags pr, Img.tags img)
-      , (ids pr, extractId' $ Booru.Schema.Images.id img)
+      , (ids pr, extractId' $ Img.id img)
       , (ratings pr, [Img.rating img])
       , (providers pr, [Img.provider img])
       ]

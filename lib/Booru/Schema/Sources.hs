@@ -9,7 +9,8 @@ module Booru.Schema.Sources (
 )
 where
 
-import Booru.Schema.Images (Identifier, Tag)
+import Booru.Schema.Identifier (Identifier)
+import Booru.Schema.Images (Tag)
 import GHC.Generics (Generic)
 import Toml.Schema
 
