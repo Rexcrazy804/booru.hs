@@ -34,6 +34,7 @@ library
     Booru.Core.Synonyms
     Booru.Schema.Config
     Booru.Schema.Filters
+    Booru.Schema.Identifier
     Booru.Schema.Images
     Booru.Schema.PFilters
     Booru.Schema.Providers
