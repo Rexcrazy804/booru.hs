@@ -9,14 +9,15 @@ import Cli.Options (CommonOpts (..))
 import Booru.Builtin.Providers (builtinProviders)
 import Booru.Core.Overrides (applyOverrides)
 import Booru.Core.Parsers
-import Booru.Core.Requests (getProviderMap)
+import Booru.Core.Requests (getProviderMap, requestFile)
 import Booru.Core.Synonyms (realizeSynonyms)
 import Booru.Schema.Config (Config (..))
 import Booru.Schema.Identifier (Identifier, toResolvedName)
-import Booru.Schema.Images (Image, Images (..), resolvedName)
+import Booru.Schema.Images (Image (Image), Images (..), resolvedName)
 import qualified Booru.Schema.Images as Img
 import Booru.Schema.Providers (ProviderName)
 import Booru.Schema.Sources (Source (Source, ids, provider))
+import qualified Data.ByteString as L
 import Data.Map (Map, findWithDefault)
 import Data.Maybe (catMaybes, fromMaybe)
 import qualified Data.Set as Set
@@ -35,8 +36,10 @@ build CommonOpts{dataDir = d, configDir = cfg} = do
     extractCfg cfg
 
   cfdir <- getDir d
-  createDirectoryIfMissing True (cfdir </> "images")
-  let datafile = cfdir </> "data.toml"
+  let
+    datafile = cfdir </> "data.toml"
+    imgDownloadDir = cfdir </> "images"
+  createDirectoryIfMissing True imgDownloadDir
   dataExists <- doesFileExist datafile
   Images{images = cachedImgs} <-
     if dataExists
@@ -54,6 +57,8 @@ build CommonOpts{dataDir = d, configDir = cfg} = do
     overridenImgs = concatMap (uncurry applyOverrides) sourceImgMap
     synonymAppliedImgs = realizeSynonyms syns overridenImgs
     finalImgs = validCImgs ++ synonymAppliedImgs
+
+  mapM_ (downloadImage imgDownloadDir) finalImgs
 
   writeFile datafile (show $ encode Images{images = finalImgs})
   return ()
@@ -87,3 +92,14 @@ getMetaData pmap src@(Source{ids = idnfrs, provider = prv}) = do
   metaList <- mapM metaFetcher idnfrs
 
   return (src, catMaybes metaList)
+
+downloadImage :: FilePath -> Image -> IO ()
+downloadImage ddir img@Image{resolvedName = name} = do
+  let dwnPath = ddir </> name
+  imgExists <- doesFileExist dwnPath
+  if imgExists
+    then return ()
+    else do
+      rsbod <- requestFile img
+      L.writeFile dwnPath rsbod
+      return ()
