@@ -35,11 +35,10 @@ data Synonyms' = Synonyms'
   }
   deriving (Show, Eq)
 
-realizeSynonyms :: Maybe Synonyms -> [Image] -> [Image]
-realizeSynonyms Nothing = id
-realizeSynonyms (Just syns) =
+realizeSynonyms :: Synonyms -> [Image] -> [Image]
+realizeSynonyms syns img =
   let syns' = toSynonyms' syns
-  in  map (replaceSynonyms syns')
+  in  map (replaceSynonyms syns') img
 
 toSynonyms' :: Synonyms -> Synonyms'
 toSynonyms' syns =
