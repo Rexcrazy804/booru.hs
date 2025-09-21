@@ -11,7 +11,7 @@ module Booru.Core.Requests (
   toArray,
 ) where
 
-import Booru.Schema.Identifier (Identifier, extractId)
+import Booru.Schema.Identifier (Identifier, extractId, toResolvedName)
 import Booru.Schema.Images (Image (Image))
 import qualified Booru.Schema.Images as Img
 import Booru.Schema.Providers (Attribute (..), Provider (..), ProviderName)
@@ -19,7 +19,6 @@ import Data.Aeson
 import Data.Aeson.Types (parseMaybe)
 import qualified Data.Aeson.Types as Atyp
 import Data.ByteString (ByteString)
-import Data.Hashable (hash)
 import Data.Map (Map, fromList)
 import Data.Maybe
 import Data.String (fromString)
@@ -118,7 +117,7 @@ extractImage :: Provider -> Identifier -> Maybe Object -> Maybe Image
 extractImage prvdr idnfr Nothing =
   Just
     Image
-      { resolvedName = name prvdr ++ '|' : show (hash id')
+      { resolvedName = name prvdr `toResolvedName` idnfr
       , provider = name prvdr
       , id = idnfr
       , file = file'
@@ -138,7 +137,7 @@ extractImage prvdr idnfr Nothing =
 extractImage prvdr idnfr (Just obj) =
   return
     Image
-      { resolvedName = name prvdr ++ '|' : show (hash $ extractId idnfr)
+      { resolvedName = name prvdr `toResolvedName` idnfr
       , provider = name prvdr
       , id = idnfr
       , file = file'
