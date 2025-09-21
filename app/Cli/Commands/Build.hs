@@ -10,6 +10,7 @@ import Booru.Builtin.Providers (builtinProviders)
 import Booru.Core.Overrides (applyOverrides)
 import Booru.Core.Parsers
 import Booru.Core.Requests (getProviderMap)
+import Booru.Core.Synonyms (realizeSynonyms)
 import Booru.Schema.Config (Config (..))
 import Booru.Schema.Identifier (Identifier, toResolvedName)
 import Booru.Schema.Images (Image, Images (..), resolvedName)
@@ -29,6 +30,7 @@ build CommonOpts{dataDir = d, configDir = cfg} = do
     , providers = prvs
     , filters = _fls
     , preview_filters = _pfls
+    , synonyms = syns
     } <-
     extractCfg cfg
 
@@ -49,8 +51,9 @@ build CommonOpts{dataDir = d, configDir = cfg} = do
   sourceImgMap <- mapM (getMetaData provMap) uncachedSrcs
 
   let
-    overrideImgs = concatMap (uncurry applyOverrides) sourceImgMap
-    finalImgs = validCImgs ++ overrideImgs
+    overridenImgs = concatMap (uncurry applyOverrides) sourceImgMap
+    synonymAppliedImgs = realizeSynonyms syns overridenImgs
+    finalImgs = validCImgs ++ synonymAppliedImgs
 
   writeFile datafile (show $ encode Images{images = finalImgs})
   return ()
