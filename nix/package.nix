@@ -28,6 +28,7 @@
     fileset = unions [
       (hsfilter (root + /app))
       (hsfilter (root + /lib))
+      (hsfilter (root + /lib-cli))
       (hsfilter (root + /test))
       (root + /booru-hs.cabal)
       (root + /CHANGELOG.md)
