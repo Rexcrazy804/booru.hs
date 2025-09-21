@@ -34,6 +34,7 @@ optionParser =
 data CommonOpts = CommonOpts
   { configDir :: Maybe String
   , dataDir :: Maybe String
+  , plantDir :: Maybe String
   }
 
 commonOptsParser :: Parser CommonOpts
@@ -52,7 +53,15 @@ commonOptsParser =
           ( long "data"
               <> short 'd'
               <> metavar "DATA_DIR"
-              <> help "Directory to populate images and other data"
+              <> help "Directory storing booru raw data"
+          )
+      )
+    <*> optional
+      ( strOption
+          ( long "plant"
+              <> short 'p'
+              <> metavar "PLANT_DIR"
+              <> help "Directory to plant autocateogrized image folders at"
           )
       )
 
