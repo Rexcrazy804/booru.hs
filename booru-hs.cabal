@@ -62,6 +62,7 @@ executable booru-hs
   other-modules:
     Cli.Commands.Build
     Cli.Commands.Download
+    Cli.Commands.Preview
     Cli.Common
     Cli.Dispatcher
     Cli.Options

@@ -69,6 +69,7 @@ commonOptsParser =
 data Commands
   = Build
   | Download DownloadOpts
+  | Preview
 
 -- | scaffolds logic for parsing sub commands
 commandsParser :: Parser Commands
@@ -76,6 +77,7 @@ commandsParser =
   hsubparser $
     command "build" (info (pure Build) $ progDesc "build the image folder")
       <> command "download" (info (Download <$> dlOptParser) $ progDesc "download images using IDS from a given PROVIDER")
+      <> command "preview" (info (pure Preview) $ progDesc "generates preview.md into stdout")
 
 {- | # Download subcommand Options
 **provider:** selected provider to rquest image and metagdata from
