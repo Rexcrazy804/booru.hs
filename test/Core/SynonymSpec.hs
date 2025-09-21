@@ -94,4 +94,4 @@ spec :: Spec
 spec = do
   it "replaces synonyms in image#1" $ replaceSynonyms normalSynonyms' imgOne `shouldBe` imgOne'
   it "replaces synonyms in image#2" $ replaceSynonyms normalSynonyms' imgTwo `shouldBe` imgTwo'
-  it "processes synonyms across multiple images" $ realizeSynonyms (Just simpleSynonyms) [imgOne, imgTwo] `shouldBe` [imgOne', imgTwo']
+  it "processes synonyms across multiple images" $ realizeSynonyms simpleSynonyms [imgOne, imgTwo] `shouldBe` [imgOne', imgTwo']
