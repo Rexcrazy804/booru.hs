@@ -50,4 +50,5 @@ getImageCat img =
   ctm = createTagMap img
 
 createTagMap :: Image -> [Tag] -> TagMap
-createTagMap Image{resolvedName = rname} = foldr (`insert` singleton rname) empty
+createTagMap img [] = createTagMap img ["unknown"]
+createTagMap Image{resolvedName = rname} ts = foldr (`insert` singleton rname) empty ts
