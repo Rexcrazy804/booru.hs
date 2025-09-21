@@ -49,9 +49,10 @@ build CommonOpts{dataDir = d, configDir = cfg, plantDir = p} = do
 
   let
     overridenImgs = concatMap (uncurry applyOverrides) sourceImgMap
-    synonymAppliedImgs = realizeSynonyms syns overridenImgs
+    synonymAppliedImgs = maybe overridenImgs (`realizeSynonyms` overridenImgs) syns
     finalImgs = validCImgs ++ synonymAppliedImgs
-    category = filterCategory fls $ genCategory finalImgs
+    rawCat = genCategory finalImgs
+    category = maybe rawCat (`filterCategory` rawCat) fls
 
   mapM_ (downloadImage imgDownloadDir) finalImgs
   writeFile datafile (show $ encode Images{images = finalImgs})

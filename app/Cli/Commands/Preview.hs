@@ -9,6 +9,5 @@ preview :: CommonOpts -> IO ()
 preview CommonOpts{dataDir = d, configDir = cfg} = do
   Config{preview_filters = pfls} <- extractCfg cfg
   (cachedImgs, _, _) <- getData d
-  let filtered = filterImages pfls cachedImgs
+  let filtered = maybe cachedImgs (`filterImages` cachedImgs) pfls
   putStrLn $ generatePreview filtered
-
