@@ -13,8 +13,9 @@ import Data.Bits (Bits (xor))
 import Data.List (intercalate)
 import Data.List.Split (chunksOf)
 
-filterImages :: PFilters -> [Image] -> [Image]
-filterImages pr = filter (applyFilter' pr)
+filterImages :: Maybe PFilters -> [Image] -> [Image]
+filterImages Nothing = id
+filterImages (Just pr) = filter (applyFilter' pr)
 
 applyFilter' :: PFilters -> Image -> Bool
 applyFilter' pr img =
