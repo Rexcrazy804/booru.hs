@@ -7,6 +7,8 @@ import Cli.Common
 import Cli.Options (CommonOpts (..))
 
 import Booru.Builtin.Providers (builtinProviders)
+import Booru.Core.Category
+import Booru.Core.FilterCat (filterCategory)
 import Booru.Core.Overrides (applyOverrides)
 import Booru.Core.Parsers
 import Booru.Core.Requests (getProviderMap, requestFile)
@@ -17,24 +19,27 @@ import Booru.Schema.Images (Image (Image), Images (..), resolvedName)
 import qualified Booru.Schema.Images as Img
 import Booru.Schema.Providers (ProviderName)
 import Booru.Schema.Sources (Source (Source, ids, provider))
+import Control.Monad (when)
 import qualified Data.ByteString as L
-import Data.Map (Map, findWithDefault)
+import Data.Foldable (forM_)
+import Data.Map (Map, findWithDefault, toList)
 import Data.Maybe (catMaybes, fromMaybe)
 import qualified Data.Set as Set
-import System.Directory (createDirectoryIfMissing, doesFileExist)
+import System.Directory (createDirectoryIfMissing, createFileLink, doesDirectoryExist, doesFileExist, removeDirectoryRecursive)
 import System.FilePath ((</>))
 
 build :: CommonOpts -> IO ()
-build CommonOpts{dataDir = d, configDir = cfg} = do
+build CommonOpts{dataDir = d, configDir = cfg, plantDir = p} = do
   Config
     { sources = srcs
     , providers = prvs
-    , filters = _fls
+    , filters = fls
     , preview_filters = _pfls
     , synonyms = syns
     } <-
     extractCfg cfg
 
+  pDir <- getPlantDir p
   (cachedImgs, datafile, imgDownloadDir) <- getData d
 
   let
@@ -48,10 +53,12 @@ build CommonOpts{dataDir = d, configDir = cfg} = do
     overridenImgs = concatMap (uncurry applyOverrides) sourceImgMap
     synonymAppliedImgs = realizeSynonyms syns overridenImgs
     finalImgs = validCImgs ++ synonymAppliedImgs
+    category = filterCategory fls $ genCategory finalImgs
 
   mapM_ (downloadImage imgDownloadDir) finalImgs
-
   writeFile datafile (show $ encode Images{images = finalImgs})
+  categoryToFs imgDownloadDir pDir category
+
   return ()
 
 -- TODO
@@ -98,3 +105,26 @@ downloadImage ddir img@Image{resolvedName = name} = do
       putStrLn $ "Downloading: " ++ name
       L.writeFile dwnPath rsbod
       return ()
+
+{- |
+First file path is a directory containing resolved images
+Second file path is the directory to plant (symlink) categorized images
+-}
+categoryToFs :: FilePath -> FilePath -> Category -> IO ()
+categoryToFs idir pdir cat = do
+  pdirExist <- doesDirectoryExist pdir
+  when pdirExist $ putStrLn ("Deleting: " ++ pdir) >> removeDirectoryRecursive pdir
+  attributeToFs (pdir </> "characters") $ characterC cat
+  attributeToFs (pdir </> "copyrights") $ copyrightC cat
+  attributeToFs (pdir </> "artists") $ artistC cat
+ where
+  attributeToFs :: FilePath -> TagMap -> IO ()
+  attributeToFs root tmap = do
+    forM_
+      (toList tmap)
+      ( \(tag, imgs) -> do
+          let tagF = root </> tag
+          putStrLn $ "Sylinking: " ++ tagF
+          createDirectoryIfMissing True tagF
+          forM_ imgs (\img -> createFileLink (idir </> img) (tagF </> img))
+      )
