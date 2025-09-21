@@ -2,7 +2,6 @@
 
 module Cli.Commands.Build (build) where
 
-import Cli.Commands.Download (nullProvider)
 import Cli.Common
 import Cli.Options (CommonOpts (..))
 

@@ -1,8 +1,8 @@
 module Cli.Dispatcher (dispatch) where
 
-import Cli.Commands.Build (build)
-import Cli.Commands.Download (download)
-import Cli.Commands.Preview (preview)
+import Cli.Commands.Build
+import Cli.Commands.Download
+import Cli.Commands.Preview
 import Cli.Options
 
 -- | reads the options structure and dispatches subcommands

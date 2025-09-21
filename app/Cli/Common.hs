@@ -44,3 +44,8 @@ getPlantDir dir = do
   let actualDir = fromMaybe plantDir dir
   createDirectoryIfMissing True actualDir
   return actualDir
+
+nullProvider :: String -> b -> IO (Maybe a)
+nullProvider prv = const $ do
+  putStrLn $ "Invalid Provider: " ++ prv
+  return Nothing
