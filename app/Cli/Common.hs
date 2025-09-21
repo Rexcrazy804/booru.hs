@@ -3,7 +3,7 @@ module Cli.Common where
 import Booru.Core.Parsers (parseFile)
 import Booru.Schema.Config
 import Data.Maybe (fromMaybe)
-import System.Directory (XdgDirectory (XdgConfig, XdgData), getXdgDirectory)
+import System.Directory (XdgDirectory (XdgConfig, XdgData), getHomeDirectory, getXdgDirectory)
 import System.FilePath ((</>))
 
 extractCfg :: Maybe String -> IO Config
@@ -18,3 +18,8 @@ getDir :: Maybe String -> IO FilePath
 getDir dir = do
   booruDir <- getXdgDirectory XdgData "booru"
   return $ fromMaybe booruDir dir
+
+getPlantDir :: Maybe String -> IO FilePath
+getPlantDir dir = do
+  plantDir <- (</> "booru") . (</> "Pictures") <$> getHomeDirectory
+  return $ fromMaybe plantDir dir
