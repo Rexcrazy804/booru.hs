@@ -13,6 +13,11 @@
   http-conduit,
   vector,
   aeson-qq,
+  bytestring,
+  directory,
+  split,
+  filepath,
+  optparse-applicative_0_19_0_0
 }: let
   inherit (lib.fileset) toSource unions fileFilter;
   hsfilter = fileFilter (file: lib.any file.hasExt ["hs"]);
@@ -32,7 +37,6 @@
 in
   mkDerivation {
     inherit src;
-    # some tests require internet connection
     pname = "booru-hs";
     version = "0.0.1.0";
     isLibrary = true;
@@ -40,14 +44,23 @@ in
     libraryHaskellDepends = [
       aeson
       base
+      bytestring
       containers
       hashable
       http-conduit
+      split
       text
       toml-parser
       vector
     ];
-    executableHaskellDepends = [base];
+    executableHaskellDepends = [
+      base
+      bytestring
+      containers
+      directory
+      filepath
+      optparse-applicative_0_19_0_0
+    ];
     testHaskellDepends = [
       aeson
       aeson-qq
