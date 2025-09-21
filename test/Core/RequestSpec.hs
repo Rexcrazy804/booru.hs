@@ -27,7 +27,7 @@ booruReqId = WithNick{id = "9969513", nickname = "kokomi_chibbi"}
 booruImg :: Image
 booruImg =
   Image
-    { resolvedName = "danbooru|-8916590893211164014"
+    { resolvedName = "danbooru-8916590893211164014"
     , provider = "danbooru"
     , id = booruReqId
     , file = "https://cdn.donmai.us/original/bd/6c/bd6cde0ec3b896251118d59b4d0e01b4.jpg"
@@ -52,7 +52,7 @@ safeBooruReqId = Id "6077620"
 safeBooruImg :: Image
 safeBooruImg =
   Image
-    { resolvedName = "safebooru|-1258380123441119458"
+    { resolvedName = "safebooru-1258380123441119458"
     , provider = "safebooru"
     , id = safeBooruReqId
     , file = "https://safebooru.org/images/539/6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg"
@@ -77,7 +77,7 @@ zeroReqId = Id "4585899"
 zeroImg :: Image
 zeroImg =
   Image
-    { resolvedName = "zerochan|4912039131850589819"
+    { resolvedName = "zerochan4912039131850589819"
     , provider = "zerochan"
     , id = zeroReqId
     , file = "https://static.zerochan.net/Honkai.Star.Rail.full.4585899.jpg"
@@ -113,7 +113,7 @@ specialProvider =
 specialImg :: Image
 specialImg =
   Image
-    { resolvedName = "kokomiOnly|-190304692471648127"
+    { resolvedName = "kokomiOnly-190304692471648127"
     , provider = "kokomiOnly"
     , id = WithNick{id = "https://sjc1.vultrobjects.com/cucdn/gallery-39/art/gi-sangonomiya-kokomi-birthday-2023.jpg", nickname = "kokomi-smile"}
     , file = "https://sjc1.vultrobjects.com/cucdn/gallery-39/art/gi-sangonomiya-kokomi-birthday-2023.jpg"

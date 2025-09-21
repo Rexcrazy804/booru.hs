@@ -41,4 +41,4 @@ extractId' (Id x) = [x]
 extractId' WithNick{id = x, nickname = n} = [x, n]
 
 toResolvedName :: ProviderName -> Identifier -> String
-toResolvedName pname id' = pname ++ '|' : show (hash $ extractId id')
+toResolvedName pname id' = pname ++ show (hash $ extractId id')
