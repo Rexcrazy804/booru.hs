@@ -5,7 +5,7 @@ module Schema.ConfigSpec (spec) where
 
 import Booru.Schema.Config
 import Booru.Schema.Filters (Filter (..), Filters (..))
-import Booru.Schema.Images (Identifier (..))
+import Booru.Schema.Identifier (Identifier (..))
 import Booru.Schema.PFilters (PFilters (..))
 import Booru.Schema.Sources
 import Booru.Schema.Synonyms (Synonyms (..))

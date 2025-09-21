@@ -1,11 +1,11 @@
-{-# LANGUAGE DisambiguateRecordFields #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Core.CategorySpec (spec) where
 
 import Booru.Core.Category (Category (..), genCategory, getImageCat)
-import Booru.Schema.Images (Identifier (..), Image (Image))
-import qualified Booru.Schema.Images
+import Booru.Schema.Identifier (Identifier (..))
+import Booru.Schema.Images (Image (..))
 import qualified Data.Map as M
 import qualified Data.Set as S
 import Test.Hspec (Spec, it, shouldBe)

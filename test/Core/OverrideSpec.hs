@@ -3,6 +3,7 @@
 module Core.OverrideSpec (spec) where
 
 import Booru.Core.Overrides
+import Booru.Schema.Identifier
 import Booru.Schema.Images
 import qualified Booru.Schema.Images as Img
 import Booru.Schema.Sources

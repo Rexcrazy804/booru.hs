@@ -4,7 +4,8 @@ module Core.PreviewSpec (spec) where
 
 import Booru.Core.Preview
 import Booru.Schema.Filters (Filter (..))
-import Booru.Schema.Images (Identifier (..), Image (..))
+import Booru.Schema.Identifier
+import Booru.Schema.Images (Image (..))
 import Booru.Schema.PFilters (PFilters (..))
 import qualified Booru.Schema.PFilters as PF
 import Test.Hspec (Spec, it, shouldBe)

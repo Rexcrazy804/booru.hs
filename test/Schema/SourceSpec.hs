@@ -3,7 +3,7 @@
 
 module Schema.SourceSpec (spec) where
 
-import Booru.Schema.Images (Identifier (..))
+import Booru.Schema.Identifier (Identifier (..))
 import Booru.Schema.Sources
 import Data.Text (Text)
 import QuoteStr (quoteStr)

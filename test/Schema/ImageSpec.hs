@@ -1,9 +1,10 @@
-{-# LANGUAGE DisambiguateRecordFields #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 module Schema.ImageSpec (spec) where
 
 import Booru.Schema.Images
+import Booru.Schema.Identifier (Identifier (WithNick, nickname, id))
 import Data.Text (Text)
 import QuoteStr (quoteStr)
 import Test.Hspec (Spec, it, shouldBe)
