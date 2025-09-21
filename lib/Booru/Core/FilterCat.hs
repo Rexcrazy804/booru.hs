@@ -5,8 +5,9 @@ import Booru.Schema.Filters (Filter (..), Filters (..))
 import Data.Bits (xor)
 import Data.Map (filterWithKey)
 
-filterCategory :: Filters -> Category -> Category
-filterCategory ft cat =
+filterCategory :: Maybe Filters -> Category -> Category
+filterCategory Nothing cat = cat
+filterCategory (Just ft) cat =
   Category
     { artistC = filterCatField (artists ft) (artistC cat)
     , copyrightC = filterCatField (copyrights ft) (copyrightC cat)
