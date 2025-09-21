@@ -34,7 +34,6 @@ build CommonOpts{dataDir = d, configDir = cfg, plantDir = p} = do
     { sources = srcs
     , providers = prvs
     , filters = fls
-    , preview_filters = _pfls
     , synonyms = syns
     } <-
     extractCfg cfg
