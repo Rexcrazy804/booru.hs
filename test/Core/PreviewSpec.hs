@@ -15,7 +15,7 @@ imgWPrv =
   Image
     { resolvedName = "generalImg"
     , provider = "danbooru"
-    , id = WithNick{id = "9969513", nickname = "kokomi_chibbi"}
+    , id = Id "generalImg"
     , file = "https://safebooru.org/images/539/6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg"
     , preview_file = "https://safebooru.org/samples/539/sample_6fef5929e6e09703b1493c6e5802fa5e4f189639.jpg"
     , artists = []

@@ -1,3 +1,5 @@
+{-# LANGUAGE DuplicateRecordFields #-}
+
 module Booru.Core.Preview (
   generatePreview,
   filterImages,
@@ -5,8 +7,8 @@ module Booru.Core.Preview (
 where
 
 import Booru.Schema.Filters (Filter (..))
-import Booru.Schema.Identifier (extractId')
-import Booru.Schema.Images (Image (Image), Tag, file, preview_file, resolvedName)
+import Booru.Schema.Identifier (extractId, extractId')
+import Booru.Schema.Images (Image (Image), Tag, file, id, preview_file)
 import qualified Booru.Schema.Images as Img
 import Booru.Schema.PFilters (PFilters (..))
 import Data.Bits (Bits (xor))
@@ -14,7 +16,7 @@ import Data.List (intercalate)
 import Data.List.Split (chunksOf)
 
 filterImages :: Maybe PFilters -> [Image] -> [Image]
-filterImages Nothing = id
+filterImages Nothing = Prelude.id
 filterImages (Just pr) = filter (applyFilter' pr)
 
 applyFilter' :: PFilters -> Image -> Bool
@@ -47,8 +49,8 @@ tabulate xs = "|" ++ intercalate "|" xs ++ "|"
 -- TODO
 -- let preview_file be a maybe srting in image spec
 toMarkDown :: Image -> String
-toMarkDown Image{resolvedName = n, file = f, preview_file = ""} = "![" ++ n ++ "](" ++ f ++ ")"
-toMarkDown Image{resolvedName = n, file = f, preview_file = pf} = "[![" ++ n ++ "](" ++ pf ++ ")](" ++ f ++ ")"
+toMarkDown Image{id = id', file = f, preview_file = ""} = let n = extractId id' in "![" ++ n ++ "](" ++ f ++ ")"
+toMarkDown Image{id = id', file = f, preview_file = pf} = let n = extractId id' in "[![" ++ n ++ "](" ++ pf ++ ")](" ++ f ++ ")"
 
 generatePreview :: [Image] -> String
 generatePreview imgs = unlines $ mdTableHeader ++ tabulatedPreviews
