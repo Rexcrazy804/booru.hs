@@ -111,6 +111,6 @@ mapToName = map resolvedName
 spec :: Spec
 spec = do
   it "generates preview.md from image list" $ lines (generatePreview [imgWPrv, imgWoPrv, imgWoPrv, imgWoPrv, imgWoPrv]) `shouldBe` generatedPreview
-  it "filters images" $ mapToName (filterImages prvFilter [bakaImg, bakaImg']) `shouldBe` [resolvedName bakaImg']
-  it "filters images # inverted" $ mapToName (filterImages prvFilter' [bakaImg, bakaImg']) `shouldBe` [resolvedName bakaImg]
-  it "filters images # empty" $ mapToName (filterImages emptyFilter [bakaImg, bakaImg']) `shouldBe` mapToName [bakaImg, bakaImg']
+  it "filters images" $ mapToName (filterImages (Just prvFilter) [bakaImg, bakaImg']) `shouldBe` [resolvedName bakaImg']
+  it "filters images # inverted" $ mapToName (filterImages (Just prvFilter') [bakaImg, bakaImg']) `shouldBe` [resolvedName bakaImg]
+  it "filters images # empty" $ mapToName (filterImages (Just emptyFilter) [bakaImg, bakaImg']) `shouldBe` mapToName [bakaImg, bakaImg']
