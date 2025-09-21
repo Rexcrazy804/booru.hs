@@ -64,5 +64,5 @@ simpleFilter' =
 
 spec :: Spec
 spec = do
-  it "categorizes simple image" $ filterCategory simpleFilter multiImgCat `shouldBe` multiImgCat''
-  it "categorizes simple image # inverted" $ filterCategory simpleFilter' multiImgCat `shouldBe` multiImgCat'
+  it "categorizes simple image" $ filterCategory (Just simpleFilter) multiImgCat `shouldBe` multiImgCat''
+  it "categorizes simple image # inverted" $ filterCategory (Just simpleFilter') multiImgCat `shouldBe` multiImgCat'
