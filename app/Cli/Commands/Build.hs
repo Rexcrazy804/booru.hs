@@ -35,16 +35,7 @@ build CommonOpts{dataDir = d, configDir = cfg} = do
     } <-
     extractCfg cfg
 
-  cfdir <- getDir d
-  let
-    datafile = cfdir </> "data.toml"
-    imgDownloadDir = cfdir </> "images"
-  createDirectoryIfMissing True imgDownloadDir
-  dataExists <- doesFileExist datafile
-  Images{images = cachedImgs} <-
-    if dataExists
-      then parseFile datafile
-      else return Images{images = []} :: IO Images
+  (cachedImgs, datafile, imgDownloadDir) <- getData d
 
   let
     (validCImgs, uncachedSrcs) = validateCache srcs cachedImgs
