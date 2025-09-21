@@ -12,7 +12,7 @@ import Booru.Core.Parsers
 import Booru.Core.Requests (getProviderMap, requestFile)
 import Booru.Core.Synonyms (realizeSynonyms)
 import Booru.Schema.Config (Config (..))
-import Booru.Schema.Identifier (Identifier, toResolvedName)
+import Booru.Schema.Identifier (Identifier, extractId, toResolvedName)
 import Booru.Schema.Images (Image (Image), Images (..), resolvedName)
 import qualified Booru.Schema.Images as Img
 import Booru.Schema.Providers (ProviderName)
@@ -89,7 +89,10 @@ validateCache srcs imgs = (validImgs, uncachedSrcs)
 getMetaData :: Map ProviderName (Identifier -> IO (Maybe Image)) -> Source -> IO (Source, [Image])
 getMetaData pmap src@(Source{ids = idnfrs, provider = prv}) = do
   let metaFetcher = findWithDefault (nullProvider prv) prv pmap
-  metaList <- mapM metaFetcher idnfrs
+      logAndFetch id' = do
+        putStrLn $ "Retriving metadata for: " ++ extractId id'
+        metaFetcher id'
+  metaList <- mapM logAndFetch idnfrs
 
   return (src, catMaybes metaList)
 
@@ -101,5 +104,6 @@ downloadImage ddir img@Image{resolvedName = name} = do
     then return ()
     else do
       rsbod <- requestFile img
+      putStrLn $ "Downloading: " ++ name
       L.writeFile dwnPath rsbod
       return ()
