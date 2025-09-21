@@ -6,8 +6,11 @@ module Booru.Schema.Identifier (
   Identifier (..),
   extractId,
   extractId',
+  toResolvedName,
 ) where
 
+import Booru.Schema.Providers (ProviderName)
+import Data.Hashable (hash)
 import Data.Text (unpack)
 import GHC.Generics (Generic)
 import Toml.Schema
@@ -36,3 +39,6 @@ extractId WithNick{id = x} = x
 extractId' :: Identifier -> [String]
 extractId' (Id x) = [x]
 extractId' WithNick{id = x, nickname = n} = [x, n]
+
+toResolvedName :: ProviderName -> Identifier -> String
+toResolvedName pname id' = pname ++ '|' : show (hash $ extractId id')
