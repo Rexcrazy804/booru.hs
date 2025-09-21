@@ -1,4 +1,4 @@
-{-# LANGUAGE DisambiguateRecordFields #-}
+{-# LANGUAGE DuplicateRecordFields #-}
 
 module Cli.Commands.Build (build) where
 
@@ -11,8 +11,9 @@ import Booru.Core.Overrides (applyOverrides)
 import Booru.Core.Parsers
 import Booru.Core.Requests (getProviderMap)
 import Booru.Schema.Config (Config (..))
-import Booru.Schema.Images (Identifier, Image (provider), Images (..))
-import qualified Booru.Schema.Images (Image (id))
+import Booru.Schema.Identifier (Identifier)
+import Booru.Schema.Images (Image, Images (..))
+import qualified Booru.Schema.Images as Img
 import Booru.Schema.Providers (ProviderName)
 import Booru.Schema.Sources (Source (Source, ids, provider))
 import Data.Map (Map, findWithDefault)
@@ -59,7 +60,7 @@ filterSources :: [Source] -> [Image] -> [Source]
 filterSources srcs imgs =
   map pruneInCache srcs
  where
-  cachedIds = map (\img -> (Booru.Schema.Images.id img, Booru.Schema.Images.provider img)) imgs
+  cachedIds = map (\img -> (Img.id img, Img.provider img)) imgs
   pruneInCache :: Source -> Source
   pruneInCache src@Source{ids = idnfrs, provider = prv} =
     src{ids = filter (\idnfr -> (idnfr, prv) `notElem` cachedIds) idnfrs}
