@@ -61,7 +61,7 @@ commonOptsParser =
           ( long "plant"
               <> short 'p'
               <> metavar "PLANT_DIR"
-              <> help "Directory to plant autocateogrized image folders at"
+              <> help "Directory to plant autocateogrized image folders at. This direcotory is **RECURSIVELY DELETED**"
           )
       )
 
