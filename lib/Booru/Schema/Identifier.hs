@@ -13,7 +13,7 @@ import GHC.Generics (Generic)
 import Toml.Schema
 
 data Identifier = Id String | WithNick {id :: String, nickname :: String}
-  deriving (Eq, Show, Generic)
+  deriving (Eq, Show, Ord, Generic)
 
 instance ToValue Identifier where
   toValue (Id id') = toValue id'
