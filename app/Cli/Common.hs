@@ -2,8 +2,15 @@ module Cli.Common where
 
 import Booru.Core.Parsers (parseFile)
 import Booru.Schema.Config
+import Booru.Schema.Images (Image, Images (Images, images))
 import Data.Maybe (fromMaybe)
-import System.Directory (XdgDirectory (XdgConfig, XdgData), getHomeDirectory, getXdgDirectory)
+import System.Directory (
+  XdgDirectory (XdgConfig, XdgData),
+  createDirectoryIfMissing,
+  doesFileExist,
+  getHomeDirectory,
+  getXdgDirectory,
+ )
 import System.FilePath ((</>))
 
 extractCfg :: Maybe String -> IO Config
@@ -14,12 +21,26 @@ extractCfg cfg = do
     cfg' = fromMaybe defaultCfg cfg
   parseFile cfg'
 
-getDir :: Maybe String -> IO FilePath
-getDir dir = do
+getData :: Maybe String -> IO ([Image], FilePath, FilePath)
+getData dir = do
   booruDir <- getXdgDirectory XdgData "booru"
-  return $ fromMaybe booruDir dir
+  let
+    ddir = fromMaybe booruDir dir
+    datafile = ddir </> "data.toml"
+    imgDownloadDir = ddir </> "images"
+
+  createDirectoryIfMissing True imgDownloadDir
+  dataExists <- doesFileExist datafile
+  Images{images = cachedImgs} <-
+    if dataExists
+      then parseFile datafile
+      else return Images{images = []} :: IO Images
+
+  return (cachedImgs, datafile, imgDownloadDir)
 
 getPlantDir :: Maybe String -> IO FilePath
 getPlantDir dir = do
   plantDir <- (</> "booru") . (</> "Pictures") <$> getHomeDirectory
-  return $ fromMaybe plantDir dir
+  let actualDir = fromMaybe plantDir dir
+  createDirectoryIfMissing True actualDir
+  return actualDir
