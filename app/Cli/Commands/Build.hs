@@ -11,8 +11,8 @@ import Booru.Core.Overrides (applyOverrides)
 import Booru.Core.Parsers
 import Booru.Core.Requests (getProviderMap)
 import Booru.Schema.Config (Config (..))
-import Booru.Schema.Identifier (Identifier)
-import Booru.Schema.Images (Image, Images (..))
+import Booru.Schema.Identifier (Identifier, toResolvedName)
+import Booru.Schema.Images (Image, Images (..), resolvedName)
 import qualified Booru.Schema.Images as Img
 import Booru.Schema.Providers (ProviderName)
 import Booru.Schema.Sources (Source (Source, ids, provider))
@@ -65,20 +65,18 @@ build CommonOpts{dataDir = d, configDir = cfg} = do
 validateCache :: [Source] -> [Image] -> ([Image], [Source])
 validateCache srcs imgs = (validImgs, uncachedSrcs)
  where
-  imgIdSet = foldr (\img acc -> Set.insert (Img.id img, Img.provider img) acc) Set.empty imgs
-  srcIdSet = foldr srcSubfold Set.empty srcs
-  srcSubfold src@Source{provider = prv} acc = foldr (\x -> Set.insert (x, prv)) acc $ ids src
-
-  -- its called valid id set but essentially
-  -- hold idSets that are in cache, discarding anything that is not mentioned in cache
+  imgIdSet = foldr (Set.insert . resolvedName) Set.empty imgs
+  srcIdSet =
+    let srcSubfold src@Source{provider = prv} acc = foldr (Set.insert . toResolvedName prv) acc $ ids src
+    in  foldr srcSubfold Set.empty srcs
   validIdSet = imgIdSet `Set.intersection` srcIdSet
 
-  uncachedSrcs = map filterInCache srcs
-  filterInCache :: Source -> Source
-  filterInCache src@Source{provider = prv} = src{ids = filter (\idnfr -> (idnfr, prv) `Set.notMember` validIdSet) $ ids src}
+  uncachedSrcs =
+    let filterInCache src = src{ids = filter ((`Set.notMember` validIdSet) . toResolvedName (provider src)) $ ids src}
+    in  map filterInCache srcs
 
   -- valid imgs are those images that are in cache and IS requested by the configuration
-  validImgs = filter (\x -> (Img.id x, Img.provider x) `Set.member` validIdSet) imgs
+  validImgs = filter ((`Set.member` validIdSet) . Img.resolvedName) imgs
 
 getMetaData :: Map ProviderName (Identifier -> IO (Maybe Image)) -> Source -> IO (Source, [Image])
 getMetaData pmap src@(Source{ids = idnfrs, provider = prv}) = do
