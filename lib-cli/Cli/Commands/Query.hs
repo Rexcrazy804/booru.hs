@@ -23,14 +23,16 @@ import System.FilePath ((</>))
 query :: QueryOpts -> CommonOpts -> IO ()
 query QueryOpts{tags = ts} CommonOpts{dataDir = d} = do
   (cachedImgs, _, ddir) <- getData d
-  let tMaps = map (\img -> createTagMap img $ imgToTags img) cachedImgs
-      centralizedMap = foldl (unionWith union) empty tMaps
-      tagMatches = map (flip (findWithDefault S.empty) centralizedMap) ts
-      queriedImgs = toList $ foldl1 intersection tagMatches
   tmpPdir <- getXdgDirectory XdgCache "booru-hs"
   dirExists <- doesDirectoryExist tmpPdir
   when dirExists $ removeDirectoryRecursive tmpPdir
   createDirectoryIfMissing True tmpPdir
+
+  let tMaps = map (\img -> createTagMap img $ imgToTags img) cachedImgs
+      centralizedMap = foldl (unionWith union) empty tMaps
+      tagMatches = map (flip (findWithDefault S.empty) centralizedMap) ts
+      queriedImgs = toList $ foldl1 intersection tagMatches
+
   forM_ queriedImgs (plantImgs ddir tmpPdir)
   putStrLn $ "Images planted at " ++ tmpPdir
 
