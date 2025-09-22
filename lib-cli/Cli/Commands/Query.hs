@@ -11,10 +11,11 @@ import Data.Map (empty, findWithDefault, unionWith)
 import Data.Set (intersection, toList, union)
 import qualified Data.Set as S
 import System.Directory (
+  XdgDirectory (XdgCache),
   createDirectoryIfMissing,
   createFileLink,
   doesDirectoryExist,
-  getTemporaryDirectory,
+  getXdgDirectory,
   removeDirectoryRecursive,
  )
 import System.FilePath ((</>))
@@ -26,8 +27,7 @@ query QueryOpts{tags = ts} CommonOpts{dataDir = d} = do
       centralizedMap = foldl (unionWith union) empty tMaps
       tagMatches = map (flip (findWithDefault S.empty) centralizedMap) ts
       queriedImgs = toList $ foldl1 intersection tagMatches
-  tdir <- getTemporaryDirectory
-  let tmpPdir = tdir </> "booru-hs"
+  tmpPdir <- getXdgDirectory XdgCache "booru-hs"
   dirExists <- doesDirectoryExist tmpPdir
   when dirExists $ removeDirectoryRecursive tmpPdir
   createDirectoryIfMissing True tmpPdir
