@@ -22,7 +22,9 @@
     formatter = eachSystem (_: pkgs: pkgs.alejandra);
     packages = eachSystem (system: pkgs: {
       noifd = pkgs.haskellPackages.callPackage ./nix/package.nix {};
-      rapid = pkgs.haskellPackages.callCabal2nix "booru-hs" (self.packages.${system}.noifd.src) {};
+      rapid = pkgs.haskellPackages.callCabal2nix "booru-hs" (self.packages.${system}.noifd.src) {
+        optparse-applicative = pkgs.haskellPackages.optparse-applicative_0_19_0_0;
+      };
       default = self.packages.${system}.noifd;
     });
     devShells = eachSystem (_: pkgs: {
