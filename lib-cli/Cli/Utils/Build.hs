@@ -11,7 +11,7 @@ import Booru.Schema.Providers (ProviderName)
 import Booru.Schema.Sources (Source (Source, ids, provider))
 import qualified Booru.Schema.Sources as Src
 import Cli.Utils.Common (nullProvider)
-import Control.Monad (when)
+import Control.Monad (guard, when)
 import qualified Data.ByteString as L
 import Data.Foldable (forM_)
 import Data.Map (Map, findWithDefault, fromList, toList)
@@ -83,9 +83,13 @@ categoryToFs idir pdir imgs cat = do
 
   getFname :: String -> String
   getFname rname = fromMaybe rname $ do
-    Image{file = fURI'} <- Map.lookup rname rnMap
+    Image{file = fURI', provider = prv, id = id'} <- Map.lookup rname rnMap
     fURI <- parseURI fURI'
-    return $ last (pathSegments fURI)
+    let fullName = last (pathSegments fURI)
+        (_, ftype) = span (/= '.') fullName
+    if prv /= "urls" -- no meaning in urls-<FULL_URL> so we use fullName
+      then return $ prv ++ extractId id' ++ ftype
+      else return fullName
 
   attributeToFs :: FilePath -> TagMap -> IO ()
   attributeToFs root tmap = forM_ (toList tmap) $ createTagFolder root
