@@ -16,3 +16,4 @@ jobs:
         nix_path: nixpkgs=channel:nixos-unstable
     - run: nix develop .#ci --command cabal update
     - run: nix develop .#ci --command env ENABLE_ONLINE_TESTS=1 cabal test --test-show-details=direct
+    - run: nix build
