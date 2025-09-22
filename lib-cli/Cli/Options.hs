@@ -16,10 +16,6 @@ parseOpts =
       (optionParser <**> helper)
       (fullDesc <> header "Booru-hs Cli for booru needs")
 
-{- | # Options Record
-**subcommand:** stores the subcommand to run
-**config:** contains the path to config.toml
--}
 data Options = Options
   { common :: CommonOpts
   , subcommand :: Commands
@@ -31,6 +27,12 @@ optionParser =
     <$> commonOptsParser
     <*> commandsParser
 
+{- |
+# Common Options Record
+- **configDir** directory containing the config.toml to be parsed by booru-hs
+- **dataDir** directory where booru-hs stores intermediate data
+- **plandDir** directory to plant auto categorized result | *this directory is recursively deleted*
+-}
 data CommonOpts = CommonOpts
   { configDir :: Maybe String
   , dataDir :: Maybe String
@@ -65,7 +67,7 @@ commonOptsParser =
           )
       )
 
--- | Available subcommands and their option records
+-- | Available subcommands and their suboption records
 data Commands
   = Build
   | Download DownloadOpts
