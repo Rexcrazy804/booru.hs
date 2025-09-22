@@ -74,14 +74,16 @@ data Commands
   | Download DownloadOpts
   | Preview
   | Query QueryOpts
+  | GenConf
 
 -- | scaffolds logic for parsing sub commands
 commandsParser :: Parser Commands
 commandsParser =
   hsubparser $
     command "build" (info (pure Build) $ progDesc "build the image folder")
-      <> command "download" (info (Download <$> dlOptParser) $ progDesc "download images using IDS from a given PROVIDER")
+      <> command "gen-config" (info (pure GenConf) $ progDesc "generate example configuration")
       <> command "preview" (info (pure Preview) $ progDesc "generates preview.md into stdout")
+      <> command "download" (info (Download <$> dlOptParser) $ progDesc "download images using IDS from a given PROVIDER")
       <> command "query" (info (Query <$> qryOptParser) $ progDesc "create a folder in the current directory linking images containg given TAGS")
 
 {- | # Download subcommand Options
