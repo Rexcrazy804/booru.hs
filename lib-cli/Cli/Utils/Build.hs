@@ -11,16 +11,14 @@ import Booru.Schema.Providers (ProviderName)
 import Booru.Schema.Sources (Source (Source, ids, provider))
 import qualified Booru.Schema.Sources as Src
 import Cli.Utils.Common (nullProvider)
-import Control.Monad (guard, when)
+import Control.Monad (forM_, unless, when)
 import qualified Data.ByteString as L
-import Data.Foldable (forM_)
 import Data.Map (Map, findWithDefault, fromList, toList)
 import qualified Data.Map as Map
 import Data.Maybe (catMaybes, fromMaybe, isNothing)
 import qualified Data.Set as Set
 import Network.URI (parseURI, pathSegments)
 import System.Directory (createDirectoryIfMissing, createFileLink, doesDirectoryExist, doesFileExist, removeDirectoryRecursive)
-import System.Directory.Internal.Prelude (unless)
 import System.FilePath ((</>))
 
 {- | Accepts sources and image list to return cache validated tuple of the same
