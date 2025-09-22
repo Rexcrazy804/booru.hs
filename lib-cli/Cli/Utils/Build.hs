@@ -15,6 +15,7 @@ import Data.Map (Map, findWithDefault, toList)
 import Data.Maybe (catMaybes, isNothing)
 import qualified Data.Set as Set
 import System.Directory (createDirectoryIfMissing, createFileLink, doesDirectoryExist, doesFileExist, removeDirectoryRecursive)
+import System.Directory.Internal.Prelude (unless)
 import System.FilePath ((</>))
 
 {- | Accepts sources and image list to return cache validated tuple of the same
@@ -56,13 +57,10 @@ downloadImage :: FilePath -> Image -> IO ()
 downloadImage ddir img@Image{resolvedName = name} = do
   let dwnPath = ddir </> name
   imgExists <- doesFileExist dwnPath
-  if imgExists
-    then return ()
-    else do
-      rsbod <- requestFile img
-      putStrLn $ "Downloading: " ++ name
-      L.writeFile dwnPath rsbod
-      return ()
+  unless imgExists $ do
+    rsbod <- requestFile img
+    putStrLn $ "Downloading: " ++ name
+    L.writeFile dwnPath rsbod
 
 {- |
 First file path is a directory containing resolved images
