@@ -8,7 +8,7 @@ import Cli.Options (CommonOpts (..), QueryOpts (..))
 import Cli.Utils.Common
 import Control.Monad (forM_, when)
 import Data.Map (empty, findWithDefault, unionWith)
-import Data.Set (union)
+import Data.Set (intersection, toList, union)
 import qualified Data.Set as S
 import System.Directory (
   createDirectoryIfMissing,
@@ -24,8 +24,8 @@ query QueryOpts{tags = ts} CommonOpts{dataDir = d} = do
   (cachedImgs, _, ddir) <- getData d
   let tMaps = map (\img -> createTagMap img $ imgToTags img) cachedImgs
       centralizedMap = foldl (unionWith union) empty tMaps
-      queriedImgs :: [String]
-      queriedImgs = S.toList $ foldr (union . flip (findWithDefault S.empty) centralizedMap) S.empty ts
+      tagMatches = map (flip (findWithDefault S.empty) centralizedMap) ts
+      queriedImgs = toList $ foldl1 intersection tagMatches
   tdir <- getTemporaryDirectory
   let tmpPdir = tdir </> "booru-hs"
   dirExists <- doesDirectoryExist tmpPdir
