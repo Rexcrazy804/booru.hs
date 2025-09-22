@@ -1,19 +1,24 @@
+{-# LANGUAGE DuplicateRecordFields #-}
+
 module Cli.Utils.Build where
 
 import Booru.Core.Category (Category (..), TagMap)
 import Booru.Core.Requests (requestFile)
 import Booru.Schema.Identifier (Identifier, extractId, toResolvedName)
-import Booru.Schema.Images (Image (Image), resolvedName)
+import Booru.Schema.Images (Image (Image, resolvedName), resolvedName)
 import qualified Booru.Schema.Images as Img
 import Booru.Schema.Providers (ProviderName)
 import Booru.Schema.Sources (Source (Source, ids, provider))
+import qualified Booru.Schema.Sources as Src
 import Cli.Utils.Common (nullProvider)
 import Control.Monad (when)
 import qualified Data.ByteString as L
 import Data.Foldable (forM_)
-import Data.Map (Map, findWithDefault, toList)
-import Data.Maybe (catMaybes, isNothing)
+import Data.Map (Map, findWithDefault, fromList, toList)
+import qualified Data.Map as Map
+import Data.Maybe (catMaybes, fromMaybe, isNothing)
 import qualified Data.Set as Set
+import Network.URI (parseURI, pathSegments)
 import System.Directory (createDirectoryIfMissing, createFileLink, doesDirectoryExist, doesFileExist, removeDirectoryRecursive)
 import System.Directory.Internal.Prelude (unless)
 import System.FilePath ((</>))
@@ -32,7 +37,7 @@ validateCache srcs imgs = (validImgs, uncachedSrcs)
   validIdSet = imgIdSet `Set.intersection` srcIdSet
 
   uncachedSrcs =
-    let filterInCache src = src{ids = filter ((`Set.notMember` validIdSet) . toResolvedName (provider src)) $ ids src}
+    let filterInCache src = src{ids = filter ((`Set.notMember` validIdSet) . toResolvedName (Src.provider src)) $ ids src}
     in  map filterInCache srcs
 
   validImgs = filter ((`Set.member` validIdSet) . Img.resolvedName) imgs
@@ -66,21 +71,30 @@ downloadImage ddir img@Image{resolvedName = name} = do
 First file path is a directory containing resolved images
 Second file path is the directory to plant (symlink) categorized images
 -}
-categoryToFs :: FilePath -> FilePath -> Category -> IO ()
-categoryToFs idir pdir cat = do
+categoryToFs :: [Image] -> FilePath -> FilePath -> Category -> IO ()
+categoryToFs imgs idir pdir cat = do
   pdirExist <- doesDirectoryExist pdir
   when pdirExist $ putStrLn ("Deleting: " ++ pdir) >> removeDirectoryRecursive pdir
   attributeToFs (pdir </> "characters") $ characterC cat
   attributeToFs (pdir </> "copyrights") $ copyrightC cat
   attributeToFs (pdir </> "artists") $ artistC cat
  where
+  rnMap = toRnameMap imgs
+
+  getFname :: String -> String
+  getFname rname = fromMaybe rname $ do
+    Image{file = fURI'} <- Map.lookup rname rnMap
+    fURI <- parseURI fURI'
+    return $ last (pathSegments fURI)
+
   attributeToFs :: FilePath -> TagMap -> IO ()
-  attributeToFs root tmap = do
-    forM_
-      (toList tmap)
-      ( \(tag, imgs) -> do
-          let tagF = root </> tag
-          putStrLn $ "Sylinking: " ++ tagF
-          createDirectoryIfMissing True tagF
-          forM_ imgs (\img -> createFileLink (idir </> img) (tagF </> img))
-      )
+  attributeToFs root tmap = forM_ (toList tmap) $ createTagFolder root
+
+  createTagFolder root (tag, rnames) = do
+    let tagF = root </> tag
+    putStrLn $ "Sylinking: " ++ tagF
+    createDirectoryIfMissing True tagF
+    forM_ rnames (\rname -> createFileLink (idir </> rname) (tagF </> getFname rname))
+
+toRnameMap :: [Image] -> Map String Image
+toRnameMap img = fromList $ foldl (\acc cur -> (resolvedName cur, cur) : acc) [] img

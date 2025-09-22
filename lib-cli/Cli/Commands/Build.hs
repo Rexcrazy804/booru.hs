@@ -47,6 +47,6 @@ build CommonOpts{dataDir = d, configDir = cfg, plantDir = p} = do
 
   mapM_ (downloadImage imgDownloadDir) finalImgs
   writeFile datafile (show $ encode Images{images = finalImgs})
-  categoryToFs imgDownloadDir pDir category
+  categoryToFs finalImgs imgDownloadDir pDir category
 
   return ()
