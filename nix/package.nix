@@ -17,7 +17,7 @@
   directory,
   split,
   filepath,
-  optparse-applicative_0_19_0_0
+  optparse-applicative_0_19_0_0,
 }: let
   inherit (lib.fileset) toSource unions fileFilter;
   hsfilter = fileFilter (file: lib.any file.hasExt ["hs"]);
