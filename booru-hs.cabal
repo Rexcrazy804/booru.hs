@@ -67,6 +67,7 @@ library booru-cli
     Cli.Options
     Cli.Utils.Build
     Cli.Utils.Common
+    Cli.Utils.Query
 
   hs-source-dirs:   lib-cli
   default-language: Haskell2010
