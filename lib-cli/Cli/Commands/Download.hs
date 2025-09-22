@@ -5,7 +5,7 @@ import Booru.Core.Requests (getProviderMap, requestFile)
 import Booru.Schema.Config (Config (Config, providers))
 import Booru.Schema.Identifier (Identifier (Id))
 import Booru.Schema.Images (Image (Image, resolvedName), resolvedName)
-import Cli.Common
+import Cli.Utils.Common
 import Cli.Options (CommonOpts (..), DownloadOpts (..))
 import Control.Monad (forM, forM_)
 import qualified Data.ByteString as L

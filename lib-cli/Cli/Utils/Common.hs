@@ -1,4 +1,4 @@
-module Cli.Common where
+module Cli.Utils.Common where
 
 import Booru.Core.Parsers (parseFile)
 import Booru.Schema.Config

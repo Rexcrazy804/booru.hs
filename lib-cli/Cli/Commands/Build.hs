@@ -2,8 +2,8 @@
 
 module Cli.Commands.Build (build) where
 
-import Cli.Common
 import Cli.Options (CommonOpts (..))
+import Cli.Utils.Common
 
 import Booru.Builtin.Providers (builtinProviders)
 import Booru.Core.Category
