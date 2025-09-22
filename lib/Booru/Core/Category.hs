@@ -4,6 +4,7 @@ module Booru.Core.Category (
   newCategory,
   genCategory,
   getImageCat,
+  createTagMap,
 ) where
 
 import Booru.Schema.Images (Image (..), Tag, resolvedName)
