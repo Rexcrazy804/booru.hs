@@ -1,0 +1,88 @@
+# PREFACE
+# I highly recommend taking a look at the toml spec beforehand
+# if you have not previously worked with toml files.
+
+# For full specifications, see:
+# https://github.com/Rexcrazy804/booru.hs/tree/master/examples
+
+[[sources]]
+# available built in providers: danbooru, safebooru, zerochan, urls
+provider = "danbooru"
+ids = ["5614777", "9590836"]
+
+[[sources]]
+# urls is a special provider that accepts plain ol urls as ids
+provider = "urls"
+# id's may be given a unique nickname, to be used with overrides
+ids = [
+  # format is "<id>" or "<id> <nickname>" seperated by a whitespace
+  "https://data.1freewallpapers.com/download/sangonomiya-kokomi-4k-genshin-impact.jpg kokomi",
+  # nicknames only have to be unique within their respective sources
+  "https://data.1freewallpapers.com/download/purple-eyes-sangonomiya-kokomi-genshin-impact.jpg also_kokomi"
+]
+
+[[sources.overrides]]
+# either id or nickcname can be used as the identifier (for urls provider, the id is the nickname)
+identifier = "kokomi"
+# append true would add information, wherease false overrites information
+append = false
+# the space is intentional, see the synonyms section
+characters = ["sangonomiya kokomi"]
+copyrights = ["genshin_impact"]
+
+[[sources.overrides]]
+identifier = "also_kokomi"
+append = false
+characters = ["sangonomiya_kokomi"]
+copyrights = ["yuanshen"]
+
+[[providers]]
+# example provider, see examples/provider for more examples and info
+name = "danbooru-copy"
+# api endpoint with %%iD%% where the identifier should be substituted
+url = "https://danbooru.donmai.us/posts/%%ID%%.json"
+# attribute containing file information, this is a soft requirement, special providers like urls have this unset
+file = "file_url"
+# attribute containing preview sized file, for use in generated preview
+preview_file = "preview_file_url"
+# rest are self explanatory
+artists = "tag_string_artist"
+characters = "tag_string_character"
+copyrights = "tag_string_copyright"
+tags = "tag_string_general"
+rating = "rating"
+
+[[sources]]
+# utilizing our cloned provider
+provider = "danbooru-copy"
+ids = ["9561442"]
+
+# used to filter the results in
+[filters]
+characters = { list = ["kokomi"], inverted = true }
+# copyrights = { list = ["genshin"], inverted = true }
+# artists = { list = ["thisartistdoesnotdrawkokomi"], inverted = false }
+
+# used to filter the resuilts in preview.md
+[preview_filters]
+ratings = { list = ["g"], inverted = true }
+# characters = { list = ["abc", "xyz"], inverted = false }
+# copyrights = { list = ["arknights"], inverted = false }
+# artists = { list = ["mourncolor", "elodias"], inverted = false }
+# tags = { list = ["bird", "horse"], inverted = false }
+# ids = { list = ["11112"], inverted = false }
+# providers = { list = ["s34"], inverted = false}
+
+[synonyms.characters]
+"kokomi" = ["sangonomiya_kokomi", "sangonomiya kokomi"]
+[synonyms.copyrights]
+"genshin" = ["genshin_impact", "yuanshen"]
+# [synonyms.tags]
+# girl = ["1girl", "female"]
+# boy = ["1boy", "male"]
+# [synonyms.copyrights]
+# genshin_impact = ["genshin impact", "yuanshen"]
+# [synonyms.artists]
+# elodias = ["little ello", "elodeas"]
+# [synonyms.ratings]
+# e = ["explicit", "n$fw"]
