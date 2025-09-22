@@ -1,8 +1,9 @@
 module Cli.Options (
   Options (..),
-  DownloadOpts (..),
-  CommonOpts (..),
   Commands (..),
+  CommonOpts (..),
+  DownloadOpts (..),
+  QueryOpts (..),
   parseOpts,
 ) where
 
@@ -72,6 +73,7 @@ data Commands
   = Build
   | Download DownloadOpts
   | Preview
+  | Query QueryOpts
 
 -- | scaffolds logic for parsing sub commands
 commandsParser :: Parser Commands
@@ -80,6 +82,7 @@ commandsParser =
     command "build" (info (pure Build) $ progDesc "build the image folder")
       <> command "download" (info (Download <$> dlOptParser) $ progDesc "download images using IDS from a given PROVIDER")
       <> command "preview" (info (pure Preview) $ progDesc "generates preview.md into stdout")
+      <> command "query" (info (Query <$> qryOptParser) $ progDesc "create a folder in the current directory linking images containg given TAGS")
 
 {- | # Download subcommand Options
 **provider:** selected provider to rquest image and metagdata from
@@ -96,3 +99,10 @@ dlOptParser =
   DownloadOpts
     <$> argument str (metavar "PROVIDER" <> help "the name of the provider to retreive images from")
     <*> some (argument str (metavar "IDS" <> help "list of ids to download"))
+
+newtype QueryOpts = QueryOpts {tags :: [String]}
+
+qryOptParser :: Parser QueryOpts
+qryOptParser =
+  QueryOpts
+    <$> some (argument str (metavar "TAGS" <> help "list of tags to retreive images for"))
