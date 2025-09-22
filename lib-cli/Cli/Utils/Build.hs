@@ -12,7 +12,7 @@ import Control.Monad (when)
 import qualified Data.ByteString as L
 import Data.Foldable (forM_)
 import Data.Map (Map, findWithDefault, toList)
-import Data.Maybe (catMaybes)
+import Data.Maybe (catMaybes, isNothing)
 import qualified Data.Set as Set
 import System.Directory (createDirectoryIfMissing, createFileLink, doesDirectoryExist, doesFileExist, removeDirectoryRecursive)
 import System.FilePath ((</>))
@@ -37,15 +37,18 @@ validateCache srcs imgs = (validImgs, uncachedSrcs)
   -- valid imgs are those images that are in cache and IS requested by the configuration
   validImgs = filter ((`Set.member` validIdSet) . Img.resolvedName) imgs
 
-getMetaData :: Map ProviderName (Identifier -> IO (Maybe Image)) -> Source -> IO (Source, [Image])
-getMetaData pmap src@(Source{ids = idnfrs, provider = prv}) = do
+-- | A simple wrapper funciton that does some logging to stdout
+getMetaData :: Map ProviderName (Identifier -> IO (Maybe Image)) -> Source -> IO [Image]
+getMetaData pmap Source{ids = idnfrs, provider = prv} = do
   let metaFetcher = findWithDefault (nullProvider prv) prv pmap
       logAndFetch id' = do
-        putStrLn $ "Retriving metadata for: " ++ extractId id'
-        metaFetcher id'
+        let exid = extractId id'
+        putStrLn $ "Retriving metadata for: " ++ exid
+        img <- metaFetcher id'
+        when (isNothing img) $ putStrLn ("Unable to retreive: " ++ exid)
+        return img
   metaList <- mapM logAndFetch idnfrs
-
-  return (src, catMaybes metaList)
+  return $ catMaybes metaList
 
 downloadImage :: FilePath -> Image -> IO ()
 downloadImage ddir img@Image{resolvedName = name} = do

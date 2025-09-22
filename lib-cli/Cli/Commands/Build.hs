@@ -1,4 +1,5 @@
 {-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE TupleSections #-}
 
 module Cli.Commands.Build (build) where
 
@@ -35,7 +36,7 @@ build CommonOpts{dataDir = d, configDir = cfg, plantDir = p} = do
     configPrvs = fromMaybe [] prvs
     provMap = getProviderMap (builtinProviders ++ configPrvs)
 
-  sourceImgMap <- mapM (getMetaData provMap) uncachedSrcs
+  sourceImgMap <- mapM (\src -> (src,) <$> getMetaData provMap src) uncachedSrcs
 
   let
     overridenImgs = concatMap (uncurry applyOverrides) sourceImgMap
