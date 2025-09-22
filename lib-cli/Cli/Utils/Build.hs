@@ -17,9 +17,9 @@ import qualified Data.Set as Set
 import System.Directory (createDirectoryIfMissing, createFileLink, doesDirectoryExist, doesFileExist, removeDirectoryRecursive)
 import System.FilePath ((</>))
 
-{- | # Yeilds valid cached [Image] and [Source] striped of cache hitting id's
-- [Image] -> Images in cached images that are requested in source (eliminates images removed in cfg)
-- [Source] -> Source set containing only id's that need to be fetched (i.e. not in cache)
+{- | Accepts sources and image list to return cache validated tuple of the same
+- [[Image]] -> Images in cached images that are requested in source (eliminates images removed in cfg)
+- [[Source]] -> Source set containing only id's that need to be fetched (i.e. not in cache)
 -}
 validateCache :: [Source] -> [Image] -> ([Image], [Source])
 validateCache srcs imgs = (validImgs, uncachedSrcs)
@@ -34,7 +34,6 @@ validateCache srcs imgs = (validImgs, uncachedSrcs)
     let filterInCache src = src{ids = filter ((`Set.notMember` validIdSet) . toResolvedName (provider src)) $ ids src}
     in  map filterInCache srcs
 
-  -- valid imgs are those images that are in cache and IS requested by the configuration
   validImgs = filter ((`Set.member` validIdSet) . Img.resolvedName) imgs
 
 -- | A simple wrapper funciton that does some logging to stdout
@@ -50,6 +49,9 @@ getMetaData pmap Source{ids = idnfrs, provider = prv} = do
   metaList <- mapM logAndFetch idnfrs
   return $ catMaybes metaList
 
+{- | Downloads images into 'FilePath' when it does not contain the image
+- the function leveragtes 'Image.resolvedName' to identify existing files
+-}
 downloadImage :: FilePath -> Image -> IO ()
 downloadImage ddir img@Image{resolvedName = name} = do
   let dwnPath = ddir </> name
