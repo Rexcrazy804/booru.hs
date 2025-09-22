@@ -30,6 +30,7 @@
       (hsfilter (root + /lib))
       (hsfilter (root + /lib-cli))
       (hsfilter (root + /test))
+      (root + /examples/config.toml)
       (root + /booru-hs.cabal)
       (root + /CHANGELOG.md)
       (root + /LICENSE)
