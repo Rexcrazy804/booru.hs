@@ -71,8 +71,8 @@ downloadImage ddir img@Image{resolvedName = name} = do
 First file path is a directory containing resolved images
 Second file path is the directory to plant (symlink) categorized images
 -}
-categoryToFs :: [Image] -> FilePath -> FilePath -> Category -> IO ()
-categoryToFs imgs idir pdir cat = do
+categoryToFs :: FilePath -> FilePath -> [Image] -> Category -> IO ()
+categoryToFs idir pdir imgs cat = do
   pdirExist <- doesDirectoryExist pdir
   when pdirExist $ putStrLn ("Deleting: " ++ pdir) >> removeDirectoryRecursive pdir
   attributeToFs (pdir </> "characters") $ characterC cat
