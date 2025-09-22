@@ -28,7 +28,7 @@
     fileset = unions [
       (hsfilter (root + /app))
       (hsfilter (root + /lib))
-      (hsfilter (root + /lib-cli))
+      (hsfilter (root + /booru-cli))
       (hsfilter (root + /test))
       (root + /examples/config.toml)
       (root + /booru-hs.cabal)

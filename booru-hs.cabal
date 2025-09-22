@@ -72,7 +72,7 @@ library booru-cli
     Cli.Utils.Query
 
   other-modules:    Paths_booru_hs
-  hs-source-dirs:   lib-cli
+  hs-source-dirs:   booru-cli
   default-language: Haskell2010
   build-depends:
     , base                  ^>=4.19.2.0
