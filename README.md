@@ -12,7 +12,9 @@ and each subfolder contains images belonging to said attribute value.
 The following image should clarify its capabilities
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/80d528c8-5776-4ddc-96e3-648cf6a0ca12" />
-<br>
+
+- foreground: [Kokomki by soraneko hino][fg-art-source]
+- background: [Kokomi by omces96][bg-art-source]
 
 ## Table of Contents
 
@@ -166,6 +168,8 @@ under [CC-BY-2.0](https://creativecommons.org/licenses/by/2.0/)
 
 All toml files in the examples folder are under [CC0-1.0](https://creativecommons.org/publicdomain/zero/1.0/)
 
+[bg-art-source]: https://danbooru.donmai.us/posts/7240127
+[fg-art-source]: https://danbooru.donmai.us/posts/6746291
 [stargazers]: https://github.com/Rexcrazy804/booru-flake/stargazers
 [booru-flake]: https://github.com/Rexcrazy804/booru-flake
 [toml-parser]: https://github.com/glguy/toml-parser
