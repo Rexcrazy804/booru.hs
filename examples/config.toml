@@ -3,7 +3,7 @@
 # if you have not previously worked with toml files.
 
 # For full specifications, see:
-# https://github.com/Rexcrazy804/booru.hs/tree/master/examples
+# https://github.com/Rexcrazy804/booru.hs#specifications
 
 [[sources]]
 # available built in providers: danbooru, safebooru, zerochan, urls
