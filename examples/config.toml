@@ -29,6 +29,8 @@ append = false
 # the space is intentional, see the synonyms section
 characters = ["sangonomiya kokomi"]
 copyrights = ["genshin_impact"]
+# tags = ["jellyfish", "underwater"]
+# rating = "g"
 
 [[sources.overrides]]
 identifier = "also_kokomi"
