@@ -40,14 +40,14 @@ but the prefered method is to use the exported package in the flake
 Add this repository as a flake
 ```nix
 {
-inputs = {
-  booru-hs = {
-    url = "github:Rexcrazy804/booru.hs";
-    inputs.nixpkgs.follows = "nixpkgs";
-    # optional (if applicable)
-    # inputs.systems.follows = "systems";
+  inputs = {
+    booru-hs = {
+      url = "github:Rexcrazy804/booru.hs";
+      inputs.nixpkgs.follows = "nixpkgs";
+      # optional (if applicable)
+      # inputs.systems.follows = "systems";
+    };
   };
-};
 }
 ```
 
@@ -113,6 +113,10 @@ efficiently downloading and querying metadata for newer ids only.
 The raw images and data are stored in `$XDG_DATA_HOME/booru`
 
 ### Query subcommand
+
+```sh
+booru-hs query <TAGS>
+```
 
 The query subcommand can be used to quickly build a folder
 containing images that contain a given list of tags.
