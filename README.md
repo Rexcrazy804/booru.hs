@@ -16,6 +16,7 @@ The following image should clarify its capabilities
 
 ## Table of Contents
 
+- [Features](#features)
 - [Installation](#installation)
   - [nixos](#nixos-installation)
   - [other operating systems](#non-nix-installtion)
@@ -29,6 +30,14 @@ The following image should clarify its capabilities
   - [Synonyms](#synonyms-spec)
 - [Acknowledgements](#Acknowledgements)
 - [Licensing](#Licensing)
+
+## Features
+
+The following are the additions booru-hs provider over [booru-flake]
+- Extensible Providers: you are no longer limited to danbooru,
+  any image board with a GET API can that responds with a json can be used
+- Overrides: Overrides enable appending or overwriting information fetched from providers
+- Synonyms: Allows coercing a list of tags to a singular tag [see the note here](examples/synonyms.toml)
 
 ## Installation
 
