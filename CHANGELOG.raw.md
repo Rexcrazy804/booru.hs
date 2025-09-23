@@ -1,24 +1,91 @@
 # Raw Revision history for booru-hs
 
+## 1.0.0.0 -- 2025-09-23
+- feat(cli): download subcommand now preserves file extension
+- fix(nix): correctly override optparse with v0_19
+- fix(nix): include examples/config.toml
+- feat(cli): added ability to generate example config
+- feat(cli): exported getCfgFile function in Utils.Common
+- feat(workflows): extended tests with a build test
+- fix(cli): stored queries in XDGCache
+- fix(cli): correct querry algorithm
+- feat(cli): added ability to query images into a temporary directory
+- feat(lib): exported createTagMap from Booru.Core.Category
+- feat(cli): improved filenames for symlinks
+- feat(cli): categoryToFs preserves file types
+- revert: improved bounds dependencies
+- feat: improved bounds dependencies
+- fix(nix): include lib-cli
+- feat: moved cli into its own internal library
+- fix(app): correctly handly maybes
+- revert: correctly wrap synonym in maybe for realizeSynonms
+- revert: Synonyms now accept Synonyms wrapped in Maybe
+- revert: correctly wrap filters in Maybe for filterCatSpec
+- revert: filterCategory now accepts Maybe Filter
+- revert: correctly wrap fitlers in maybe
+- feat(app): relocated null provider
+- feat(lib): categorize images with empty tags into 'unknown'
+- fix(lib): previews now use id over resolvedName
+- fix(nix): update noifd package
+- feat(app): support generating previews
+- fix(tests): correctly wrap fitlers in maybe
+- feat(lib): accept maybe filter in filterImages
+- feat(app): build complete
+- fix(app): utilized improved common commands
+- feat(app): imrpoved common funtions
+- feat(app): extended common opts to support plant dir
+- feat(app): extended options to include plantdir
+- fix(tests): correctly wrap filters in Maybe for filterCatSpec
+- feat(lib): filterCategory now accepts Maybe Filter
+- feat(lib): minimal loggin for build
+- feat(lib): build now efficiently downloads images
+- feat(lib): build now processes synonyms
+- fix(tests): correctly wrap synonym in maybe for realizeSynonms
+- feat(lib): Synonyms now accept Synonyms wrapped in Maybe
+- feat(lib): created toResolvedName function
+- feat(app): improved cache validation
+- feat(lib): derrived ord for Identifier
+- fix(app): reflected changes to identifier
+- fix(tests): reflected changes to identifier
+- fix(lib): correct references to Identifier
+- fix(tests): fixed missing import
+- fix(app): leveraged parsefile in Cli.Common
+- feat(lib): export null provider + used findWithDefault
+- feat(lib): rexport encode option in parsers
+- feat(lib): created generalized parser
+- feat(app): removed xdg-basedir dep
+- fix(app): removed default value for --data
+- fix(app): ensure FilePath type is preserved
+- feat(app): ensure -c and -d args are optional
+- fix(app): leveraged common extractCfg + comply with commonOpts
+- feat(app): accept common opts in Download subcmd wiht internal parsing of cfg
+- feat(app): addition of Cli.Common module
+- feat(app): Intial work for cli (#1)
+- feat(lib): exported function to parse config
+- feat(lib): exported list of builtin providers
+- fix(lib): getProvider accepts \[Proivider\] over Providers newtyp
+- feat(lib,tests): addition of unified config structure
+- feat(lib): added function to request files
+
 ## 0.0.4.0 -- 2025-09-20
-f840d5c feat(tests): added tests for category filtering
-6d733dd feat(lib): added filter category unit
-5a219a4 fix(tests): reflected relocation of lib files
-9c2b749 fix(lib,tests): corrected Previews references to PFilter refernces
-e21c7f3 feat(lib): separated Previews into PFilters
-3649a77 feat(tests): tests for preview generation and filtering
-7b3600c feat(lib): addition of preview generation and filtering
-3a2f44c feat(lib): addition of alternate extractId'
-ad2ef9f fix(tests): reflect decomposiiton of Filters
-aafad04 feat(lib): decompose Fitlers into Fitlers and Previews
-ffc4167 feat(tests): reflected addition to Filter
-7d65f85 feat(lib): extended filters to support filtering by provider
-7764951 feat(tests): return tests for filters
-4534c0a fix(tests): reflect removal of filters and previews in source tests
-de2296d fix(tests): correct imports to reflect relocation
-682d733 fix(lib): correct imports to reflect relocation
-49b697d feat(lib): seperation of Filters from Sources
-eb5f3dc feat(lib): relocation of tags and identifiers to images
+- feat(tests): added tests for category filtering
+- feat(lib): added filter category unit
+- fix(tests): reflected relocation of lib files
+- fix(lib,tests): corrected Previews references to PFilter refernces
+- feat(lib): separated Previews into PFilters
+- feat(tests): tests for preview generation and filtering
+- feat(lib): addition of preview generation and filtering
+- feat(lib): addition of alternate extractId'
+- fix(tests): reflect decomposiiton of Filters
+- feat(lib): decompose Fitlers into Fitlers and Previews
+- feat(tests): reflected addition to Filter
+- feat(lib): extended filters to support filtering by provider
+- feat(tests): return tests for filters
+- fix(tests): reflect removal of filters and previews in source tests
+- fix(tests): correct imports to reflect relocation
+- fix(lib): correct imports to reflect relocation
+- feat(lib): seperation of Filters from Sources
+- feat(lib): relocation of tags and identifiers to images
 
 ## 0.0.3.0 -- 2025-09-19
 - feat(tests): added tests for categorization

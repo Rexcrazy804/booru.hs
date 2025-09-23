@@ -1,5 +1,21 @@
 # Revision history for booru-hs
 
+## 1.0.0.0 -- 2025-09-23
+Stable Release!!
+further releases will follow https://pvp.haskell.org/#decision-tree
+
+- Established CLI interface
+- Established unified config structure (see examples/config.toml)
+- genCategory now categorizes images with empty tags into "unknown"
+- previews now utilize id over resolvedName
+- changes to resolvedName spec (removal of '|' separator)
+- created Parser module
+- created requestfile function for downloads
+- CI now builds the default package as part of tests
+
+Last Revision
+- [480ea3b](https://github.com/Rexcrazy804/booru.hs/tree/480ea3b9c51302c359047ed30f6a1868ef9dd13d) feat(cli): download subcommand now preserves file extension
+
 ## 0.0.4.0 -- 2025-09-20
 - Addition of Preview generation
 - Decoupling of Fitlers and Previews from Sources

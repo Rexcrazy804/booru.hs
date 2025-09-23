@@ -1,4 +1,8 @@
-# Flow of controll
+# Flow of control
+> This file is preserved for historical reasons.
+> This is simply a train of thought dumped into an md file.
+> Updated and referenced over the course of building booru-hs.
+
 ```
 parse configuration
 | infer providers
@@ -59,14 +63,14 @@ leverage the above structure to create symlinks at DEST directory
 | and, files to delete = fsCat - genCat
 ```
 
-## NOTE 1
+#### NOTE 1
 the database I am thinking of at the moment is simply a folder containing
 `provider`-(hash of `id`).
 
-##  NOTE 2
+####  NOTE 2
 add a gc step to remove unused files and data from the db folder
 
-## Note 3
+#### Note 3
 add option to force update information for a specified source
 uhh ideally you don't wanna do this, specially if you've amassed a large collection
 but yeah this must be provided as an option
