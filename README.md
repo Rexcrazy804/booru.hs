@@ -137,7 +137,7 @@ containing images that contain a given list of tags.
 > TODO <br>
 > for the time being you may take a look at [examples/](examples/)
 
-# Acknowledgements
+## Acknowledgements
 
 [toml-parser]
 
@@ -163,7 +163,7 @@ I should do a better job at using it correctly
 
 Thank you.
 
-# Licensing
+## Licensing
 
 All code in this repository are under [MPL-2.0](LICENSE),
 unless explicitly stated otherwise.
