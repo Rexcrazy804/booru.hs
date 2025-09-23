@@ -154,6 +154,11 @@ I suppose booru-hs is missing a nixosModule (not for long).
 Excellent CLI framework,
 besides a few nitpicks its does it job well and is easy to work with.
 
+[conventional-commits]
+
+Specification for commit format.
+I should do a better job at using it correctly
+
 [You | the users][stargazers]
 
 Thank you.
