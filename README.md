@@ -244,7 +244,7 @@ ratings = { list = ["g"], inverted = true }
 providers = { list = ["s34"], inverted = false}
 ```
 
-### synonyms-specification
+### Synonyms specification
 
 ```toml
 # synonyms simply group several identical tags into a common tag
