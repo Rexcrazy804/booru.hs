@@ -1,3 +1,5 @@
+{-# LANGUAGE DuplicateRecordFields #-}
+
 module Cli.Commands.Download (download) where
 
 import Booru.Builtin.Providers (builtinProviders)
@@ -6,6 +8,7 @@ import Booru.Schema.Config (Config (Config, providers))
 import Booru.Schema.Identifier (Identifier (Id))
 import Booru.Schema.Images (Image (Image, resolvedName), resolvedName)
 import Cli.Options (CommonOpts (..), DownloadOpts (..))
+import Cli.Utils.Build (getFname)
 import Cli.Utils.Common
 import Control.Monad (forM, forM_)
 import qualified Data.ByteString as L
@@ -27,6 +30,8 @@ download DownloadOpts{provider = prv, ids = ids'} CommonOpts{configDir = cfg} = 
 
 downloadImage :: Image -> IO ()
 downloadImage img@Image{resolvedName = name} = do
+  let fname = fromMaybe name $ getFname img
   rsbod <- requestFile img
-  L.writeFile name rsbod
+  L.writeFile fname rsbod
+  putStrLn $ "Downloaded img: " ++ fname
   return ()
