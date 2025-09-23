@@ -13,7 +13,7 @@ The following image should clarify its capabilities
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/80d528c8-5776-4ddc-96e3-648cf6a0ca12" />
 
-- foreground: [Kokomki by soraneko hino][fg-art-source]
+- foreground: [Kokomi by soraneko hino][fg-art-source]
 - background: [Kokomi by omces96][bg-art-source]
 
 ## Table of Contents
