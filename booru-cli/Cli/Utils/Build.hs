@@ -79,24 +79,27 @@ categoryToFs idir pdir imgs cat = do
  where
   rnMap = toRnameMap imgs
 
-  getFname :: String -> String
-  getFname rname = fromMaybe rname $ do
-    Image{file = fURI', provider = prv, id = id'} <- Map.lookup rname rnMap
-    fURI <- parseURI fURI'
-    let fullName = last (pathSegments fURI)
-        (_, ftype) = span (/= '.') fullName
-    if prv /= "urls" -- no meaning in urls-<FULL_URL> so we use fullName
-      then return $ prv ++ extractId id' ++ ftype
-      else return fullName
-
   attributeToFs :: FilePath -> TagMap -> IO ()
   attributeToFs root tmap = forM_ (toList tmap) $ createTagFolder root
 
   createTagFolder root (tag, rnames) = do
     let tagF = root </> tag
+        toSymLink rname =
+          createFileLink
+            (idir </> rname)
+            (tagF </> fromMaybe rname (Map.lookup rname rnMap >>= getFname))
     putStrLn $ "Sylinking: " ++ tagF
     createDirectoryIfMissing True tagF
-    forM_ rnames (\rname -> createFileLink (idir </> rname) (tagF </> getFname rname))
+    forM_ rnames toSymLink
+
+getFname :: Image -> Maybe String
+getFname Image{file = fURI', provider = prv, id = id'} = do
+  fURI <- parseURI fURI'
+  let fullName = last (pathSegments fURI)
+      (_, ftype) = span (/= '.') fullName
+  if prv /= "urls" -- no meaning in urls-<FULL_URL> so we use fullName
+    then return $ prv ++ extractId id' ++ ftype
+    else return fullName
 
 toRnameMap :: [Image] -> Map String Image
 toRnameMap img = fromList $ foldl (\acc cur -> (resolvedName cur, cur) : acc) [] img
