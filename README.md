@@ -1,13 +1,13 @@
 # Booru-hs | Extensible Booru Library
 
 Booru-hs is a piece of software that allows you to categorize
-your images from various booru sources into folders of 
+your images from various booru sources into folders of
 
-- Aritsts
+- Artists
 - Copyrights
 - Characters
 
-each folder contains subfolders for each available value of the attribute,
+Each folder contains subfolders for each available value of the attribute,
 and each subfolder contains images belonging to said attribute value.
 The following image should clarify its capabilities
 
@@ -20,7 +20,7 @@ The following image should clarify its capabilities
 
 - [Features](#features)
 - [Installation](#installation)
-  - [nixos](#nixos-installation)
+  - [NixOS](#nixos-installation)
   - [other operating systems](#non-nix-installtion)
 - [Configuration](#configuration)
 - [Usage](#usage)
@@ -28,7 +28,7 @@ The following image should clarify its capabilities
   - [Sources](#source-spec)
   - [Providers](#provider-spec)
   - [Filters](#filters-spec)
-  - [Preview fitlers](#preview-filters-spec)
+  - [Preview filters](#preview-filters-spec)
   - [Synonyms](#synonyms-spec)
 - [Acknowledgements](#Acknowledgements)
 - [Licensing](#Licensing)
@@ -44,9 +44,9 @@ The following are the additions booru-hs provider over [booru-flake]
 ## Installation
 
 You may build the project from source using cabal,
-but the prefered method is to use the exported package in the flake
+but the preferred method is to use the exported package in the flake
 
-### Nixos installation
+### NixOS installation
 
 Add this repository as a flake
 ```nix
@@ -76,7 +76,7 @@ or [Usage](#usage) sections
 ### Non nix installation
 
 > TODO <br>
-> Technically you should be able to install this on any distrobution with cabal.
+> Technically you should be able to install this on any distribution with cabal.
 > Potentially, even windows .w.
 
 ## Configuration
@@ -89,8 +89,8 @@ provider = "danbooru"
 ids = ["5614777", "9590836", "9561442"]
 ```
 
-an exhaustive list of options is provided by default with booru-hs 
-and can be generated using 
+An exhaustive list of options is provided by default with booru-hs
+and can be generated using
 ```sh
 booru-hs gen-config
 ```
@@ -146,7 +146,7 @@ tooling for this project.
 
 [booru-flake]
 
-The predecessor to this project, booru-hs is simply an upgrade to booru-flake on most most levels, 
+The predecessor to this project, booru-hs is simply an upgrade to booru-flake on most most levels,
 I suppose booru-hs is missing a nixosModule (not for long).
 
 [optparse-applicative]
