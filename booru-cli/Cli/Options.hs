@@ -87,7 +87,7 @@ commandsParser =
       <> command "query" (info (Query <$> qryOptParser) $ progDesc "create a folder in the current directory linking images containg given TAGS")
 
 {- | # Download subcommand Options
-**provider:** selected provider to rquest image and metagdata from
+**provider:** selected provider to request image and metadata from
 **ids:** list of strings containing ids to request
 -}
 data DownloadOpts = DownloadOpts
