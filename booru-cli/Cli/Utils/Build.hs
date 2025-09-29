@@ -93,13 +93,7 @@ categoryToFs idir pdir imgs cat = do
     forM_ rnames toSymLink
 
 getFname :: Image -> Maybe String
-getFname Image{file = fURI', provider = prv, id = id'} = do
-  fURI <- parseURI fURI'
-  let fullName = last (pathSegments fURI)
-      (_, ftype) = span (/= '.') fullName
-  if prv /= "urls" -- no meaning in urls-<FULL_URL> so we use fullName
-    then return $ prv ++ extractId id' ++ ftype
-    else return fullName
+getFname Image{file = fURI'} = last . pathSegments <$> parseURI fURI'
 
 toRnameMap :: [Image] -> Map String Image
 toRnameMap img = fromList $ foldl (\acc cur -> (resolvedName cur, cur) : acc) [] img
