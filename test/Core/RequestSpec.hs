@@ -68,7 +68,7 @@ zeroObject :: Maybe Object
 zeroObject =
   toObject
     [aesonQQ|
-    { "id": 4585899, "small": "https://s1.zerochan.net/75/49/17/4585899.jpg", "medium": "https://s3.zerochan.net/240/49/17/4585899.jpg", "large": "https://s1.zerochan.net/Honkai.Star.Rail.600.4585899.jpg", "full": "https://static.zerochan.net/Honkai.Star.Rail.full.4585899.jpg", "width": 1092, "height": 1336, "size": 986112, "hash": "72221567cd1eb33ff2600ebdd5dd2c27", "source": "https://www.pixiv.net/en/artworks/135136150", "primary": "Honkai Star Rail", "tags": [ "Female", "Fanart", "Long Hair", "Red Eyes", "Pink Hair", "Blush", "Two Girls", "Yuri", "White Background", "Pixiv", "Duo", "Smile", "Sidelocks", "Simple Background", "Dark Persona", "Looking At Another", "Fanart from Pixiv", "Multi-colored Eyes", "Light Background", "Honkai Star Rail", "March 7th", "oiro ik", "Jellyfish Hair", "Very Long Hair", "Evernight" ] }
+    { "id": 4585899, "small": "https://s1.zerochan.net/75/49/17/4585899.jpg", "medium": "https://s3.zerochan.net/240/49/17/4585899.jpg", "large": "https://s1.zerochan.net/Honkai.Star.Rail.600.4585899.jpg", "full": "https://static.zerochan.net/Honkai.Star.Rail.full.4585899.jpg", "width": 1092, "height": 1336, "size": 986112, "hash": "72221567cd1eb33ff2600ebdd5dd2c27", "source": "https://www.pixiv.net/en/artworks/135136150", "primary": "Honkai Star Rail", "tags": [ "Female", "Fanart", "Flower", "Dress", "Black Dress", "Long Hair", "Red Eyes", "Gloves", "Pink Hair", "Blush", "Jacket", "Two Girls", "Top", "Yuri", "White Background", "Pixiv", "Hair Clip", "Hair Ornament", "Duo", "White Top", "Smile", "Sidelocks", "Simple Background", "Long Sleeves", "Open Clothes", "Dark Persona", "Looking At Another", "Black Gloves", "Fanart from Pixiv", "Multi-colored Eyes", "Light Background", "Choker", "Black Handwear", "Honkai Star Rail", "March 7th", "X-shaped Clip", "Off Shoulder Jacket", "Flower Ornament", "March 7th (Default Outfit)", "oiro ik", "Jellyfish Hair", "Very Long Hair", "Evernight", "Evernight (Default Outfit)" ] }
     |]
 
 zeroReqId :: Identifier
@@ -86,7 +86,7 @@ zeroImg =
     , characters = []
     , copyrights = []
     , rating = ""
-    , tags = ["Evernight", "Very Long Hair", "Jellyfish Hair", "oiro ik", "March 7th", "Honkai Star Rail", "Light Background", "Multi-colored Eyes", "Fanart from Pixiv", "Looking At Another", "Dark Persona", "Simple Background", "Sidelocks", "Smile", "Duo", "Pixiv", "White Background", "Yuri", "Two Girls", "Blush", "Pink Hair", "Red Eyes", "Long Hair", "Fanart", "Female"]
+    , tags = ["Evernight (Default Outfit)", "Evernight", "Very Long Hair", "Jellyfish Hair", "oiro ik", "March 7th (Default Outfit)", "Flower Ornament", "Off Shoulder Jacket", "X-shaped Clip", "March 7th", "Honkai Star Rail", "Black Handwear", "Choker", "Light Background", "Multi-colored Eyes", "Fanart from Pixiv", "Black Gloves", "Looking At Another", "Dark Persona", "Open Clothes", "Long Sleeves", "Simple Background", "Sidelocks", "Smile", "White Top", "Duo", "Hair Ornament", "Hair Clip", "Pixiv", "White Background", "Yuri", "Top", "Two Girls", "Jacket", "Blush", "Pink Hair", "Gloves", "Red Eyes", "Long Hair", "Black Dress", "Dress", "Flower", "Fanart", "Female"]
     }
 
 specialId :: Identifier
