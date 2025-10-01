@@ -42,11 +42,12 @@ build CommonOpts{dataDir = d, configDir = cfg, plantDir = p} = do
     overridenImgs = concatMap (uncurry applyOverrides) sourceImgMap
     synonymAppliedImgs = maybe overridenImgs (`realizeSynonyms` overridenImgs) syns
     finalImgs = validCImgs ++ synonymAppliedImgs
+    newCache = cachedImgs ++ synonymAppliedImgs
     rawCat = genCategory finalImgs
     category = maybe rawCat (`filterCategory` rawCat) fls
 
   mapM_ (downloadImage imgDownloadDir) finalImgs
-  writeFile datafile (show $ encode Images{images = finalImgs})
+  writeFile datafile (show $ encode Images{images = newCache})
   categoryToFs imgDownloadDir pDir configPrvs finalImgs category
 
   return ()
