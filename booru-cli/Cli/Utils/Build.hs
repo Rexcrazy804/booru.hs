@@ -44,14 +44,16 @@ validateCache srcs imgs = (validImgs, uncachedSrcs)
 getMetaData :: Map ProviderName (Identifier -> IO (Maybe Image)) -> Source -> IO [Image]
 getMetaData pmap Source{ids = idnfrs, provider = prv} = do
   let metaFetcher = findWithDefault (nullProvider prv) prv pmap
-      logAndFetch id' = do
-        let exid = extractId id'
-        putStrLn $ "Retriving metadata for: " ++ exid
-        img <- metaFetcher id'
-        when (isNothing img) $ putStrLn ("Unable to retreive: " ++ exid)
-        return img
-  metaList <- mapM logAndFetch idnfrs
+  metaList <- mapM (logAndFetch metaFetcher) idnfrs
   return $ catMaybes metaList
+
+logAndFetch :: (Identifier -> IO (Maybe Image)) -> Identifier -> IO (Maybe Image)
+logAndFetch fn id' = do
+    let exid = extractId id'
+    putStrLn $ "Retriving metadata for: " ++ exid
+    img <- fn id'
+    when (isNothing img) $ putStrLn ("Unable to retreive: " ++ exid)
+    return img
 
 {- | Downloads images into 'FilePath' when it does not contain the image
 - the function leveragtes 'Image.resolvedName' to identify existing files
