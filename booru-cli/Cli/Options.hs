@@ -84,7 +84,7 @@ commandsParser =
       <> command "gen-config" (info (pure GenConf) $ progDesc "generate example configuration")
       <> command "preview" (info (pure Preview) $ progDesc "generates preview.md into stdout")
       <> command "download" (info (Download <$> dlOptParser) $ progDesc "download images using IDS from a given PROVIDER")
-      <> command "query" (info (Query <$> qryOptParser) $ progDesc "create a folder in the current directory linking images containg given TAGS")
+      <> command "query" (info (Query <$> qryOptParser) $ progDesc "retreive images with given TAGS")
 
 {- | # Download subcommand Options
 **provider:** selected provider to request image and metadata from
