@@ -63,6 +63,7 @@ library booru-cli
     Cli.Commands.Build
     Cli.Commands.Download
     Cli.Commands.Generate
+    Cli.Commands.Metadata
     Cli.Commands.Preview
     Cli.Commands.Query
     Cli.Dispatcher
