@@ -15,13 +15,9 @@ import System.FilePath ((</>))
 
 extractCfg :: Maybe String -> IO Config
 extractCfg cfg = do
-  booruDir <- getXdgDirectory XdgConfig "booru"
-  let
-    defaultCfg = booruDir </> "config.toml"
-    cfg' = fromMaybe defaultCfg cfg
+  cfg' <- getCfgFile cfg
   parseFile cfg'
 
--- alternative that simply returns the correct filepath
 getCfgFile :: Maybe String -> IO FilePath
 getCfgFile cfg = do
   booruDir <- getXdgDirectory XdgConfig "booru"
