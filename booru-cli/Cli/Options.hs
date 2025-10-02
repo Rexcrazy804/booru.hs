@@ -4,6 +4,8 @@ module Cli.Options (
   CommonOpts (..),
   DownloadOpts (..),
   QueryOpts (..),
+  MetadataOpts (..),
+  MetadataAction (..),
   parseOpts,
 ) where
 
@@ -75,6 +77,7 @@ data Commands
   | Preview
   | Query QueryOpts
   | GenConf
+  | Metadata MetadataOpts
 
 -- | scaffolds logic for parsing sub commands
 commandsParser :: Parser Commands
@@ -84,6 +87,7 @@ commandsParser =
       <> command "gen-config" (info (pure GenConf) $ progDesc "generate example configuration")
       <> command "preview" (info (pure Preview) $ progDesc "generates preview.md into stdout")
       <> command "download" (info (Download <$> dlOptParser) $ progDesc "download images using IDS from a given PROVIDER")
+      <> command "metadata" (info (Metadata <$> metaOptParser) $ progDesc "act on stored metadata")
       <> command "query" (info (Query <$> qryOptParser) $ progDesc "retreive images with given TAGS")
 
 {- | # Download subcommand Options
@@ -108,3 +112,40 @@ qryOptParser :: Parser QueryOpts
 qryOptParser =
   QueryOpts
     <$> some (argument str (metavar "TAGS" <> help "list of tags to retreive images for"))
+
+data MetadataOpts = MetadataOpts
+  { action :: MetadataAction
+  , resolvedNames :: [String]
+  }
+
+metaOptParser :: Parser MetadataOpts
+metaOptParser =
+  MetadataOpts
+    <$> (mUpdateAction <|> mGetAction <|> mRemoveAction)
+    <*> some (argument str (metavar "RESOLVEDNAMES" <> help "list of resolvednames"))
+
+data MetadataAction
+  = Update
+  | Get
+  | Remove
+
+mUpdateAction :: Parser MetadataAction
+mUpdateAction =
+  flag' Update $
+    long "update"
+      <> short 'u'
+      <> help "update stored metadata"
+
+mGetAction :: Parser MetadataAction
+mGetAction =
+  flag' Get $
+    long "get"
+      <> short 'g'
+      <> help "retreive stored metadata"
+
+mRemoveAction :: Parser MetadataAction
+mRemoveAction =
+  flag' Remove $
+    long "remove"
+      <> short 'r'
+      <> help "remove stored metadata"
