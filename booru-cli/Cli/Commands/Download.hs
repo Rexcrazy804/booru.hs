@@ -16,7 +16,7 @@ import qualified Data.Map as M
 import Data.Maybe (catMaybes, fromMaybe)
 
 download :: DownloadOpts -> CommonOpts -> IO ()
-download DownloadOpts{provider = prv, ids = ids'} CommonOpts{configDir = cfg} = do
+download DownloadOpts{provider = prv, ids = ids'} CommonOpts{configFile = cfg} = do
   Config{providers = prvs} <- extractCfg cfg
   let
     configPrv = fromMaybe [] prvs

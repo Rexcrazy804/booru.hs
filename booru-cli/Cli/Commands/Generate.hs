@@ -7,7 +7,7 @@ import Paths_booru_hs (getDataFileName)
 import System.Directory (doesFileExist)
 
 generate :: CommonOpts -> IO ()
-generate CommonOpts{configDir = cfg} = do
+generate CommonOpts{configFile = cfg} = do
   exampleCfg <- getDataFileName "examples/config.toml"
   contents <- readFile exampleCfg
   cfgPath <- getCfgFile cfg

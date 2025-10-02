@@ -37,7 +37,7 @@ optionParser =
 - **plandDir** directory to plant auto categorized result | *this directory is recursively deleted*
 -}
 data CommonOpts = CommonOpts
-  { configDir :: Maybe String
+  { configFile :: Maybe String
   , dataDir :: Maybe String
   , plantDir :: Maybe String
   }

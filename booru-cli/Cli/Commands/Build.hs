@@ -19,7 +19,7 @@ import Booru.Schema.Images (Images (..))
 import Data.Maybe (fromMaybe)
 
 build :: CommonOpts -> IO ()
-build CommonOpts{dataDir = d, configDir = cfg, plantDir = p} = do
+build CommonOpts{dataDir = d, configFile = cfg, plantDir = p} = do
   Config
     { sources = srcs
     , providers = prvs
