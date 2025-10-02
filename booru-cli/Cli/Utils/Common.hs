@@ -14,13 +14,13 @@ import System.Directory (
 import System.FilePath ((</>))
 
 -- | Accepts a potential config file path and yeilds the parsed result
-extractCfg :: Maybe String -> IO Config
+extractCfg :: Maybe FilePath -> IO Config
 extractCfg cfg = do
   cfg' <- getCfgFile cfg
   parseFile cfg'
 
 -- | Converts a potential config file path to a validated one
-getCfgFile :: Maybe String -> IO FilePath
+getCfgFile :: Maybe FilePath -> IO FilePath
 getCfgFile cfg = do
   booruDir <- getXdgDirectory XdgConfig "booru"
   let defaultCfg = booruDir </> "config.toml"
@@ -32,7 +32,7 @@ the resultant tuple contains the following information respectively:
 2. path to datafile
 3. path to image download directory
 -}
-getData :: Maybe String -> IO ([Image], FilePath, FilePath)
+getData :: Maybe FilePath -> IO ([Image], FilePath, FilePath)
 getData dir = do
   booruDir <- getXdgDirectory XdgData "booru"
   let
@@ -49,7 +49,7 @@ getData dir = do
 
   return (cachedImgs, datafile, imgDownloadDir)
 
-getPlantDir :: Maybe String -> IO FilePath
+getPlantDir :: Maybe FilePath -> IO FilePath
 getPlantDir dir = do
   plantDir <- (</> "booru") . (</> "Pictures") <$> getHomeDirectory
   let actualDir = fromMaybe plantDir dir
@@ -57,7 +57,7 @@ getPlantDir dir = do
   return actualDir
 
 -- | A fetcher that logs that the associated provider is invalid
-nullProvider :: String -> b -> IO (Maybe a)
+nullProvider :: String -> a -> IO (Maybe Image)
 nullProvider prv = const $ do
   putStrLn $ "Invalid Provider: " ++ prv
   return Nothing
