@@ -114,7 +114,6 @@ data DownloadOpts = DownloadOpts
   , ids :: [String]
   }
 
--- | don't expect me to comment on everything, Baka!
 dlOptParser :: Parser DownloadOpts
 dlOptParser =
   DownloadOpts
