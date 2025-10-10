@@ -3,7 +3,7 @@
 
 module Cli.Commands.Build (build) where
 
-import Cli.Options (CommonOpts (..))
+import Cli.Options (CommonOpts (..), BuildOpts (..))
 import Cli.Utils.Build
 import Cli.Utils.Common
 
@@ -17,9 +17,10 @@ import Booru.Core.Synonyms (realizeSynonyms)
 import Booru.Schema.Config (Config (..))
 import Booru.Schema.Images (Images (..))
 import Data.Maybe (fromMaybe)
+import Control.Monad (unless)
 
-build :: CommonOpts -> IO ()
-build CommonOpts{dataDir = d, configFile = cfg, plantDir = p} = do
+build :: BuildOpts -> CommonOpts -> IO ()
+build BuildOpts{plantDir = p, skipCat = skip} CommonOpts{dataDir = d, configFile = cfg} = do
   Config
     { sources = srcs
     , providers = prvs
@@ -48,6 +49,4 @@ build CommonOpts{dataDir = d, configFile = cfg, plantDir = p} = do
 
   mapM_ (downloadImage imgDownloadDir) finalImgs
   writeFile datafile (show $ encode Images{images = newCache})
-  categoryToFs imgDownloadDir pDir configPrvs finalImgs category
-
-  return ()
+  unless skip $ categoryToFs imgDownloadDir pDir configPrvs finalImgs category

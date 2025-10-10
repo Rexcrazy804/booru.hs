@@ -15,7 +15,7 @@ dispatch Options{subcommand = sub, common = copts} =
     (Download opts) -> download opts
     (Query opts) -> query opts
     (Metadata opts) -> meta opts
-    Build -> build
+    (Build opts) -> build opts
     Preview -> preview
     GenConf -> generate
     $ copts

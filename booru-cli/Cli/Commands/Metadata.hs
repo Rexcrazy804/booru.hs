@@ -13,8 +13,8 @@ module Cli.Commands.Metadata (meta) where
 import Booru.Core.Parsers (encode)
 import Booru.Schema.Identifier (extractId, extractId')
 import Booru.Schema.Images (Image (..), Images (..))
-import Cli.Options (CommonOpts (..), MetadataAction (..), MetadataOpts (..))
 import Cli.Commands.Build (build)
+import Cli.Options (BuildOpts (..), CommonOpts (..), MetadataAction (..), MetadataOpts (..))
 import Cli.Utils.Common (getData)
 import Control.Monad (forM_)
 import Data.List (partition)
@@ -27,7 +27,7 @@ meta mo@MetadataOpts{action = a, resolvedNames = rnames} co@CommonOpts{dataDir =
     Get -> forM_ reqImgs displayMetadata
     Update -> do
       meta mo{action = Remove} co
-      build co
+      build BuildOpts{plantDir = Nothing, skipCat = True} co
     Remove -> do
       forM_ reqImgs (\img -> putStrLn $ "Removing metadata of: " ++ extractId img.id)
       writeFile datafile (show $ encode Images{images = otherImgs})

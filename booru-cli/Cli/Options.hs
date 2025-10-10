@@ -2,6 +2,7 @@ module Cli.Options (
   Options (..),
   Commands (..),
   CommonOpts (..),
+  BuildOpts (..),
   DownloadOpts (..),
   QueryOpts (..),
   MetadataOpts (..),
@@ -39,7 +40,6 @@ optionParser =
 data CommonOpts = CommonOpts
   { configFile :: Maybe String
   , dataDir :: Maybe String
-  , plantDir :: Maybe String
   }
 
 commonOptsParser :: Parser CommonOpts
@@ -61,18 +61,10 @@ commonOptsParser =
               <> help "Directory storing booru raw data"
           )
       )
-    <*> optional
-      ( strOption
-          ( long "plant"
-              <> short 'p'
-              <> metavar "PLANT_DIR"
-              <> help "Directory to plant autocateogrized image folders at. This direcotory is **RECURSIVELY DELETED**"
-          )
-      )
 
 -- | Available subcommands and their suboption records
 data Commands
-  = Build
+  = Build BuildOpts
   | Download DownloadOpts
   | Preview
   | Query QueryOpts
@@ -83,12 +75,35 @@ data Commands
 commandsParser :: Parser Commands
 commandsParser =
   hsubparser $
-    command "build" (info (pure Build) $ progDesc "build the image folder")
+    command "build" (info (Build <$> bldOptParser) $ progDesc "build the image folder")
       <> command "gen-config" (info (pure GenConf) $ progDesc "generate example configuration")
       <> command "preview" (info (pure Preview) $ progDesc "generates preview.md into stdout")
       <> command "download" (info (Download <$> dlOptParser) $ progDesc "download images using IDS from a given PROVIDER")
       <> command "metadata" (info (Metadata <$> metaOptParser) $ progDesc "act on stored metadata")
       <> command "query" (info (Query <$> qryOptParser) $ progDesc "retreive images with given TAGS")
+
+data BuildOpts = BuildOpts
+  { plantDir :: Maybe String
+  , skipCat :: Bool
+  }
+
+-- | don't expect me to comment on everything, Baka!
+bldOptParser :: Parser BuildOpts
+bldOptParser =
+  BuildOpts
+    <$> optional
+      ( strOption
+          ( long "plant"
+              <> short 'p'
+              <> metavar "PLANT_DIR"
+              <> help "Directory to plant autocateogrized image folders at. This direcotory is **RECURSIVELY DELETED**"
+          )
+      )
+    <*> switch
+      ( long "skip"
+          <> short 's'
+          <> help "skip the auto categorization step"
+      )
 
 {- | # Download subcommand Options
 **provider:** selected provider to request image and metadata from
