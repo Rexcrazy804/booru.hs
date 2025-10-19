@@ -42,7 +42,7 @@ in
   mkDerivation {
     inherit src;
     pname = "booru-hs";
-    version = "1.0.1.1";
+    version = "1.0.1.2";
     isLibrary = true;
     isExecutable = true;
     libraryHaskellDepends = [
