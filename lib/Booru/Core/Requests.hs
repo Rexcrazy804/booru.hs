@@ -5,6 +5,7 @@ module Booru.Core.Requests (
   getProviderMap,
   requestJson,
   requestFile,
+  requestTags,
   extractImage,
   resolveProvider,
   toObject,
@@ -25,7 +26,8 @@ import Data.String (fromString)
 import Data.Text (pack, replace, unpack)
 import Data.Vector (toList, (!?))
 import Network.HTTP.Client.Conduit (Response)
-import Network.HTTP.Simple (getResponseBody, httpBS, httpJSON, parseRequest, setRequestHeader)
+import Network.HTTP.Client.MultipartFormData (formDataBody, partBS, partFileSource)
+import Network.HTTP.Simple (getResponseBody, httpBS, httpJSON, parseRequest, setRequestHeader, setRequestMethod)
 import System.Environment (lookupEnv)
 
 getProviderMap :: [Provider] -> Map ProviderName (Identifier -> IO (Maybe Image))
@@ -64,6 +66,24 @@ requestJson url' = do
   let request = setRequestHeader "User-Agent" [fromString header] request'
   response <- (httpJSON request :: IO (Response (Maybe Value)))
   return $ getResponseBody response >>= toObject
+
+requestTags :: FilePath -> String -> IO (Map String Double)
+requestTags fpath apiUrl = do
+  request' <- parseRequest apiUrl
+  username <- lookupEnv "USER"
+  let header = "Booru.hs - " ++ fromMaybe "unkownBooruUser" username
+      request'' =
+        foldr
+          ($)
+          request'
+          [ setRequestHeader "User-Agent" [fromString header]
+          , setRequestMethod "POST"
+          ]
+  request <- formDataBody [partBS "format" "json", partFileSource "file" fpath] request''
+  response <- httpJSON request
+  let obj = getResponseBody response >>= toObject
+
+  return $ fromMaybe mempty (obj >>= parseMaybe (.: "tags") >>= parseMaybe parseJSON)
 
 requestFile :: Image -> IO ByteString
 requestFile Image{file = f} = do

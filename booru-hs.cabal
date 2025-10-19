@@ -48,6 +48,7 @@ library
     , bytestring    ^>=0.12.1.0
     , containers    ^>=0.6.8
     , hashable      ^>=1.4.7.0
+    , http-client   ^>=0.7.19
     , http-conduit  ^>=2.3.9.1
     , split         ^>=0.2.5
     , text          ^>=2.1.1
