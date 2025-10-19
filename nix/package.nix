@@ -17,6 +17,8 @@
   directory,
   split,
   filepath,
+  network-uri,
+  http-client,
   optparse-applicative_0_19_0_0,
 }: let
   inherit (lib.fileset) toSource unions fileFilter;
@@ -61,7 +63,9 @@ in
       containers
       directory
       filepath
+      http-client
       optparse-applicative_0_19_0_0
+      network-uri
     ];
     testHaskellDepends = [
       aeson
