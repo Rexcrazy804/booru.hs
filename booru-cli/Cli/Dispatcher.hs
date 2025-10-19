@@ -6,6 +6,7 @@ import Cli.Commands.Generate
 import Cli.Commands.Metadata
 import Cli.Commands.Preview
 import Cli.Commands.Query
+import Cli.Commands.AutoTag
 import Cli.Options
 
 -- | reads the options structure and dispatches subcommands
@@ -16,6 +17,7 @@ dispatch Options{subcommand = sub, common = copts} =
     (Query opts) -> query opts
     (Metadata opts) -> meta opts
     (Build opts) -> build opts
+    (AutoTag opts) -> autotag opts
     Preview -> preview
     GenConf -> generate
     $ copts

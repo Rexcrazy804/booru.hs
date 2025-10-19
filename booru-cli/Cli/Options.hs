@@ -1,3 +1,5 @@
+{-# LANGUAGE DuplicateRecordFields #-}
+
 module Cli.Options (
   Options (..),
   Commands (..),
@@ -7,6 +9,7 @@ module Cli.Options (
   QueryOpts (..),
   MetadataOpts (..),
   MetadataAction (..),
+  AutoTagOpts (..),
   parseOpts,
 ) where
 
@@ -70,6 +73,7 @@ data Commands
   | Query QueryOpts
   | GenConf
   | Metadata MetadataOpts
+  | AutoTag AutoTagOpts
 
 -- | scaffolds logic for parsing sub commands
 commandsParser :: Parser Commands
@@ -81,6 +85,7 @@ commandsParser =
       <> command "download" (info (Download <$> dlOptParser) $ progDesc "download images using IDS from a given PROVIDER")
       <> command "metadata" (info (Metadata <$> metaOptParser) $ progDesc "act on stored metadata")
       <> command "query" (info (Query <$> qryOptParser) $ progDesc "retreive images with given TAGS")
+      <> command "auto-tag" (info (AutoTag <$> autOptParser) $ progDesc "auto generate tags for an image")
 
 data BuildOpts = BuildOpts
   { plantDir :: Maybe String
@@ -163,3 +168,39 @@ mRemoveAction =
     long "remove"
       <> short 'r'
       <> help "remove stored metadata"
+
+data AutoTagOpts = AutoTagOpts
+  { provider :: String
+  , id :: String
+  , threshold :: Float
+  , showT :: Bool
+  , apiUrl :: String
+  }
+
+autOptParser :: Parser AutoTagOpts
+autOptParser =
+  AutoTagOpts
+    <$> argument str (metavar "PROVIDER" <> help "the name of the provider to retreive images from")
+    <*> argument str (metavar "ID" <> help "id of the image")
+    <*> option
+      auto
+      ( long "threshold"
+          <> short 't'
+          <> metavar "DOUBLE"
+          <> help "The minimum threshold the the tag must meet"
+          <> showDefault
+          <> value 0.0
+      )
+    <*> switch
+      ( long "show-threshold"
+          <> short 's'
+          <> help "display threshold information for each tag"
+      )
+    <*> strOption
+      ( long "api"
+          <> short 'u'
+          <> metavar "API_URL"
+          <> help "url to make tag requests to"
+          <> showDefault
+          <> value "https://autotagger.donmai.us/evaluate"
+      )

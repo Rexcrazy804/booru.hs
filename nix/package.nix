@@ -17,6 +17,8 @@
   directory,
   split,
   filepath,
+  network-uri,
+  http-client,
   optparse-applicative_0_19_0_0,
 }: let
   inherit (lib.fileset) toSource unions fileFilter;
@@ -40,7 +42,7 @@ in
   mkDerivation {
     inherit src;
     pname = "booru-hs";
-    version = "1.0.0.1";
+    version = "1.0.1.2";
     isLibrary = true;
     isExecutable = true;
     libraryHaskellDepends = [
@@ -61,7 +63,9 @@ in
       containers
       directory
       filepath
+      http-client
       optparse-applicative_0_19_0_0
+      network-uri
     ];
     testHaskellDepends = [
       aeson
