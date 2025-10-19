@@ -1,5 +1,6 @@
 cabal-version:   3.0
 name:            booru-hs
+
 -- A.B.C.X
 -- X => version of CLI
 version:         1.0.1.1
@@ -63,6 +64,7 @@ library
 library booru-cli
   import:           warnings
   exposed-modules:
+    Cli.Commands.AutoTag
     Cli.Commands.Build
     Cli.Commands.Download
     Cli.Commands.Generate
