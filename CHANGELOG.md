@@ -1,5 +1,20 @@
 # Revision history for booru-hs
 
+## 1.0.1.2 -- 2025-10-19
+library:
+- addition of requestTag function in library
+
+booru-cli:
+- addition of `auto-tag` subcommand for auto generating tags
+- addition of `metadata` subcommand for metadata manipulation
+- `build` subcommand no longer prunes image data (gc subcommand will be introduced in next release)
+- removed platDir from commonOpts and relocated it to buildOpts
+- improvements to `getFname'`
+
+Last Revision
+- [b13396f](https://github.com/Rexcrazy804/booru.hs/tree/b13396f7e07294c3d9dcad24d9d6a6a023b8ae08) Merge pull request #6 from Rexcrazy804/feat-autotag
+
+
 ## 1.0.0.0 -- 2025-09-23
 Stable Release!!
 further releases will follow https://pvp.haskell.org/#decision-tree

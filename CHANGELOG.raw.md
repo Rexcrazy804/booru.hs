@@ -1,5 +1,13 @@
 # Raw Revision history for booru-hs
 
+## 1.0.1.2 -- 2025-10-19
+- feat(cli): added auto tag sub command
+- feat(lib): addition of auto tag request function
+- feat(cli): added options for build subcommand
+- feat(cli): added metadata manipulation subcommand
+- feat(cli): build no longer removed redundant image data
+- feat(cli): improved getFname' that uses fullname for special providers
+
 ## 1.0.0.0 -- 2025-09-23
 - feat(cli): download subcommand now preserves file extension
 - fix(nix): correctly override optparse with v0_19
